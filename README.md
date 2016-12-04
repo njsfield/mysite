@@ -28,6 +28,7 @@ CREATE TABLE Posts (
   ImageID INTEGER NOT NULL,
   CreationDate DATE NOT NULL,
   ModifiedDate DATE NOT NULL,
+  Live BOOLEAN,
   CategoryID INTEGER NOT NULL,
   OwnerID INTEGER NOT NULL
 );
@@ -76,8 +77,8 @@ INSERT INTO Images (ImageURL, UploadDate) VALUES
 ### Insert Post Query
 ```sql
 BEGIN TRANSACTION;
-  INSERT INTO Posts (PostTitle, ImageID, CreationDate, ModifiedDate, CategoryID, OwnerID)
-    VALUES ('A Guide To Flexbox' , 1 , CURRENT_DATE, CURRENT_DATE, 1, 1);
+  INSERT INTO Posts (PostTitle, ImageID, CreationDate, ModifiedDate, Live, CategoryID, OwnerID)
+    VALUES ('A Guide To Flexbox' , 1 , CURRENT_DATE, CURRENT_DATE, TRUE, 1, 1);
   INSERT INTO PostBodies (PostId, PostBody)
     VALUES ((SELECT MAX(PostID) FROM Posts), 'Flexbox is simply incredible');
 COMMIT;
@@ -107,8 +108,29 @@ DELETE FROM Posts WHERE PostId = 1 AND OwnerID IN
     WHERE Owners.OwnerUsername = 'njsfield' AND
           Owners.OwnerPassword = 'Badger');
 ```
+### Hide Post
+```sql
+Update Posts SET Live = FALSE WHERE PostID = 1;
+```
+### Show Post
+```sql
+Update Posts SET Live = TRUE WHERE PostID = 1;
+```
 ### Return Posts By Category
 ```sql
 SELECT * FROM Posts WHERE Posts.CategoryID IN
 (SELECT CategoryId FROM Categories WHERE Categories.CategoryName = 'CSS');
 ```
+
+# Routes
+/home [GET]
+/blog (queries: filterby='CSS/JavaScript/Design' ) [GET]
+/blog/id [GET]
+/edit/id [GET,POST]
+/delete/id [POST]
+/hide/id [POST]
+/show/id [POST]
+/portfolio [GET]
+/portfolio/id [GET]
+/login [GET]
+/logout [GET]
