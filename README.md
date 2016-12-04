@@ -140,19 +140,19 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 
 ## Views
 
-home.hbs
-blog.hbs
-post.hbs
-portfolio.hbs
-edit.hbs
-compose.hbs
-login.hbs
+home.hbs  
+blog.hbs  
+post.hbs  
+portfolio.hbs  
+edit.hbs  
+compose.hbs  
+login.hbs  
 
 ## Partials
 
-posts.hbs
-portfolioitems.hbs
+posts.hbs  
+portfolioitems.hbs  
 
 ## Layout
 
-default.hbs
+default.hbs  
