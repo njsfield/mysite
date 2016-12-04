@@ -142,7 +142,7 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 /delete/id [DELETE]   
 /hide/id [PUT]  
 /show/id [PUT]  
-/images [GET]
+/images [GET, POST]
 
 
 # HBS
