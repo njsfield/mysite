@@ -17,17 +17,18 @@ A personal website to host a blog, biography, and personal/professional projects
 ```sql
 CREATE TABLE Posts (
   PostID SERIAL PRIMARY KEY NOT NULL,
-  PostBodyID INTEGER NOT NULL,
   PostTitle VARCHAR(1000) NOT NULL,
   ImageID INTEGER NOT NULL,
-  PostDate DATE        NOT NULL,
+  CreationDate DATE NOT NULL,
+  ModifiedDate DATE NOT NULL,
   CategoryID INTEGER NOT NULL,
   OwnerID INTEGER NOT NULL
 );
 
 CREATE TABLE PostBodies (
-  PostBodyID SERIAL PRIMARY KEY NOT NULL,
-  PostBody JSONB
+  PostID INT REFERENCES Posts ON DELETE CASCADE,
+  PostBody Text,
+  PRIMARY KEY (PostID)
 );
 
 CREATE TABLE Owners (
@@ -41,7 +42,7 @@ CREATE TABLE Owners (
 );
 
 INSERT INTO Owners (OwnerName, OwnerUsername, OwnerPassword, OwnerEmailAddress, SignupDate, PostsSubmitted) VALUES
-('Nick Field', 'njsfield', '$2a$10$IJETvwsaxVYjxPDeRarqjOrYZQWFQCgQp6VohxK0N1JbBYxRpIz7e', 'heyimnick@live.com', CURRENT_DATE, 0);
+('Nick Field', 'njsfield', 'Badger', 'heyimnick@live.com', CURRENT_DATE, 0);
 
 CREATE TABLE Categories (
   CategoryID SERIAL PRIMARY KEY NOT NULL,
@@ -65,27 +66,42 @@ INSERT INTO Images (ImageURL, UploadDate) VALUES
 ('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger3.jpg', CURRENT_DATE);
 
 ```
-### Insert Post
-
+### Insert Post Query
 ```sql
 BEGIN TRANSACTION;
-   INSERT INTO PostDetails (PostData) VALUES ('{
-  	"PostTitle": "A Guide to Flexbox",
-  	"ImageID": 1,
-  	"PostContent": "This is a blog post",
-  	"CategoryID": 1,
-  	"OwnerID": 1
-  }');
-  INSERT INTO Posts (PostDetailID, PostTitle, ImageID, PostDate, CategoryID, OwnerID)
-  SELECT PostDetailID,
-    PostData->>'PostTitle' AS PostTitle,
-    CAST(PostData->>'ImageID' AS INT) AS ImageID,
-    CURRENT_DATE,
-    CAST(PostData->>'CategoryID' AS INT) AS CategoryID,
-    CAST(PostData->>'OwnerID' AS INT) AS OwnerID
-  FROM PostDetails
-  WHERE PostDetailID IN (SELECT MAX(PostDetailID) FROM PostDetails);
+  INSERT INTO Posts (PostTitle, ImageID, CreationDate, ModifiedDate, CategoryID, OwnerID)
+    VALUES ('A Guide To Flexbox' , 1 , CURRENT_DATE, CURRENT_DATE, 1, 1);
+  INSERT INTO PostBodies (PostId, PostBody)
+    VALUES ((SELECT MAX(PostID) FROM Posts), 'Flexbox is simply incredible');
 COMMIT;
 ```
 
+### Return Whole Post Query
+```sql
+SELECT * FROM Posts INNER JOIN PostBodies ON PostBodies.PostID = 1;
+```
 ### Update Post
+```sql
+BEGIN TRANSACTION;
+  Update Posts
+    SET PostTitle = 'CSS is super', ImageID = 2, ModifiedDate = CURRENT_DATE, CategoryID = 1
+    WHERE PostID = 1 AND OwnerID IN
+      (SELECT OwnerID FROM Owners
+        WHERE Owners.OwnerUsername = 'njsfield' AND
+              Owners.OwnerPassword = 'Badger');
+  Update PostBodies SET PostBody = 'I just love it so much'
+    WHERE PostID = 1;
+COMMIT;
+```
+### Delete Post
+```sql
+DELETE FROM Posts WHERE PostId = 1 AND OwnerID IN
+  (SELECT OwnerID FROM Owners
+    WHERE Owners.OwnerUsername = 'njsfield' AND
+          Owners.OwnerPassword = 'Badger');
+```
+### Return Posts By Category
+```sql
+SELECT * FROM Posts WHERE Posts.CategoryID IN
+(SELECT CategoryId FROM Categories WHERE Categories.CategoryName = 'CSS');
+```
