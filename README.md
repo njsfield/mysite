@@ -125,7 +125,8 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 # Routes
 /home [GET]
 /blog (queries: filterby='CSS/JavaScript/Design' ) [GET]
-/blog/id [GET]
+/compose [POST]
+/post/id [GET]
 /edit/id [GET,POST]
 /delete/id [POST]
 /hide/id [POST]
@@ -134,3 +135,24 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 /portfolio/id [GET]
 /login [GET]
 /logout [GET]
+
+# HBS
+
+## Views
+
+home.hbs
+blog.hbs
+post.hbs
+portfolio.hbs
+edit.hbs
+compose.hbs
+login.hbs
+
+## Partials
+
+posts.hbs
+portfolioitems.hbs
+
+## Layout
+
+default.hbs
