@@ -1,6 +1,13 @@
 # Description
 A personal website to host a blog, biography, and personal/professional projects
 
+# Technologies
+Node.js  
+Hapi.js
+Bcrypt
+Handlebars
+Postgres
+
 # Mockups
 
 ### Home/Nav
