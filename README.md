@@ -68,13 +68,14 @@ INSERT INTO Categories (CategoryName) VALUES
 CREATE TABLE Images (
   ImageID SERIAL PRIMARY KEY NOT NULL,
   ImageURL VARCHAR(500) NOT NULL,
+  ImageTitle VARCHAR(500),
   UploadDate DATE NOT NULL
 );
 
 INSERT INTO Images (ImageURL, UploadDate) VALUES
-('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger1.jpg', CURRENT_DATE),
-('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger2.jpg', CURRENT_DATE),
-('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger3.jpg', CURRENT_DATE);
+('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger1.jpg' 'A Badger', CURRENT_DATE),
+('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger2.jpg', 'Another Badger', CURRENT_DATE),
+('https://github.com/FAC9/the-badgerer/blob/master/public/images/badger3.jpg', 'A third Badger', CURRENT_DATE);
 
 ```
 ### Insert Post Query
