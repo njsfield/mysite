@@ -1,5 +1,7 @@
 # Description
-A personal website to host a blog, biography, and personal/professional projects
+A personal website to host a biography, a blog, and personal/professional projects.
+Users can view blog posts and filter them by category.
+The owner can log in, edit/create/delete/hide blog and portfolio posts.
 
 # Technologies
 Node.js  
@@ -139,6 +141,7 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 /delete/id [DELETE]   
 /hide/id [PUT]  
 /show/id [PUT]  
+/images [GET]
 
 
 # HBS
