@@ -25,11 +25,11 @@ Postgres
 CREATE TABLE Posts (
   PostID SERIAL PRIMARY KEY NOT NULL,
   PostTitle VARCHAR(1000) NOT NULL,
-  ImageID INTEGER NOT NULL,
+  ImageID INTEGER,
   CreationDate DATE NOT NULL,
   ModifiedDate DATE NOT NULL,
   Live BOOLEAN,
-  CategoryID INTEGER NOT NULL,
+  CategoryID INTEGER,
   OwnerID INTEGER NOT NULL
 );
 
@@ -60,7 +60,8 @@ CREATE TABLE Categories (
 INSERT INTO Categories (CategoryName) VALUES
 ('CSS'),
 ('JavaScript'),
-('Design');
+('Design')
+('Portfolio');
 
 CREATE TABLE Images (
   ImageID SERIAL PRIMARY KEY NOT NULL,
@@ -123,18 +124,22 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 ```
 
 # Routes
-/home [GET]
-/blog (queries: filterby='CSS/JavaScript/Design' ) [GET]
-/compose [POST]
-/post/id [GET]
-/edit/id [GET,POST]
-/delete/id [POST]
-/hide/id [POST]
-/show/id [POST]
-/portfolio [GET]
-/portfolio/id [GET]
-/login [GET]
-/logout [GET]
+### Public
+/home [GET]  
+/blog (queries: filterby='CSS/JavaScript/Design' ) [GET]  
+/blog/id [GET]  
+/portfolio [GET]   
+/portfolio/id [GET]  
+
+### Owner
+/login [POST]    
+/logout [GET]  
+/compose [GET, POST]  
+/edit/id [GET,PUT]  
+/delete/id [DELETE]   
+/hide/id [PUT]  
+/show/id [PUT]  
+
 
 # HBS
 
