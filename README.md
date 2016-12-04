@@ -19,7 +19,7 @@ Postgres
 ### Portfolio
 ![Portfolio](./mockups/portfolio.png)
 ### Create Post Flow
-![Createpostflow](./mockups/create-post-flow.png)
+![Createpostflow](./mockups/createpostflow.png)
 
 # Schema
 ![Schema](./mockups/schema.png)
