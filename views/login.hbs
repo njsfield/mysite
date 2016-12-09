@@ -1,5 +1,7 @@
 <nav class='nav'>{{> header}}</nav>
+<h3 class='login-warning'>{{message}}</h3>
 <form action="/login" method="post">
   <input name="username" type="text" placeholder="username"/>
   <input name="password" type="password" placeholder="password"/>
+  <input type="submit"/>
 </form>
