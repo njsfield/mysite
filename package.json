@@ -1,0 +1,39 @@
+{
+  "name": "mysite",
+  "version": "1.0.0",
+  "description": "A personal website to host a biography, a blog, and personal/professional projects. Users can view blog posts and filter them by category. The owner can log in, edit/create/delete/hide blog and portfolio posts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njsfield/mysite.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/njsfield/mysite/issues"
+  },
+  "homepage": "https://github.com/njsfield/mysite#readme",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "env2": "^2.1.1",
+    "handlebars": "^4.0.6",
+    "hapi": "^15.2.0",
+    "hapi-auth-cookie": "^6.1.1",
+    "hapi-context-credentials": "^2.0.0",
+    "inert": "^4.0.3",
+    "joi": "^10.0.1",
+    "pg": "^6.1.0",
+    "vision": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.11.1",
+    "eslint-config-semistandard": "^7.0.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.7.1",
+    "eslint-plugin-standard": "^2.0.1"
+  }
+}
