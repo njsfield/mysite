@@ -81,7 +81,7 @@ SELECT * FROM Posts WHERE Posts.CategoryID IN
 /portfolio/id [GET]  
 
 ### Owner
-/login [POST]    
+/login [GET, POST]    
 /logout [GET]  
 /compose [GET, POST]  
 /edit/id [GET,PUT]  
