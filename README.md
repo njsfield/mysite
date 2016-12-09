@@ -27,49 +27,49 @@ Postgres
 ### Insert Post Query
 ```sql
 BEGIN TRANSACTION;
-  INSERT INTO Posts (PostTitle, ImageID, CreationDate, ModifiedDate, Live, CategoryID, OwnerID)
+  INSERT INTO posts (posttitle, imageid, creationdate, modifieddate, live, categoryid, ownerid)
     VALUES ('A Guide To Flexbox' , 1 , CURRENT_DATE, CURRENT_DATE, TRUE, 1, 1);
-  INSERT INTO PostBodies (PostId, PostBody)
-    VALUES ((SELECT MAX(PostID) FROM Posts), 'Flexbox is simply incredible');
+  INSERT INTO postbodies (postid, postbody)
+    VALUES ((SELECT MAX(postid) FROM posts), 'Flexbox is simply incredible');
 COMMIT;
 ```
 
 ### Return Whole Post Query
 ```sql
-SELECT * FROM Posts INNER JOIN PostBodies ON PostBodies.PostID = 1;
+SELECT * FROM posts INNER JOIN postbodies ON postbodies.postid = 1;
 ```
 ### Update Post
 ```sql
 BEGIN TRANSACTION;
-  Update Posts
-    SET PostTitle = 'CSS is super', ImageID = 2, ModifiedDate = CURRENT_DATE, CategoryID = 1
-    WHERE PostID = 1 AND OwnerID IN
-      (SELECT OwnerID FROM Owners
-        WHERE Owners.OwnerUsername = 'njsfield' AND
-              Owners.OwnerPassword = 'badger');
-  Update PostBodies SET PostBody = 'I just love it so much'
-    WHERE PostID = 1;
+  Update posts
+    SET posttitle = 'CSS is super', imageid = 2, modifieddate = CURRENT_DATE, categoryid = 1
+    WHERE postid = 1 AND ownerid IN
+      (SELECT ownerid FROM owners
+        WHERE owners.ownerusername = 'njsfield' AND
+              owners.ownerpassword = 'badger');
+  Update postbodies SET postbody = 'I just love it so much'
+    WHERE postid = 1;
 COMMIT;
 ```
 ### Delete Post
 ```sql
-DELETE FROM Posts WHERE PostId = 1 AND OwnerID IN
-  (SELECT OwnerID FROM Owners
-    WHERE Owners.OwnerUsername = 'njsfield' AND
-          Owners.OwnerPassword = 'Badger');
+DELETE FROM posts WHERE postid = 1 AND ownerid IN
+  (SELECT ownerid FROM owners
+    WHERE owners.ownerusername = 'njsfield' AND
+          owners.ownerpassword = '$2a$10$IJETvwsaxVYjxPDeRarqjOrYZQWFQCgQp6VohxK0N1JbBYxRpIz7e');
 ```
 ### Hide Post
 ```sql
-Update Posts SET Live = FALSE WHERE PostID = 1;
+Update posts SET live = FALSE WHERE postid = 1;
 ```
 ### Show Post
 ```sql
-Update Posts SET Live = TRUE WHERE PostID = 1;
+Update posts SET live = TRUE WHERE postid = 1;
 ```
 ### Return Posts By Category
 ```sql
-SELECT * FROM Posts WHERE Posts.CategoryID IN
-(SELECT CategoryId FROM Categories WHERE Categories.CategoryName = 'CSS');
+SELECT * FROM posts WHERE posts.categoryid IN
+(SELECT categoryid FROM categories WHERE categories.categoryname = 'CSS');
 ```
 
 # Routes
