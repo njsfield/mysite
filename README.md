@@ -46,7 +46,7 @@ BEGIN TRANSACTION;
     WHERE postid = 1 AND ownerid IN
       (SELECT ownerid FROM owners
         WHERE owners.ownerusername = 'njsfield' AND
-              owners.ownerpassword = 'badger');
+              owners.ownerpassword = '$2a$10$IJETvwsaxVYjxPDeRarqjOrYZQWFQCgQp6VohxK0N1JbBYxRpIz7e');
   Update postbodies SET postbody = 'I just love it so much'
     WHERE postid = 1;
 COMMIT;
