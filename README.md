@@ -102,7 +102,7 @@ BEGIN TRANSACTION;
     WHERE PostID = 1 AND OwnerID IN
       (SELECT OwnerID FROM Owners
         WHERE Owners.OwnerUsername = 'njsfield' AND
-              Owners.OwnerPassword = 'Badger');
+              Owners.OwnerPassword = 'badger');
   Update PostBodies SET PostBody = 'I just love it so much'
     WHERE PostID = 1;
 COMMIT;
