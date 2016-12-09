@@ -41,7 +41,7 @@ server.register([vision, inert, cookieAuth, hapiContextCredentials], (err) => {
   // Register views
   server.views({
     engines: {
-      html: require('handlebars')
+      hbs: require('handlebars')
     },
     relativeTo: path.join(__dirname, '../views'),
     path: './',

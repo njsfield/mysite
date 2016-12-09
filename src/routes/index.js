@@ -17,14 +17,13 @@ const show = require('./private/show');
 
 module.exports = [
   home,
-  ...blog,
-  ...portfolio,
+  blog,
+  portfolio,
   login,
   logout,
   compose,
   del,
   edit,
-  hide,
   hide,
   show,
   images
