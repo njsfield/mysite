@@ -162,6 +162,7 @@ login.hbs
 ## Partials
 
 posts.hbs  
+header.hbs
 portfolioitems.hbs  
 
 ## Layout
