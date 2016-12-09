@@ -8,9 +8,10 @@ const server = new Hapi.Server();
 const path = require('path');
 const env = require('env2');
 
-// Install environment variables
+// Install Environment Variables
 env('./config.env');
 
+// Set Cookie Options
 const options = {
   password: process.env.COOKIE_PASSWORD,
   cookie: 'somecookie',
@@ -24,6 +25,7 @@ const options = {
 //   require('http').get('http://the-badgerer.herokuapp.com');
 // }, 300000); // every 5 minutes
 
+// Set Connection
 server.connection({
   port: process.env.PORT || 8080,
   routes: {
@@ -33,18 +35,20 @@ server.connection({
   }
 });
 
+// Register Plugins
 server.register([vision, inert, cookieAuth, hapiContextCredentials], (err) => {
   if (err) { throw err; }
+  // Register views
   server.views({
     engines: {
       html: require('handlebars')
     },
-    relativeTo: __dirname,
-    path: '../views',
-    layoutPath: '../views/layout/',
-    helpersPath: '../views/helpers/',
-    layout: 'layout',
-    partialsPath: '../views/partials/'
+    relativeTo: path.join(__dirname, '../views'),
+    path: './',
+    layoutPath: './layout/',
+    helpersPath: './helpers/',
+    layout: 'default',
+    partialsPath: './partials/'
   });
   server.auth.strategy('session', 'cookie', options);
   server.route(routes);
