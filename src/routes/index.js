@@ -1,6 +1,7 @@
 // Public
 
 const home = require('./public/home');
+const files = require('./public/files');
 const blog = require('./public/blog');
 const portfolio = require('./public/portfolio');
 
@@ -26,5 +27,6 @@ module.exports = [
   edit,
   hide,
   show,
-  images
+  images,
+  files
 ];
