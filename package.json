@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+
     "start": "node index.js",
     "build-db": "node src/database_builder/build_database.js"
   },
