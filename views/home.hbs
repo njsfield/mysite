@@ -1,2 +1,7 @@
-{{> header}}
-<p>(Home)</p>
+<section class="container">
+{{post}}
+</section>
+
+{{#if credentials}}
+  <a href="/edit"></a>
+{{/if}}

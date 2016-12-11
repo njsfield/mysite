@@ -26,12 +26,19 @@ const loginHandler = function (request, reply) {
     const password = request.payload.password;
     checkUser(username, (err, data) => {
       if (err) throw err;
-      else if (!data) reply.view('login', { message: 'User does not exist' });
-      else {
+      else if (!data) {
+        reply.view('login', {
+          message: 'User does not exist',
+          error: 'login-error' });
+      } else {
         comparePasswords(password, data.ownerpassword, (err, isMatch) => {
           if (err) { throw (err); }
           if (!isMatch) {
-            reply.view('login', { message: 'Wrong password' });
+            reply.view('login', {
+              message: 'Wrong password',
+              error: 'login-error',
+              username: username
+            });
           } else {
             request.cookieAuth.set({current_user: username});
             reply.redirect('/');
