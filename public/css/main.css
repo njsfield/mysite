@@ -8,6 +8,22 @@
     margin: 0 auto;
 }
 
+/***** Home *****/
+
+.home-edit {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.5em;
+    padding: .5em;
+    width: 4em;
+    margin: 2em auto;
+    background: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: .3em;
+}
+
 /***** Login *****/
 
 /** Message **/

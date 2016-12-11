@@ -1,7 +1,6 @@
 <section class="container">
 {{post}}
-</section>
-
-{{#if credentials}}
-  <a href="/edit"></a>
+{{#if credentials.current_user}}
+  <a class="home-edit" href="/edit">Edit</a>
 {{/if}}
+</section>
