@@ -157,7 +157,7 @@ body {
 .nav__social {
     color: white;
     display: inline-block;
-    font-size: 2em;
+    font-size: 1.7em;
     width: 1em;
     height: 1em;
     text-decoration: none;
@@ -248,10 +248,6 @@ body {
         font-size: 1.2rem;
     }
 
-    .nav__social {
-        font-size: 3em;
-    }
-
 }
 
 /** Large Desktop **/
@@ -293,9 +289,6 @@ body {
         display: none;
     }
 
-    .nav__social {
-        font-size: 2em;
-    }
     .nav__link:hover {
         transform-origin: 90% 30%;
     }
