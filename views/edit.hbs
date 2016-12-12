@@ -1,4 +1,4 @@
-<h1>Editing: {{PostTitle}}</h1>
+<h2 class="title">Editing: {{PostTitle}}</h2>
 
 <form class="edit" action="/edit/{{postid}}" method="post">
   <!-- Output Image -->
@@ -11,8 +11,13 @@
     <input type="text" class="edit__title-input" name="title" id="edit__title-input" value="{{posttitle}}" required/>
   <!-- Triggers /images route-->
   <button class="edit__add-image-button">Add Image</button>
-  <!-- Outputs markdown syntax -->
-  <textarea name="postbody" class="edit__post-body">{{postbody}}</textarea>
+
+  <!-- Output -->
+    <!-- Outputs markdown syntax -->
+    <textarea name="postbody" class="edit__post-body">{{postbody}}</textarea>
+    <!-- Outputs Output View syntax -->
+    <div class="edit__post-body-output"></div>
+
   <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
   <button class="edit__preview-button">Preview</button>
 
