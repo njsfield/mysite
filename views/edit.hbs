@@ -1,2 +1,10 @@
-{{> header}}
-<p>(Edit)</p>
+<form class="edit" action="/edit/{{postid}}" method="post">
+  <!-- Output Image -->
+  <img class="edit__image" src="{{imageurl}}"/>
+  <!-- Image Label & Disabled Input -->
+  <label for="edit__image-input" class="edit__image-button">Select Image</label>
+    <input class="edit__image-input" name="image-url" id="edit__image-input" placeholder="{{imageurl}}" disabled />
+  <label for="edit__title-input" class="edit__title-label">Title</label>
+    <input class="edit__title-input" name="title" id="edit__title-input" value="{{posttitle}}" required/>
+  <textarea class="edit__post-body">{{postbody}}</textarea>
+</form>
