@@ -27,6 +27,7 @@
     "hapi-context-credentials": "^2.0.0",
     "inert": "^4.0.3",
     "joi": "^10.0.1",
+    "marked": "^0.3.6",
     "pg": "^6.1.0",
     "vision": "^4.1.1"
   },
