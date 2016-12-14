@@ -1,0 +1,9 @@
+{{#if post.live}}
+  <img src="{{post.imageurl}}" class="post__image"/>
+  {{#unless this.isHome}}
+    <p class="post__date">{{post.creationdate}}</p>
+    <p class="post__category">{{post.categoryname}}</p>
+  {{/unless}}
+  <h1 class="post__header">{{post.posttitle}}</h1>
+  <div class="post__body">{{post.postbody}}</div>
+{{/if}}

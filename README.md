@@ -36,7 +36,24 @@ COMMIT;
 
 ### Return Whole Post Query
 ```sql
-SELECT * FROM posts INNER JOIN postbodies ON postbodies.postid = 1;
+SELECT p.postid,
+      pb.postbody,
+      p.posttitle,
+      i.imageurl,
+      p.creationdate,
+      p.modifieddate,
+      p.live,
+      c.categoryname,
+      o.ownername
+      FROM posts AS p
+INNER JOIN postbodies AS pb
+      ON pb.postid = 1
+INNER JOIN images AS i
+      ON i.imageid = p.imageid
+INNER JOIN categories AS c
+      on c.categoryid = p.categoryid
+INNER JOIN owners as O
+      on o.ownerid = p.ownerid;
 ```
 ### Update Post
 ```sql

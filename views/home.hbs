@@ -1,5 +1,5 @@
 <section class="container">
-{{post}}
+{{> post isHome=true }}
 {{#if credentials.current_user}}
   <a class="home-edit" href="/edit/1">Edit</a>
 {{/if}}
