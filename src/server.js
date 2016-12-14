@@ -3,7 +3,7 @@ const cookieAuth = require('hapi-auth-cookie');
 const hapiContextCredentials = require('hapi-context-credentials');
 const vision = require('vision');
 const inert = require('inert');
-const routes = require('./routes');
+const routes = require('./routes.js');
 const server = new Hapi.Server();
 const path = require('path');
 const env = require('env2');
@@ -38,17 +38,18 @@ server.connection({
 // Register Plugins
 server.register([vision, inert, cookieAuth, hapiContextCredentials], (err) => {
   if (err) { throw err; }
-  // Register views
+
+    // Register views
   server.views({
     engines: {
       hbs: require('handlebars')
     },
-    relativeTo: path.join(__dirname, '../views'),
-    path: './',
-    layoutPath: './layout/',
-    helpersPath: './helpers/',
+    relativeTo: __dirname,
+    path: '../views',
+    layoutPath: '../views/layout/',
+    helpersPath: '../views/helpers/',
     layout: 'default',
-    partialsPath: './partials/'
+    partialsPath: '../views/partials/'
   });
   server.auth.strategy('session', 'cookie', options);
   server.route(routes);

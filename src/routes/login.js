@@ -1,4 +1,4 @@
-const sqlLogin = require('../../dbrequests/getuser.js');
+const sqlLogin = require('../dbrequests/getuser.js');
 const compare = require('bcrypt').compare;
 
 const checkUser = (username, cb) => {

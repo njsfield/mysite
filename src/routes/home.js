@@ -1,6 +1,6 @@
-const getPost = require('../../dbrequests/getpost');
-const credentialsCheck = require('../../helpers/credentialscheck');
-const markDownTransform = require('../../helpers/markdowntransform');
+const getPost = require('../dbrequests/getpost');
+const credentialsCheck = require('../helpers/credentialscheck');
+const markDownTransform = require('../helpers/markdowntransform');
 
 module.exports = {
   path: '/',

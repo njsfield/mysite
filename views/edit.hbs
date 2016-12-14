@@ -1,26 +1,28 @@
-<h2 class="title">Editing: {{PostTitle}}</h2>
+<section class="container">
+  <h2 class="title">Editing: {{post.posttitle}}</h2>
 
-<form class="edit" action="/edit/{{postid}}" method="post">
-  <!-- Output Image -->
-  <img class="edit__image" src="{{imageurl}}"/>
-  <!-- Triggers /images route-->
-  <button class="edit__image-button">Select Image</button>
-    <!-- Outputs Image url -->
-    <input type="text" class="edit__image-input" name="image-url" placeholder="{{imageurl}}" disabled />
-  <label for="edit__title-input" class="edit__title-label">Title</label>
-    <input type="text" class="edit__title-input" name="title" id="edit__title-input" value="{{posttitle}}" required/>
-  <!-- Triggers /images route-->
-  <button class="edit__add-image-button">Add Image</button>
+  <form class="edit" action="/edit/{{post.postid}}" method="post">
+    <!-- Output Image -->
+    <img class="edit__image" src="/{{post.imageurl}}"/>
+    <!-- Triggers /images route-->
+    <button class="edit__image-button">Select Image</button>
+      <!-- Outputs Image url -->
+      <input type="text" class="edit__image-input" name="image-url" placeholder="{{post.imageurl}}" disabled />
+    <label for="edit__title-input" class="edit__title-label">Title</label>
+      <input type="text" class="edit__title-input" name="title" id="edit__title-input" value="{{post.posttitle}}" required/>
+    <!-- Triggers /images route-->
+    <button class="edit__add-image-button">Add Image</button>
 
-  <!-- Output -->
-    <!-- Outputs markdown syntax -->
-    <textarea name="postbody" class="edit__post-body">{{postbody}}</textarea>
-    <!-- Outputs Output View syntax -->
-    <div class="edit__post-body-output"></div>
+    <!-- Output -->
+      <!-- Outputs markdown syntax -->
+      <textarea name="postbody" class="edit__post-body">{{post.postbody}}</textarea>
+      <!-- Outputs Output View syntax -->
+      <div class="edit__post-body-output"></div>
 
-  <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
-  <button class="edit__preview-button">Preview</button>
+    <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
+    <button class="edit__preview-button">Preview</button>
 
-  <!-- Submit-->
-  <input class="edit__submit" type="submit" />
-</form>
+    <!-- Submit-->
+    <input class="edit__submit" type="submit" />
+  </form>
+</section>
