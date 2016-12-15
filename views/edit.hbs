@@ -13,6 +13,13 @@
     <!-- Triggers /images route-->
     <button class="edit__add-image-button">Add Image</button>
 
+    <!-- Category Select -->
+    <select class="edit__category" name="categoryname">
+      {{#each categories}}
+        <option class="edit__category-option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
+      {{/each}}
+    </select>
+
     <!-- Output -->
       <!-- Outputs markdown syntax -->
       <textarea name="postbody" class="edit__post-body">{{post.postbody}}</textarea>
