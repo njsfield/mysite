@@ -2,24 +2,29 @@
   <h2 class="title">Editing: {{post.posttitle}}</h2>
 
   <form class="edit" action="/edit/{{post.postid}}" method="post">
-    <!-- Output Image -->
-    <img class="edit__image" src="/{{post.imageurl}}"/>
     <!-- Triggers /images route-->
     <button class="edit__image-button">Select Image</button>
-      <!-- Outputs Image url -->
-      <input type="text" class="edit__image-input" name="image-url" placeholder="{{post.imageurl}}" disabled />
+    <!-- Outputs Image url -->
+    <input type="text" class="edit__image-input" name="imageurl" placeholder="{{post.imageurl}}" disabled />
+    <!-- Output Image -->
+    <img class="edit__image" src="/{{post.imageurl}}"/>
+
+    <!--Title-->
     <label for="edit__title-input" class="edit__title-label">Title</label>
       <input type="text" class="edit__title-input" name="title" id="edit__title-input" value="{{post.posttitle}}" required/>
-    <!-- Triggers /images route-->
-    <button class="edit__add-image-button">Add Image</button>
 
     <!-- Category Select -->
+    <label for="categoryname" class="edit__category-label">Category</label>
     <select class="edit__category" name="categoryname">
       {{#each categories}}
         <option class="edit__category-option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
       {{/each}}
     </select>
 
+    <!-- Body -->
+    <label for="postbody" class="edit__post-body-label">Post</label>
+    <!-- Triggers /images route-->
+    <button class="edit__add-image-button">Add Image</button>
     <!-- Output -->
       <!-- Outputs markdown syntax -->
       <textarea name="postbody" class="edit__post-body">{{post.postbody}}</textarea>

@@ -74,3 +74,77 @@
 }
 
 /***** Edit Form *****/
+
+.title {
+    text-align: center;
+}
+
+.edit {
+    padding: .5rem;
+    border: 1px solid grey;
+    position: relative;
+}
+
+.edit__image {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+.edit__image-button {
+    border: none;
+    background: lightblue;
+    margin: .3rem;
+    color: white;
+    padding: .5rem;
+    border-radius: .2rem;
+    cursor: pointer;
+    transition: all .3s ease;
+    position: absolute;
+    top: .5rem;
+    left: .5rem;
+}
+.edit__image-button:hover {
+    background: #5DB8FF;
+}
+
+.edit__image-input {
+    display: none;
+}
+
+.edit__title-label {
+    display: block;
+    max-width: 600px;
+    margin: 1rem auto;
+}
+.edit__title-input {
+    display: block;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto;
+}
+
+.edit__category-label {
+    display: block;
+    max-width: 600px;
+    margin: 1rem auto;
+}
+
+.edit__category {
+    display: block;
+    max-width: 600px;
+    width: 100%;
+    padding-right: 50%;
+    margin: 1rem auto;
+}
+
+.edit__post-body-label {
+    display: block;
+    max-width: 600px;
+    margin: 1rem auto;
+}
+
+.edit__add-image-button {
+    display: inline-block;
+}
