@@ -81,8 +81,10 @@
 
 .edit {
     padding: .5rem;
-    border: 1px solid grey;
     position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .edit__image {
@@ -113,27 +115,28 @@
 
 .edit__title-label {
     display: block;
-    max-width: 600px;
     margin: 1rem auto;
+    font-size: 1.2rem;
+    color: grey;
 }
 .edit__title-input {
     display: block;
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.3);
     width: 100%;
-    max-width: 600px;
     margin: 1rem auto;
+    padding-left: .5rem;
 }
 
 .edit__category-label {
     display: block;
-    max-width: 600px;
     margin: 1rem auto;
+    font-size: 1.2rem;
+    color: grey;
 }
 
 .edit__category {
     display: block;
-    max-width: 600px;
     width: 100%;
     padding-right: 50%;
     margin: 1rem auto;
@@ -141,10 +144,83 @@
 
 .edit__post-body-label {
     display: block;
-    max-width: 600px;
     margin: 1rem auto;
+    font-size: 1.2rem;
+    color: grey;
+}
+
+.edit__post-container {
+    position: relative;
 }
 
 .edit__add-image-button {
     display: inline-block;
+    position: absolute;
+    top: -2.5rem;
+    right: 4.8rem;
+    background: lightblue;
+    padding: .4rem;
+    border: none;
+    border-radius: .3rem;
+    color: white;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+.edit__add-image-button:hover {
+    background: #5DB8FF;
+}
+
+
+/* Postbody */
+.edit__post-body {
+    width: 100%;
+    resize: none;
+    overflow-y: scroll;
+    height: 25rem;
+    font-family: monospace;
+    line-height: 1rem;
+    outline: none;
+    padding: .5rem;
+}
+.edit__post-body-output {
+    width: 100%;
+    resize: none;
+    overflow-y: scroll;
+    height: 25rem;
+    padding: .5rem;
+}
+
+.edit__preview-button {
+    display: inline-block;
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    background: black;
+    border: none;
+    padding: .4rem;
+    border-radius: .3rem;
+    color: white;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+.edit__preview-button:hover {
+    background: grey;
+}
+
+.edit__submit {
+    padding: .7rem;
+    width: 7rem;
+    background: white;
+    border: 1px solid black;
+    border-radius: .3rem;
+    display: block;
+    margin: .3rem auto;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.edit__submit:hover {
+    background: rgb(0,130,100);
+    border-color: rgb(0,130,100);
+    color: white;
 }

@@ -23,16 +23,16 @@
 
     <!-- Body -->
     <label for="postbody" class="edit__post-body-label">Post</label>
-    <!-- Triggers /images route-->
-    <button class="edit__add-image-button">Add Image</button>
-    <!-- Output -->
-      <!-- Outputs markdown syntax -->
+    <div class="edit__post-container">
+      <!-- Triggers /images route-->
+      <button class="edit__add-image-button">Add Image</button>
+      <!-- Markdown syntax -->
       <textarea name="postbody" class="edit__post-body">{{post.postbody}}</textarea>
-      <!-- Outputs Output View syntax -->
-      <div class="edit__post-body-output"></div>
-
-    <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
-    <button class="edit__preview-button">Preview</button>
+      <!-- Outputs HTML -->
+      <div class="edit__post-body-output" style="display: none;"></div>
+      <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
+      <button class="edit__preview-button">Preview</button>
+    </div>
 
     <!-- Submit-->
     <input class="edit__submit" type="submit" />
