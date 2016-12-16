@@ -1,5 +1,5 @@
-const getPost = require('../dbrequests/getpost');
-const getCategories = require('../dbrequests/getcategories');
+const getPost = require('../../dbrequests/getpost');
+const getCategories = require('../../dbrequests/getcategories');
 
 module.exports = {
   path: '/edit/{id}',

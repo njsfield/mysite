@@ -3,7 +3,7 @@ const cookieAuth = require('hapi-auth-cookie');
 const hapiContextCredentials = require('hapi-context-credentials');
 const vision = require('vision');
 const inert = require('inert');
-const routes = require('./routes.js');
+const routes = require('./routes');
 const server = new Hapi.Server();
 const path = require('path');
 const env = require('env2');
@@ -52,7 +52,17 @@ server.register([vision, inert, cookieAuth, hapiContextCredentials], (err) => {
     partialsPath: '../views/partials/'
   });
   server.auth.strategy('session', 'cookie', options);
-  server.route(routes);
+
+  const fileRoute = {
+    method: 'GET',
+    path: '/{path*}',
+    handler: {
+      directory: {
+        path: '../public'
+      }
+    }
+  };
+  server.route([fileRoute, ...routes]);
 });
 
 module.exports = server;
