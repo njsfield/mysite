@@ -30,7 +30,7 @@ server.connection({
   port: process.env.PORT || 8080,
   routes: {
     files: {
-      relativeTo: path.join(__dirname, '../public')
+      relativeTo: __dirname
     }
   }
 });

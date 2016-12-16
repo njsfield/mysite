@@ -4,7 +4,7 @@
   "description": "A personal website to host a biography, a blog, and personal/professional projects. Users can view blog posts and filter them by category. The owner can log in, edit/create/delete/hide blog and portfolio posts.",
   "main": "index.js",
   "scripts": {
-    "dev": "supervisor index.js",
+    "dev": "nodemon index.js",
     "start": "node index.js",
     "build-db": "node src/database_builder/build_database.js"
   },
