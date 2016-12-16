@@ -5,7 +5,6 @@ const vision = require('vision');
 const inert = require('inert');
 const routes = require('./routes');
 const server = new Hapi.Server();
-const path = require('path');
 const env = require('env2');
 
 // Install Environment Variables
