@@ -1,19 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-
-const decodeBase64Image = (dataString) => {
-  const matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  const response = {};
-
-  if (matches.length !== 3) {
-    return new Error('Invalid input string');
-  }
-
-  response.type = matches[1];
-  response.data = new Buffer(matches[2], 'base64');
-
-  return response;
-};
+const decodeBase64Image = require('../../helpers/decode64baseimage.js');
+const addImageToDb = require('../../dbrequests/addimage');
 
 module.exports = {
   path: '/images',
@@ -29,7 +17,10 @@ module.exports = {
       let imageName = req.query.name;
       fs.writeFile(path.join(__dirname, '../../../public/images', imageName), imageBuffer.data, (err) => {
         if (err) throw err;
-        reply('done');
+        addImageToDb(imageName, (err) => {
+          if (err) throw err;
+          reply('done');
+        });
       });
     }
   }
