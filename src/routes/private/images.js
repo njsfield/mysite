@@ -26,9 +26,10 @@ module.exports = {
       });
     } else {
       let imageBuffer = decodeBase64Image(req.payload);
-      fs.writeFile(path.join(__dirname, '../../../public/images', 'astronaut.jpg'), imageBuffer.data, (err) => {
+      let imageName = req.query.name;
+      fs.writeFile(path.join(__dirname, '../../../public/images', imageName), imageBuffer.data, (err) => {
         if (err) throw err;
-        else console.log('cool');
+        reply('done');
       });
     }
   }

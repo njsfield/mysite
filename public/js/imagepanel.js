@@ -59,8 +59,8 @@
 
   // Upload Button
   uploadBtn.addEventListener('change', function (e) {
-    retrieveImage(e, function (raw) {
-      postImage(raw.target.result, function () {
+    retrieveImage(e, function (file) {
+      postImage(file, function () {
         clearContent(gallery);
         fetchImages(function (images) {
           injectImages(images, gallery, 'images__image');
@@ -74,19 +74,19 @@
     var files = evt.target.files;
     var f = files[0];
     var reader = new FileReader();
-    reader.onload = cb;
+    reader.onload = function (raw) {
+      cb({name: f.name, raw: raw.target.result});
+    };
     reader.readAsDataURL(f);
   }
 
-  // Post image
-  function postImage (raw, cb) {
+  // Post image (file = {name: filename, raw: rawfile})
+  function postImage (file, cb) {
     var xhr = new XML();
-    xhr.addEventListener('load', function () {
+    xhr.addEventListener('load', function (data) {
       cb();
     });
-    xhr.open('post', '/images');
-    xhr.send(raw);
+    xhr.open('post', '/images?name=' + file.name);
+    xhr.send(file.raw);
   }
-
-  //
 })();
