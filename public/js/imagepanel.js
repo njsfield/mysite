@@ -143,7 +143,7 @@
       imageInput.setAttribute('value', path);
       outputImage.setAttribute('src', '/images/' + path);
     } else {
-      editBody.innerHTML += ' ![Custom Image](/images/' + path + ')';
+      editBody.innerHTML = editBody.innerHTML + ' ![Custom Image](/images/' + path + ')';
     }
 
     disableElt(selectBtn);
