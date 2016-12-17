@@ -1,7 +1,15 @@
 module.exports = {
   path: '/logout',
   method: 'get',
-  handler: (req, reply) => {
-    reply.view('logout');
+  config: {
+    auth: {
+      strategy: 'session',
+      mode: 'try'
+    },
+    handler: (req, reply) => {
+      req.cookieAuth.clear();
+      reply.redirect('/');
+    }
   }
+
 };
