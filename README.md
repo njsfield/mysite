@@ -59,7 +59,10 @@ INNER JOIN owners as O
 ```sql
 BEGIN TRANSACTION;
   Update posts
-    SET posttitle = 'CSS is super', imageid = 2, modifieddate = CURRENT_DATE, categoryid = 1
+    SET posttitle = 'CSS is super',
+        imageid = (SELECT imageid FROM images WHERE imageurl = 'site-logo.png'),
+        modifieddate = CURRENT_DATE,
+        categoryid = (SELECT categoryid FROM categories WHERE categoryname = 'Design')
     WHERE postid = 1 AND ownerid IN
       (SELECT ownerid FROM owners
         WHERE owners.ownerusername = 'njsfield' AND

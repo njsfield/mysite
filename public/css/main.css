@@ -109,10 +109,6 @@
     background: #5DB8FF;
 }
 
-.edit__image-input {
-    display: none;
-}
-
 .edit__title-label {
     display: block;
     margin: 1rem auto;

@@ -2,12 +2,14 @@
   <h2 class="title">Editing: {{post.posttitle}}</h2>
 
   <form class="edit" action="/edit/{{post.postid}}" method="post">
+    <!-- Hidden Post ID -->
+    <input type="text" name="postid" value="{{post.postid}}" hidden />
     <!-- Triggers /images route-->
     <button class="edit__image-button">Select Image</button>
     <!-- Outputs Image url -->
-    <input type="text" class="edit__image-input" name="imageurl" placeholder="{{post.imageurl}}" disabled />
+    <input type="text" class="edit__image-input" name="imageurl" value="{{post.imageurl}}" hidden />
     <!-- Output Image -->
-    <img class="edit__image" src="/{{post.imageurl}}"/>
+    <img class="edit__image" src="/images/{{post.imageurl}}"/>
 
     <!--Title-->
     <label for="edit__title-input" class="edit__title-label">Title</label>
