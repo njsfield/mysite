@@ -1,6 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
+const decodeBase64Image = (dataString) => {
+  const matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  const response = {};
+
+  if (matches.length !== 3) {
+    return new Error('Invalid input string');
+  }
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], 'base64');
+
+  return response;
+};
+
 module.exports = {
   path: '/images',
   method: ['get', 'post'],
@@ -11,7 +25,11 @@ module.exports = {
         reply({images: images});
       });
     } else {
-      reply.redirect('/');
+      let imageBuffer = decodeBase64Image(req.payload);
+      fs.writeFile(path.join(__dirname, '../../../public/images', 'astronaut.jpg'), imageBuffer.data, (err) => {
+        if (err) throw err;
+        else console.log('cool');
+      });
     }
   }
 };

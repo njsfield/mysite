@@ -3,6 +3,7 @@
   var imagesContainer = document.querySelector('.images');
   var gallery = document.querySelector('.images__container');
   var backBtn = document.querySelector('.button__back');
+  var uploadBtn = document.querySelector('.upload');
 
   var XML = XMLHttpRequest;
 
@@ -55,4 +56,37 @@
     e.preventDefault();
     toggleElt(imagesContainer, 'images--hidden');
   });
+
+  // Upload Button
+  uploadBtn.addEventListener('change', function (e) {
+    retrieveImage(e, function (raw) {
+      postImage(raw.target.result, function () {
+        clearContent(gallery);
+        fetchImages(function (images) {
+          injectImages(images, gallery, 'images__image');
+        });
+      });
+    });
+  }, false);
+
+  // Retrieve Image
+  function retrieveImage (evt, cb) {
+    var files = evt.target.files;
+    var f = files[0];
+    var reader = new FileReader();
+    reader.onload = cb;
+    reader.readAsDataURL(f);
+  }
+
+  // Post image
+  function postImage (raw, cb) {
+    var xhr = new XML();
+    xhr.addEventListener('load', function () {
+      cb();
+    });
+    xhr.open('post', '/images');
+    xhr.send(raw);
+  }
+
+  //
 })();

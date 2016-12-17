@@ -1,5 +1,6 @@
 .button {
   min-width: 6rem;
+  display: inline-block;
   padding: .5rem;
   margin: .5rem;
   border-radius: .2rem;
