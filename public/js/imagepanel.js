@@ -3,7 +3,10 @@
   var imagesContainer = document.querySelector('.images');
   var gallery = document.querySelector('.images__container');
   var backBtn = document.querySelector('.button__back');
+  var selectBtn = document.querySelector('.button__select');
   var uploadBtn = document.querySelector('.upload');
+  var imageInput = document.querySelector('.edit__image-input');
+  var outputImage = document.querySelector('.edit__image');
 
   var XML = XMLHttpRequest;
 
@@ -22,11 +25,18 @@
   }
 
   // Inject Images
-  function injectImages (images, elt, className) {
+  function injectImages (images, elt, className, selectedClassName) {
     images.forEach(function (image) {
       var imageElt = document.createElement('span');
       imageElt.style.backgroundImage = 'url(/images/' + image + ')';
       imageElt.className = className;
+      imageElt.setAttribute('path', image);
+      imageElt.addEventListener('click', function () {
+        Array.prototype.forEach.call(elt.children, function (elt) {
+          elt.classList.remove(selectedClassName);
+        });
+        imageElt.classList.add(selectedClassName);
+      });
       elt.appendChild(imageElt);
     });
   }
@@ -47,7 +57,7 @@
     toggleElt(imagesContainer, 'images--hidden');
     clearContent(gallery);
     fetchImages(function (images) {
-      injectImages(images, gallery, 'images__image');
+      injectImages(images, gallery, 'images__image', 'images__image--selected');
     });
   });
 
@@ -63,7 +73,7 @@
       postImage(file, function () {
         clearContent(gallery);
         fetchImages(function (images) {
-          injectImages(images, gallery, 'images__image');
+          injectImages(images, gallery, 'images__image', 'images__image--selected');
         });
       });
     });
@@ -89,4 +99,13 @@
     xhr.open('post', '/images?name=' + file.name);
     xhr.send(file.raw);
   }
+
+  // Select Image
+  selectBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    var path = document.querySelector('.images__image--selected').getAttribute('path');
+    imageInput.value = path;
+    outputImage.setAttribute('src', '/images/' + path);
+    toggleElt(imagesContainer, 'images--hidden');
+  });
 })();
