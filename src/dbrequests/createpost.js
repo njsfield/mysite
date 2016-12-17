@@ -17,8 +17,8 @@ const query = (title, imageid, categoryid, ownderid, postbody, cb) => {
   });
 };
 
-query('Welcome To My Site', 1, 1, 1, '## Hello, come on in\n My name is Nick', (err, data) => {
-  err ? console.log(err) : console.log(data);
-});
+// query('Welcome To My Site', 1, 1, 1, '## Hello, come on in\n My name is Nick', (err, data) => {
+//   err ? console.log(err) : console.log(data);
+// });
 
 module.exports = query;
