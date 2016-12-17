@@ -63,20 +63,14 @@ BEGIN TRANSACTION;
         imageid = (SELECT imageid FROM images WHERE imageurl = 'site-logo.png'),
         modifieddate = CURRENT_DATE,
         categoryid = (SELECT categoryid FROM categories WHERE categoryname = 'Design')
-    WHERE postid = 1 AND ownerid IN
-      (SELECT ownerid FROM owners
-        WHERE owners.ownerusername = 'njsfield' AND
-              owners.ownerpassword = '$2a$10$IJETvwsaxVYjxPDeRarqjOrYZQWFQCgQp6VohxK0N1JbBYxRpIz7e');
+    WHERE postid = 1;
   Update postbodies SET postbody = 'I just love it so much'
     WHERE postid = 1;
 COMMIT;
 ```
 ### Delete Post
 ```sql
-DELETE FROM posts WHERE postid = 1 AND ownerid IN
-  (SELECT ownerid FROM owners
-    WHERE owners.ownerusername = 'njsfield' AND
-          owners.ownerpassword = '$2a$10$IJETvwsaxVYjxPDeRarqjOrYZQWFQCgQp6VohxK0N1JbBYxRpIz7e');
+DELETE FROM posts WHERE postid = 1;
 ```
 ### Hide Post
 ```sql
