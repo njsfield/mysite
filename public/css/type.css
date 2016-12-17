@@ -1,0 +1,28 @@
+/* Type */
+
+body {
+    font-family: 'Open Sans', arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 1.8rem;
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'futura', 'Open Sans', sans-serif;
+    text-align: center;
+    font-weight: 300;
+    margin: 2rem;
+}
+
+
+/* Helpers */
+
+.title {
+    display: block;
+    text-align: center;
+}
+
+.title--red {
+    color: red;
+}

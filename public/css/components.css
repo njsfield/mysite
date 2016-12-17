@@ -1,41 +1,3 @@
-/* Base */
-
-img {
-  width: 100%;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Open Sans', arial, sans-serif;
-    font-weight: 500;
-    letter-spacing: 1px;
-    line-height: 1.8rem;
-    color: #333;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    text-align: center;
-    font-family: 'futura', 'Open Sans', sans-serif;
-    font-weight: 300;
-    margin: 2rem;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-li:before {
-    content: ' + ';
-    margin-left: 1rem;
-    font-size: .7rem;
-
-}
-
 /* Container */
 
 .container {
@@ -44,17 +6,6 @@ li:before {
     max-width: 650px;
     padding: 5rem 1rem .8rem .8rem;
     margin: 0 auto;
-}
-
-/* Type */
-
-.title {
-    display: block;
-    text-align: center;
-}
-
-.title--red {
-    color: red;
 }
 
 /***** Login *****/
