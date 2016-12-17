@@ -139,11 +139,11 @@
   selectBtn.addEventListener('click', function (e) {
     e.preventDefault();
     var path = document.querySelector('.images__image--selected').getAttribute('path');
-    imageInput.value = path;
     if (outputMainImage) {
+      imageInput.setAttribute('value', path);
       outputImage.setAttribute('src', '/images/' + path);
     } else {
-      editBody.innerHTML += '![Custom Image](' + path + ')';
+      editBody.innerHTML += ' ![Custom Image](/images/' + path + ')';
     }
 
     disableElt(selectBtn);
