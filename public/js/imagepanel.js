@@ -2,7 +2,7 @@
   var imageBtn = document.querySelector('.edit__image-button');
   var imagesContainer = document.querySelector('.images');
   var gallery = document.querySelector('.images__container');
-  var backBtn = document.querySelector('.images__back');
+  var backBtn = document.querySelector('.button__back');
 
   var XML = XMLHttpRequest;
 

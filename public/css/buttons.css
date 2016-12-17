@@ -1,0 +1,31 @@
+.button {
+  min-width: 6rem;
+  padding: .5rem;
+  margin: .5rem;
+  border-radius: .2rem;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: .8rem;
+  transition: all .2s ease;
+}
+
+.button:hover {
+  opacity: .5;
+}
+
+.button--grey {
+  background: #607D8B;
+  color: white;
+}
+
+.button--blue {
+  background: #00BCD4;
+  color: white;
+}
+
+
+.button--green {
+  background: #009688;
+  color: white;
+}

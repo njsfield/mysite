@@ -254,25 +254,9 @@
   overflow-y: auto;
 }
 
-.images__back {
-  padding: .5rem;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 2.5rem);
-  bottom: 1rem;
-  background: gray;
-  width: 5rem;
-  border: 2px solid black;
-  border-radius: .3rem;
-  cursor: pointer;
-  transition: all .4s ease;
-}
-
 .images__image {
   width: 20%;
   height: 20%;
-  display: inline-block;
   margin: 1rem;
   border: 1px solid white;
   background-position: center;
@@ -280,6 +264,10 @@
   background-size: cover;
 }
 
-.images__back:hover {
-  background: white;
+.images__button-container {
+  display: block;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
 }
