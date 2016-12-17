@@ -1,5 +1,7 @@
 (function () {
+  // Variables
   var imageBtn = document.querySelector('.edit__image-button');
+  var addImageBtn = document.querySelector('.edit__add-image-button');
   var imagesContainer = document.querySelector('.images');
   var gallery = document.querySelector('.images__container');
   var backBtn = document.querySelector('.button__back');
@@ -7,6 +9,13 @@
   var uploadBtn = document.querySelector('.upload');
   var imageInput = document.querySelector('.edit__image-input');
   var outputImage = document.querySelector('.edit__image');
+  var editBody = document.querySelector('.edit__post-body');
+
+  // Output elt
+
+  var outputMainImage = false;
+
+  /* Helpers */
 
   var XML = XMLHttpRequest;
 
@@ -35,13 +44,16 @@
 
   // Inject Images
   function injectImages (images, elt, className, selectedClassName, eventFunc) {
+    // Add array method
+    var DOMForEach = Array.prototype.forEach;
+
     images.forEach(function (image) {
       var imageElt = document.createElement('span');
       imageElt.style.backgroundImage = 'url(/images/' + image + ')';
       imageElt.className = className;
       imageElt.setAttribute('path', image);
       imageElt.addEventListener('click', function () {
-        Array.prototype.forEach.call(elt.children, function (elt) {
+        DOMForEach.call(elt.children, function (elt) {
           elt.classList.remove(selectedClassName);
         });
         imageElt.classList.add(selectedClassName);
@@ -51,7 +63,7 @@
     });
   }
 
-  // Make request
+  // Make request to fetch images
   function fetchImages (cb) {
     var xhr = new XML();
     xhr.addEventListener('load', function (res) {
@@ -60,34 +72,6 @@
     xhr.open('get', '/images');
     xhr.send();
   }
-
-  // Image Button
-  imageBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    toggleElt(imagesContainer, 'images--hidden');
-    clearContent(gallery);
-    fetchImages(function (images) {
-      injectImages(images, gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
-    });
-  });
-
-  // Back Button
-  backBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    toggleElt(imagesContainer, 'images--hidden');
-  });
-
-  // Upload Button
-  uploadBtn.addEventListener('change', function (e) {
-    retrieveImage(e, function (file) {
-      postImage(file, function () {
-        clearContent(gallery);
-        fetchImages(function (images) {
-          injectImages(images, gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
-        });
-      });
-    });
-  }, false);
 
   // Retrieve Image
   function retrieveImage (evt, cb) {
@@ -110,12 +94,58 @@
     xhr.send(file.raw);
   }
 
+  // Build Images
+  function buildImages (elt, imageClass, imageSelectedClass, func) {
+    clearContent(elt);
+    fetchImages(function (images) {
+      injectImages(images, elt, imageClass, imageSelectedClass, func);
+    });
+  }
+
+  /** Events **/
+
+  // Image Button on click
+  imageBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    outputMainImage = true;
+    toggleElt(imagesContainer, 'images--hidden');
+    buildImages(gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
+  });
+
+  // Add Image Button on click
+  addImageBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    outputMainImage = false;
+    toggleElt(imagesContainer, 'images--hidden');
+    buildImages(gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
+  });
+
+  // Back Button
+  backBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    toggleElt(imagesContainer, 'images--hidden');
+  });
+
+  // Upload Button
+  uploadBtn.addEventListener('change', function (e) {
+    retrieveImage(e, function (file) {
+      postImage(file, function () {
+        buildImages(gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
+      });
+    });
+  }, false);
+
   // Select Image
   selectBtn.addEventListener('click', function (e) {
     e.preventDefault();
     var path = document.querySelector('.images__image--selected').getAttribute('path');
     imageInput.value = path;
-    outputImage.setAttribute('src', '/images/' + path);
+    if (outputMainImage) {
+      outputImage.setAttribute('src', '/images/' + path);
+    } else {
+      editBody.innerHTML += '![Custom Image](' + path + ')';
+    }
+
     disableElt(selectBtn);
     toggleElt(imagesContainer, 'images--hidden');
   });
