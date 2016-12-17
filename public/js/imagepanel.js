@@ -19,13 +19,22 @@
     }
   }
 
+  // Toggle Disabled
+  function disableElt (elt) {
+    elt.disabled = true;
+  }
+  // Toggle Disabled
+  function enableElt (elt) {
+    elt.disabled = false;
+  }
+
   // clearContent
   function clearContent (elt) {
     elt.innerHTML = '';
   }
 
   // Inject Images
-  function injectImages (images, elt, className, selectedClassName) {
+  function injectImages (images, elt, className, selectedClassName, eventFunc) {
     images.forEach(function (image) {
       var imageElt = document.createElement('span');
       imageElt.style.backgroundImage = 'url(/images/' + image + ')';
@@ -36,6 +45,7 @@
           elt.classList.remove(selectedClassName);
         });
         imageElt.classList.add(selectedClassName);
+        eventFunc();
       });
       elt.appendChild(imageElt);
     });
@@ -57,7 +67,7 @@
     toggleElt(imagesContainer, 'images--hidden');
     clearContent(gallery);
     fetchImages(function (images) {
-      injectImages(images, gallery, 'images__image', 'images__image--selected');
+      injectImages(images, gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
     });
   });
 
@@ -73,7 +83,7 @@
       postImage(file, function () {
         clearContent(gallery);
         fetchImages(function (images) {
-          injectImages(images, gallery, 'images__image', 'images__image--selected');
+          injectImages(images, gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
         });
       });
     });
@@ -106,6 +116,7 @@
     var path = document.querySelector('.images__image--selected').getAttribute('path');
     imageInput.value = path;
     outputImage.setAttribute('src', '/images/' + path);
+    disableElt(selectBtn);
     toggleElt(imagesContainer, 'images--hidden');
   });
 })();
