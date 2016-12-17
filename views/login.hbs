@@ -1,5 +1,5 @@
 <section class="container">
-<h3 class='login-message {{error}}'>{{message}}</h3>
+<h3 class='title {{errorclass}}'>{{message}}</h3>
 <form class="login" action="/login" method="post">
   <label class="login__label" for="username">Username: </label>
     <input id="username=" class="login__input" name="username" type="text" placeholder="username" pattern="^[A-Za-z0-9]{1,25}$" value="{{username}}"/>

@@ -36,7 +36,7 @@ const loginHandler = function (request, reply) {
           if (!isMatch) {
             reply.view('login', {
               message: 'Wrong password',
-              error: 'login-error',
+              errorclass: 'title--red',
               username: username
             });
           } else {

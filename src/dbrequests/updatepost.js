@@ -15,13 +15,14 @@ const secondQuery = `Update postbodies SET postbody = $1
 
 const query = (payload, cb) => {
   let imageurl = payload.imageurl;
-  let title = payload.title;
+  let posttitle = payload.posttitle;
   let categoryname = payload.categoryname;
   let postbody = payload.postbody;
   let postid = payload.postid;
 
   dbConn.query('BEGIN TRANSACTION;', () => {
-    dbConn.query(firstQuery, [title, imageurl, categoryname, postid], () => {
+    dbConn.query(firstQuery, [posttitle, imageurl, categoryname, postid], (err, data) => {
+      if (err) throw err;
       dbConn.query(secondQuery, [postbody, postid], (err, data) => {
         (err) ? cb(err) : cb(null);
         dbConn.query('COMMIT');

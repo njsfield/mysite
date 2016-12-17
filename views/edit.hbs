@@ -1,57 +1,57 @@
 <section class="container">
-  <h2 class="title">Editing: {{post.posttitle}}</h2>
+  <h4 class="title">Editing: {{post.posttitle}}</h4>
 
   <form class="edit" action="/edit/{{post.postid}}" method="post">
     <!-- Hidden Post ID -->
     <input type="text" name="postid" value="{{post.postid}}" hidden />
     <!-- Triggers /images route-->
-    <button class="edit__image-button">Select Image</button>
+    <button class="edit__feature-image-btn button button--blue">Select</button>
     <!-- Outputs Image url -->
-    <input type="text" class="edit__image-input" name="imageurl" value="{{post.imageurl}}" hidden />
+    <input type="text" class="edit__feature-image-input" name="imageurl" value="{{post.imageurl}}" hidden />
     <!-- Output Image -->
-    <img class="edit__image" src="/images/{{post.imageurl}}"/>
+    <img class="edit__feature-image-output" src="/images/{{post.imageurl}}"/>
 
     <!--Title-->
-    <label for="edit__title-input" class="edit__title-label">Title</label>
-      <input type="text" class="edit__title-input" name="title" id="edit__title-input" value="{{post.posttitle}}" required/>
+    <label for="edit__title-input" class="edit__label">Title</label>
+      <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" value="{{post.posttitle}}" required/>
 
     <!-- Category Select -->
-    <label for="categoryname" class="edit__category-label">Category</label>
-    <select class="edit__category" name="categoryname">
+    <label for="categoryname" class="edit__label">Category</label>
+    <select class="select" name="categoryname">
       {{#each categories}}
-        <option class="edit__category-option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
+        <option class="select__option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
       {{/each}}
     </select>
 
     <!-- Body -->
-    <label for="postbody" class="edit__post-body-label">Post</label>
+    <label for="postbody" class="edit__label">Post</label>
     <div class="edit__post-container">
       <!-- Triggers /images route-->
-      <button class="edit__add-image-button">Add Image</button>
+      <button class="edit__add-image-btn button button--blue">Add Image</button>
       <!-- Markdown syntax -->
       <textarea name="postbody" class="edit__post-body">{{post.postbody}}</textarea>
       <!-- Outputs HTML -->
       <div class="edit__post-body-output" style="display: none;"></div>
       <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
-      <button class="edit__preview-button">Preview</button>
+      <button class="edit__preview-btn button button--black">Preview</button>
     </div>
 
     <!-- Submit-->
-    <input class="edit__submit" type="submit" />
+    <input class="edit__submit button button--white" type="submit" />
+
   </form>
 </section>
 
 <!-- images -->
 <div class="images images--hidden">
-  <div class="images__container">
+  <div class="images__gallery">
   </div>
   <div class="images__button-container">
-    <button class="button button__back button--grey">Back</button>
-    <label for="file" class="button button__upload button--blue">Upload</label>
-      <input style="display: none;" name="file" id="file" class="upload" type="file" accept="image/*"/>
-    <button class="button button__select button--green" disabled>Select</button>
+    <button class="images__back-btn images__btn button button--grey">Back</button>
+    <label for="file" class="images__btn button button--blue">Upload</label>
+      <input style="display: none;" name="file" id="file" class="images__upload-btn" type="file" accept="image/*"/>
+    <button class="images__select-btn images__btn button button--green" disabled>Select</button>
   </div>
 </div>
 
-<script src="/js/imagepanel.js"></script>
-<script src="/js/markedpreview.js"></script>
+<script src="/js/customise-post.js"></script>
