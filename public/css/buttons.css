@@ -58,3 +58,7 @@
 .button--spaced {
   margin: 3rem auto;
 }
+
+.button--free-width {
+    width: auto;
+}

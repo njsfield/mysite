@@ -1,5 +1,7 @@
 {{#if post.live}}
-  <img src="/images/{{post.imageurl}}" alt="{{post.imagetitle}}" class="post__image"/>
+  {{#if post.imageurl}}
+    <img src="/images/{{post.imageurl}}" alt="{{post.imagetitle}}" class="post__image"/>
+  {{/if}}
   {{#unless this.isHome}}
     <p class="post__date">{{post.creationdate}}</p>
     <p class="post__category">{{post.categoryname}}</p>

@@ -1,10 +1,11 @@
 (function () {
   // Edit Form elts
   var imageBtn = document.querySelector('.edit__feature-image-btn');
+  var clearImageBtn = document.querySelector('.edit__clear-image-btn');
   var addImageBtn = document.querySelector('.edit__add-image-btn');
   var previewBtn = document.querySelector('.edit__preview-btn');
   var imageInput = document.querySelector('.edit__feature-image-input');
-  var outputImage = document.querySelector('.edit__feature-image-output');
+  var imageOutput = document.querySelector('.edit__feature-image-output');
   var postBody = document.querySelector('.edit__post-body');
   var outputBody = document.querySelector('.edit__post-body-output');
 
@@ -201,7 +202,7 @@
     var path = document.querySelector('.images__image--selected').getAttribute('path');
     if (outputMainImage) {
       imageInput.setAttribute('value', path);
-      outputImage.setAttribute('src', '/images/' + path);
+      imageOutput.setAttribute('src', '/images/' + path);
     } else {
       postBody.value = postBody.value + ' ![' + selectedTitle.value + '](/images/' + path + ')';
     }
@@ -232,5 +233,11 @@
     }), function (title) {
       addTitleToElt(title, selectedTitle);
     });
+  });
+
+  clearImageBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    imageInput.setAttribute('value', '');
+    imageOutput.setAttribute('src', '');
   });
 })();

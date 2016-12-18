@@ -43,8 +43,29 @@
 }
 .edit__feature-image-btn {
     position: absolute;
-    top: 0rem;
-    left: 0rem;
+    top: 0;
+    left: 0;
+}
+
+/* Clear */
+.edit__clear-image-btn {
+    position: absolute;
+    top: -.3rem;
+    right: -.3rem;
+    width: 2.5rem;
+    background: red;
+    border-radius: 50%;
+    border: 0;
+    color: white;
+    font-size: 2rem;
+    font-weight: 100;
+    opacity: 0;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.edit__clear-image-btn:hover {
+    opacity: 1;
 }
 
 .edit__label {

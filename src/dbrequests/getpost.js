@@ -14,7 +14,7 @@ const query = `SELECT p.postid,
       FROM posts AS p
 INNER JOIN postbodies AS pb
       ON pb.postid = $1
-INNER JOIN images AS i
+LEFT JOIN images AS i
       ON i.imageid = p.imageid
 INNER JOIN categories AS c
       on c.categoryid = p.categoryid
