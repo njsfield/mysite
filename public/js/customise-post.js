@@ -201,10 +201,10 @@
   // Selected Title
   selectedTitle.addEventListener('focusout', function (e) {
     serverRequest('/image', JSON.stringify({
-      imagetite: selectedTitle.value,
+      imagetitle: selectedTitle.value,
       imageurl: document.querySelector('.images__image--selected').getAttribute('path')
     }), function (data) {
-      console.log(data);
+      return;
     });
   });
 })();
