@@ -171,12 +171,18 @@
 }
 
 .images__selected-title {
-  display: block;
-  width: 50%;
+  display: none;
+  min-width: 30%;
   margin: 0 auto;
   border: none;
   background: none;
   border-bottom: 2px solid white;
   padding: .5rem;
   color: white;
+  transition: all .4s ease;
+}
+
+.images__selected-title--purple:focus {
+  color: purple;
+  border-color: purple;
 }

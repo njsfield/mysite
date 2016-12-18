@@ -45,6 +45,11 @@
     elt.innerHTML = '';
   }
 
+  // Display elt
+  function displayElt (elt) {
+    elt.style.display = 'block';
+  }
+
   // Inject Images
   function injectImages (images, elt, className, selectedClassName, eventFunc) {
     // Add array method
@@ -116,6 +121,7 @@
       enableElt(selectBtn);
       serverRequest('/image?imageurl=' + imageurl, function (data) {
         addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
+        displayElt(selectedTitle);
       });
     };
     if (!fromGallery) {
@@ -191,5 +197,15 @@
   // Output body
   outputBody.addEventListener('click', function (e) {
     toggleElts(outputBody, postBody, outputBody.style.display === 'none');
+  });
+
+  // Selected Title
+  selectedTitle.addEventListener('focusout', function (e) {
+    serverRequest('/image', {
+      imagetite: selectedTitle.value,
+      imageurl: document.querySelector('.images__image--selected').getAttribute('path')
+    }, function (data) {
+      console.log(data);
+    });
   });
 })();

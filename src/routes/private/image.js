@@ -1,5 +1,5 @@
 const getImage = require('../../dbrequests/getimages').getImage;
-const updateImage = require('../../dbrequests/updateimage');
+const updateImageTitle = require('../../dbrequests/updateimage');
 
 module.exports = {
   path: '/image',
@@ -15,7 +15,7 @@ module.exports = {
           (err ? reply(err) : reply(image));
         });
       } else {
-        updateImage(req.payload.imageurl, req.payload.imageid, (err) => {
+        updateImageTitle(req.payload.imageurl, req.payload.imagetitle, (err) => {
           (err ? reply(err) : reply('updated image'));
         });
       }
