@@ -175,6 +175,10 @@
   top: 1px;
 }
 
+.images__select-btn {
+  padding-top: .6rem;
+}
+
 .images__selected-title {
   display: none;
   position: absolute;
