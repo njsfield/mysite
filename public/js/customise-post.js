@@ -65,18 +65,25 @@
     });
   }
 
-  // Make request to fetch images
-  function fetchImages (cb) {
+  // Request
+  function serverRequest (path, payload, cb) {
+    var method = 'post';
+    // If payload
+    if (arguments.length === 2) {
+      cb = payload;
+      payload = undefined;
+      method = 'get';
+    }
     var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', function (res) {
-      cb(JSON.parse(res.target.responseText).images);
+    xhr.addEventListener('load', function (data) {
+      cb(xhr.responseText);
     });
-    xhr.open('get', '/images');
-    xhr.send();
+    xhr.open(method, path);
+    xhr.send(payload);
   }
 
-  // Retrieve Image
-  function retrieveImage (evt, cb) {
+  // Retrieve File
+  function retrieveFile (evt, cb) {
     var files = evt.target.files;
     var f = files[0];
     var reader = new FileReader();
@@ -84,16 +91,6 @@
       cb({name: f.name, raw: raw.target.result});
     };
     reader.readAsDataURL(f);
-  }
-
-  // Post image (file = {name: filename, raw: rawfile})
-  function postImage (file, cb) {
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', function (data) {
-      cb();
-    });
-    xhr.open('post', '/images?name=' + file.name);
-    xhr.send(file.raw);
   }
 
   // Elt toggle
@@ -107,23 +104,10 @@
     }
   }
 
-  // Make Request
-  function requestMarked (value, cb) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.addEventListener('load', function () {
-      cb(xhr.responseText);
-    });
-
-    xhr.open('post', '/marked');
-    xhr.send(value);
-  }
-
   // Build Images
   function buildImages (elt, imageClass, imageSelectedClass, func) {
-    clearContent(elt);
-    fetchImages(function (images) {
-      injectImages(images, elt, imageClass, imageSelectedClass, func);
+    serverRequest('/images', function (raw) {
+      injectImages(JSON.parse(raw).images, elt, imageClass, imageSelectedClass, func);
     });
   }
 
@@ -134,7 +118,10 @@
     e.preventDefault();
     outputMainImage = true;
     toggleElt(imagesContainer, 'images--hidden');
-    buildImages(gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
+    clearContent(gallery);
+    buildImages(gallery, 'images__image', 'images__image--selected', function () {
+      enableElt(selectBtn);
+    });
   });
 
   // Add Image Button on click
@@ -142,7 +129,10 @@
     e.preventDefault();
     outputMainImage = false;
     toggleElt(imagesContainer, 'images--hidden');
-    buildImages(gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
+    clearContent(gallery);
+    buildImages(gallery, 'images__image', 'images__image--selected', function () {
+      enableElt(selectBtn);
+    });
   });
 
   // Back Button
@@ -153,9 +143,12 @@
 
   // Upload Button
   uploadBtn.addEventListener('change', function (e) {
-    retrieveImage(e, function (file) {
-      postImage(file, function () {
-        buildImages(gallery, 'images__image', 'images__image--selected', enableElt.bind(null, selectBtn));
+    retrieveFile(e, function (file) {
+      serverRequest('/images?name=' + file.name, file.raw, function () {
+        clearContent(gallery);
+        buildImages(gallery, 'images__image', 'images__image--selected', function () {
+          enableElt(selectBtn);
+        });
       });
     });
   }, false);
@@ -178,7 +171,7 @@
   // Preview Button
   previewBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    requestMarked(postBody.value, function (htmlString) {
+    serverRequest('/marked', postBody.value, function (htmlString) {
       outputBody.innerHTML = JSON.parse(htmlString).marked;
       toggleElts(outputBody, postBody, outputBody.style.display === 'none');
     });
