@@ -15,7 +15,7 @@ const writeImage = (filename, data, cb) => {
 };
 
 const deleteImage = (filename, cb) => {
-  fs.writeFile(path.join(__dirname, '../../public/images', filename), (err) => {
+  fs.unlink(path.join(__dirname, '../../public/images', filename), (err) => {
     err ? cb(err) : cb(null);
   });
 };
