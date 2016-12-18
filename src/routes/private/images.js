@@ -1,12 +1,5 @@
-const fs = require('fs');
-const path = require('path');
-const decodeBase64Image = require('../../helpers/decode64baseimage.js');
+const {readImages, writeImage, decodeBase64Image, sanitizeImagePath} = require('../../helpers/image-helpers');
 const addImageToDb = require('../../dbrequests/addimage');
-
-const sanitizePath = (path) => {
-  path = path.replace(/\s/g, '-');
-  return path.toLowerCase();
-};
 
 module.exports = {
   path: '/images',
@@ -18,16 +11,15 @@ module.exports = {
     },
     handler: (req, reply) => {
       if (req.method === 'get') {
-        fs.readdir(path.join(__dirname, '../../../public/images'), (err, images) => {
-          if (err) throw err;
-          reply({images: images});
+        readImages((err, images) => {
+          err ? reply(err) : reply({images: images});
         });
       } else {
-        let imageBuffer = decodeBase64Image(req.payload);
-        let imageName = sanitizePath(req.query.name);
-        fs.writeFile(path.join(__dirname, '../../../public/images', imageName), imageBuffer.data, (err) => {
+        let imageData = decodeBase64Image(req.payload);
+        let fileName = sanitizeImagePath(req.query.name);
+        writeImage(fileName, imageData.data, (err) => {
           if (err) throw err;
-          addImageToDb(imageName, (err) => {
+          addImageToDb(fileName, (err) => {
             if (err) throw err;
             reply('done');
           });
