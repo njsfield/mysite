@@ -9,8 +9,8 @@ module.exports = {
     if (payload.item === 'image') {
       let imageurl = payload.imageurl;
       deleteImageFromDb(imageurl, (err) => {
-        err ? reply(err) : deleteImage(imageurl, (err) => {
-          err ? reply(err) : reply(`${imageurl} deleted`);
+        err ? reply(`db delete: 0, images/ delete: 0`) : deleteImage(imageurl, (err) => {
+          err ? reply(`db delete: 1, images/ delete: 0`) : reply(`${imageurl} deleted`);
         });
       });
     }
