@@ -3,6 +3,11 @@ const path = require('path');
 const decodeBase64Image = require('../../helpers/decode64baseimage.js');
 const addImageToDb = require('../../dbrequests/addimage');
 
+const sanitizePath = (path) => {
+  path = path.replace(/\s/g, '-');
+  return path.toLowerCase();
+};
+
 module.exports = {
   path: '/images',
   method: ['get', 'post'],
@@ -19,7 +24,7 @@ module.exports = {
         });
       } else {
         let imageBuffer = decodeBase64Image(req.payload);
-        let imageName = req.query.name;
+        let imageName = sanitizePath(req.query.name);
         fs.writeFile(path.join(__dirname, '../../../public/images', imageName), imageBuffer.data, (err) => {
           if (err) throw err;
           addImageToDb(imageName, (err) => {
