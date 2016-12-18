@@ -14,16 +14,6 @@ img {
 
 ul {
     list-style: none;
-    padding: 0 1rem;
-    margin: 0;
-}
-
-li:before {
-    content: ' + ';
-    margin-left: 1rem;
-    position: relative;
-    top: .2rem;
-    font-size: 1.5rem;
 }
 
 input {
@@ -31,3 +21,29 @@ input {
 }
 
 /* Marked */
+
+
+/* List */
+
+.ul,
+.ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.li {
+    padding: .5rem 3rem;
+}
+
+.ul .li:before {
+    content: ' + ';
+    position: relative;
+    top: .2rem;
+    font-size: 1.5rem;
+}
+
+.ol .li {
+    list-style-type: upper-roman;
+    list-style-position: inside;
+}
