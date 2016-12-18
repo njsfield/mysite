@@ -85,7 +85,13 @@
   // deleteImage
   function deleteImage (e) {
     var path = e.target.getAttribute('path');
-    console.log(path);
+    var payload = {
+      item: 'image',
+      imageurl: path
+    };
+    serverRequest('/delete', JSON.stringify(payload), function (data) {
+      buildGallery(true);
+    });
   }
 
   // Request
@@ -134,11 +140,14 @@
     var imageClass = 'images__image';
     var imageSelectedClass = 'images__image--selected';
 
+    // For each image on click
     var cbFunc = function (imageurl) {
       enableElt(selectBtn);
       serverRequest('/image?imageurl=' + imageurl, function (data) {
-        addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
-        displayElt(selectedTitle);
+        if (data) {
+          addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
+          displayElt(selectedTitle);
+        }
       });
     };
     if (!fromGallery) {
