@@ -41,6 +41,11 @@
     <!-- Submit-->
     <input class="edit__submit button button--white" type="submit" />
 
+    {{#unless post.homepost}}
+      <button>Delete</button>
+      <button>Live</button>
+    {{/unless}}
+
   </form>
 </section>
 

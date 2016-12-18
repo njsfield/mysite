@@ -16,6 +16,7 @@ module.exports = {
           if (err) throw err;
           getCategories((err, categories) => {
             if (err) throw err;
+            if (post.postid === 1) post.homepost = true;
             reply.view('edit', {post: post, categories: categories});
           });
         });
