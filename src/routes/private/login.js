@@ -17,42 +17,52 @@ const comparePasswords = (reqpass, dbpass, cb) => {
   });
 };
 
-const loginHandler = function (request, reply) {
-  if (request.method === 'get') {
-    return reply.view('login', { message: 'Please Kindly Log In' });
-  }
-  if (request.method === 'post') {
-    const username = request.payload.username;
-    const password = request.payload.password;
-    checkUser(username, (err, data) => {
-      if (err) throw err;
-      else if (!data) {
-        reply.view('login', {
-          message: 'User does not exist',
-          error: 'login-error' });
-      } else {
-        comparePasswords(password, data.ownerpassword, (err, isMatch) => {
-          if (err) { throw (err); }
-          if (!isMatch) {
-            reply.view('login', {
-              message: 'Wrong password',
-              errorclass: 'title--red',
-              username: username
-            });
-          } else {
-            request.cookieAuth.set({current_user: username});
-            reply.redirect('/');
-          }
-        });
-      }
-    });
-  }
+const userNotFound = {
+  message: 'Non existent user',
+  error: 'login-error'
+};
+
+const wrongPassword = (username) => {
+  return {
+    message: 'Wrong password',
+    errorclass: 'title--red',
+    username: username
+  };
+};
+
+const loginHandler = (username, password, req, reply) => {
+  checkUser(username, (err, data) => {
+    if (err) {
+      throw err;
+    } else if (!data) {
+      reply.view('login', userNotFound);
+    } else {
+      comparePasswords(password, data.ownerpassword, (err, isMatch) => {
+        if (err) {
+          throw err;
+        } else if (!isMatch) {
+          reply.view('login', wrongPassword);
+        } else {
+          req.cookieAuth.set({current_user: username});
+          reply.redirect('/');
+        }
+      });
+    }
+  });
 };
 
 module.exports = {
   method: ['GET', 'POST'],
   path: '/login',
   config: {
-    handler: loginHandler
+    handler: (req, reply) => {
+      if (req.method === 'get') {
+        reply.view('login', { message: 'Please Kindly Log In' });
+      } else {
+        let username = req.payload.username;
+        let password = req.payload.password;
+        loginHandler(username, password, req, reply);
+      }
+    }
   }
 };
