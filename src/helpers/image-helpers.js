@@ -14,7 +14,7 @@ const writeImage = (filename, data, cb) => {
   });
 };
 
-const deleteImage = (filename, cb) => {
+const unlinkImage = (filename, cb) => {
   fs.unlink(path.join(__dirname, '../../public/images', filename), (err) => {
     err ? cb(err) : cb(null);
   });
@@ -60,5 +60,5 @@ module.exports = {
   writeImage,
   sanitizeImagePath,
   decodeBase64Image,
-  deleteImage
+  unlinkImage
 };
