@@ -170,6 +170,11 @@
   line-height: 1rem;
 }
 
+.images__upload-btn {
+  position: relative;
+  top: 1px;
+}
+
 .images__selected-title {
   display: none;
   position: absolute;
