@@ -1,2 +1,63 @@
-{{> header}}
-<p>(Compose)</p>
+<section class="container">
+  <h4 class="title">New Post</h4>
+
+  <form class="edit" action="/compose" method="post">
+    <!-- Triggers /images route-->
+    <button class="edit__feature-image-btn button button--blue button--free-width">Select Image</button>
+    <!-- Triggers /images route-->
+    <button class="edit__clear-image-btn">-</button>
+    <!-- Outputs Image url -->
+    <input type="text" class="edit__feature-image-input" name="imageurl" hidden />
+    <!-- Output Image -->
+    <img class="edit__feature-image-output" src=""/>
+
+    <!--Title-->
+    <label for="edit__title-input" class="edit__label">Set Title</label>
+      <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" required/>
+
+    <!-- Category Select -->
+    <label for="categoryname" class="edit__label">Choose Category</label>
+    <select class="select" name="categoryname">
+      {{#each categories}}
+        <option class="select__option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
+      {{/each}}
+    </select>
+
+    <!-- Live -->
+    <label for="live" class="edit__label edit__label--toggle">Live
+      <input id="live" class="edit__live-checkbox" type="checkbox" name="live" checked>
+    </label>
+
+    <!-- Body -->
+    <label for="postbody" class="edit__label">Add Some Words</label>
+    <div class="edit__post-container">
+      <!-- Triggers /images route-->
+      <button class="edit__add-image-btn button button--blue">Add Image</button>
+      <!-- Markdown syntax -->
+      <textarea name="postbody" class="edit__post-body"></textarea>
+      <!-- Outputs HTML -->
+      <div class="edit__post-body-output" style="display: none;"></div>
+      <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
+      <button class="edit__preview-btn button button--black">Preview</button>
+    </div>
+
+    <!-- Submit-->
+    <input class="edit__submit button button--white" type="submit" />
+
+  </form>
+</section>
+
+<!-- images -->
+<div class="images images--hidden">
+  <div class="images__gallery">
+  </div>
+  <input type='text' class='images__selected-title images__selected-title--purple'/>
+  <div class="images__button-container">
+    <button class="images__back-btn images__btn button button--grey">Back</button>
+    <label for="file" class="images__btn images__upload-label button button--blue">Upload</label>
+      <input style="display: none;" name="file" id="file" class="images__upload-btn" type="file" accept="image/*"/>
+    <button class="images__select-btn images__btn button button--green" disabled>Select</button>
+  </div>
+</div>
+
+<script src="/js/customise-post.js"></script>

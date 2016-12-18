@@ -68,11 +68,15 @@
     opacity: 1;
 }
 
+
 .edit__label {
     display: block;
     margin: 1.5rem auto;
     font-size: 1.2rem;
     color: grey;
+}
+.edit__label--toggle {
+    margin: 3rem auto;
 }
 .edit__text-input {
     display: block;
