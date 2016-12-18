@@ -1,2 +1,6 @@
-{{> header}}
-<p>(Blog)</p>
+<section class="container">
+{{> posts}}
+{{#if credentials.current_user}}
+  <a class="button button--black" href="/compose">Compose</a>
+{{/if}}
+</section>

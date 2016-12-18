@@ -1,4 +1,4 @@
-const getPost = require('../../dbrequests/getpost');
+const getPost = require('../../dbrequests/posts').getPost;
 const getCategories = require('../../dbrequests/getcategories');
 const updatePost = require('../../dbrequests/updatepost');
 

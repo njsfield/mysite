@@ -1,4 +1,4 @@
-const getPost = require('../../dbrequests/getpost');
+const getPost = require('../../dbrequests/posts').getPost;
 const credentialsCheck = require('../../helpers/credentialscheck');
 const markDownTransform = require('../../helpers/markdowntransform');
 
