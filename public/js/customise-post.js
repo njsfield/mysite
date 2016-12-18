@@ -67,8 +67,19 @@
         imageElt.classList.add(selectedClassName);
         eventFunc(image);
       });
+      var imageDelete = document.createElement('span');
+      imageDelete.className = 'images__delete';
+      imageDelete.setAttribute('path', image);
+      imageDelete.addEventListener('click', deleteImage);
+      imageElt.appendChild(imageDelete);
       elt.appendChild(imageElt);
     });
+  }
+
+  // deleteImage
+  function deleteImage (e) {
+    var path = e.target.getAttribute('path');
+    console.log(path);
   }
 
   // Request
