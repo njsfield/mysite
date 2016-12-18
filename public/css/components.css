@@ -172,6 +172,9 @@
 
 .images__selected-title {
   display: none;
+  position: absolute;
+  bottom: 4rem;
+  left: 35%;
   min-width: 30%;
   margin: 0 auto;
   border: none;
