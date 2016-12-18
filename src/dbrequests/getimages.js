@@ -1,7 +1,7 @@
 const dbConn = require('../dbconnection.js');
 
-const getImage = (imageid, cb) => {
-  dbConn.query(`SELECT * FROM images WHERE imageid = $1`, [imageid], (err, data) => {
+const getImage = (imageurl, cb) => {
+  dbConn.query(`SELECT * FROM images WHERE imageurl = $1`, [imageurl], (err, data) => {
     (err ? cb(err) : cb(null, data.rows[0]));
   });
 };

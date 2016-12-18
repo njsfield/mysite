@@ -11,6 +11,7 @@ const del = require('./private/delete');
 const edit = require('./private/edit');
 const hide = require('./private/hide');
 const images = require('./private/images');
+const image = require('./private/image');
 const login = require('./private/login');
 const logout = require('./private/logout');
 const show = require('./private/show');
@@ -26,6 +27,7 @@ module.exports = [
   del,
   edit,
   hide,
+  image,
   show,
   images,
   marked
