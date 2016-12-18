@@ -16,7 +16,8 @@ const options = {
   cookie: 'somecookie',
   ttl: 24 * 60 * 60 * 1000,
   isSecure: process.env.NODE_ENV === 'PRODUCTION',
-  isHttpOnly: false
+  isHttpOnly: false,
+  redirectTo: '/'
 };  // make this :)
 
 // Uncomment for production

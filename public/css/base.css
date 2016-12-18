@@ -4,20 +4,30 @@
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+}
+
 img {
   width: 100%;
 }
 
 ul {
     list-style: none;
-    padding: 0;
+    padding: 0 1rem;
     margin: 0;
 }
 
 li:before {
     content: ' + ';
     margin-left: 1rem;
-    font-size: .7rem;
+    position: relative;
+    top: .2rem;
+    font-size: 1.5rem;
+}
+
+input {
+    outline: 0;
 }
 
 /* Marked */

@@ -13,37 +13,17 @@
 /** Form **/
 .login {
     font-size: 1rem;
-    max-width: 23em;
+    max-width: 20em;
     padding: 1em;
     margin: 0 auto;
-    background: black;
-    color: white;
-    height: 14em;
-    border-radius: 1em;
-}
-
-.login__label {
-    display: inline-block;
-    width: 38%;
-    padding: 1em;
 }
 
 .login__input {
     display: inline-block;
-    width: 60%;
+    width: 100%;
     padding: 1em;
-}
-
-.login__submit {
-    display: block;
-    font-size: 1em;
-    width: 7em;
-    height: 2.5em;
-    margin: 2em auto;
-    background: black;
-    color: white;
-    border: 1px solid white;
-    border-radius: .3em;
+    border: none;
+    border-bottom: 1px solid grey;
 }
 
 /***** Edit Form *****/

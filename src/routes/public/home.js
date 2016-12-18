@@ -10,6 +10,11 @@ module.exports = {
       strategy: 'session',
       mode: 'try'
     },
+    plugins: {
+      'hapi-auth-cookie': {
+        redirectTo: false
+      }
+    },
     handler: (req, reply) => {
       getPost(1, (err, post) => {
         post.postbody = markDownTransform(post.postbody);

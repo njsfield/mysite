@@ -1,10 +1,8 @@
 <section class="container">
 <h3 class='title {{errorclass}}'>{{message}}</h3>
 <form class="login" action="/login" method="post">
-  <label class="login__label" for="username">Username: </label>
     <input id="username=" class="login__input" name="username" type="text" placeholder="username" pattern="^[A-Za-z0-9]{1,25}$" value="{{username}}"/>
-  <label class="login__label" for="password">Password: </label>
     <input id="username=" class="login__input" name="password" type="password" placeholder="password" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"/>
-  <input class="login__submit" type="submit"/>
+  <input class="button button--white button--spaced" type="submit"/>
 </form>
 </section>
