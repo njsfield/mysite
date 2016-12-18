@@ -177,7 +177,7 @@
       imageInput.setAttribute('value', path);
       outputImage.setAttribute('src', '/images/' + path);
     } else {
-      postBody.value = postBody.value + ' ![Custom Image](/images/' + path + ')';
+      postBody.value = postBody.value + ' ![' + selectedTitle.value + '](/images/' + path + ')';
     }
 
     disableElt(selectBtn);
@@ -187,7 +187,6 @@
   // Preview Button
   previewBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log(postBody.value);
     serverRequest('/marked', postBody.value, function (htmlString) {
       outputBody.innerHTML = JSON.parse(htmlString).marked;
       toggleElts(outputBody, postBody, outputBody.style.display === 'none');
@@ -201,10 +200,10 @@
 
   // Selected Title
   selectedTitle.addEventListener('focusout', function (e) {
-    serverRequest('/image', {
+    serverRequest('/image', JSON.stringify({
       imagetite: selectedTitle.value,
       imageurl: document.querySelector('.images__image--selected').getAttribute('path')
-    }, function (data) {
+    }), function (data) {
       console.log(data);
     });
   });

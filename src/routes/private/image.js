@@ -15,7 +15,8 @@ module.exports = {
           (err ? reply(err) : reply(image));
         });
       } else {
-        updateImageTitle(req.payload.imageurl, req.payload.imagetitle, (err) => {
+        let payload = JSON.parse(req.payload);
+        updateImageTitle(payload.imageurl, payload.imagetitle, (err) => {
           (err ? reply(err) : reply('updated image'));
         });
       }
