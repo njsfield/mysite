@@ -11,6 +11,7 @@
   // Image Container elts
   var imagesContainer = document.querySelector('.images');
   var gallery = document.querySelector('.images__gallery');
+  var selectedTitle = document.querySelector('.images__selected-title');
   var backBtn = document.querySelector('.images__back-btn');
   var selectBtn = document.querySelector('.images__select-btn');
   var uploadBtn = document.querySelector('.images__upload-btn');
@@ -59,7 +60,7 @@
           elt.classList.remove(selectedClassName);
         });
         imageElt.classList.add(selectedClassName);
-        eventFunc();
+        eventFunc(image);
       });
       elt.appendChild(imageElt);
     });
@@ -111,6 +112,11 @@
     });
   }
 
+  // Add title
+  function addTitleToElt (title, elt) {
+    elt.value = title;
+  }
+
   /** Events **/
 
   // Image Button on click
@@ -119,8 +125,11 @@
     outputMainImage = true;
     toggleElt(imagesContainer, 'images--hidden');
     clearContent(gallery);
-    buildImages(gallery, 'images__image', 'images__image--selected', function () {
+    buildImages(gallery, 'images__image', 'images__image--selected', function (imageurl) {
       enableElt(selectBtn);
+      serverRequest('/image?imageurl=' + imageurl, function (data) {
+        addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
+      });
     });
   });
 
@@ -130,8 +139,11 @@
     outputMainImage = false;
     toggleElt(imagesContainer, 'images--hidden');
     clearContent(gallery);
-    buildImages(gallery, 'images__image', 'images__image--selected', function () {
+    buildImages(gallery, 'images__image', 'images__image--selected', function (imageurl) {
       enableElt(selectBtn);
+      serverRequest('/image?imageurl=' + imageurl, function (data) {
+        addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
+      });
     });
   });
 
