@@ -67,11 +67,13 @@
         imageElt.classList.add(selectedClassName);
         eventFunc(image);
       });
-      var imageDelete = document.createElement('span');
-      imageDelete.className = 'images__delete';
-      imageDelete.setAttribute('path', image);
-      imageDelete.addEventListener('click', deleteImage);
-      imageElt.appendChild(imageDelete);
+      if (['site-logo.png', 'social-sprite.png'].indexOf(image) < 0) {
+        var imageDelete = document.createElement('span');
+        imageDelete.className = 'images__delete';
+        imageDelete.setAttribute('path', image);
+        imageDelete.addEventListener('click', deleteImage);
+        imageElt.appendChild(imageDelete);
+      }
       elt.appendChild(imageElt);
     });
   }
