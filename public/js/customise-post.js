@@ -106,9 +106,24 @@
   }
 
   // Build Images
-  function buildImages (elt, imageClass, imageSelectedClass, func) {
+  function buildGallery (fromGallery) {
+    var parentElt = imagesContainer;
+    var elt = gallery;
+    var imageClass = 'images__image';
+    var imageSelectedClass = 'images__image--selected';
+
+    var cbFunc = function (imageurl) {
+      enableElt(selectBtn);
+      serverRequest('/image?imageurl=' + imageurl, function (data) {
+        addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
+      });
+    };
+    if (!fromGallery) {
+      toggleElt(parentElt, 'images--hidden');
+    }
+    clearContent(elt);
     serverRequest('/images', function (raw) {
-      injectImages(JSON.parse(raw).images, elt, imageClass, imageSelectedClass, func);
+      injectImages(JSON.parse(raw).images, elt, imageClass, imageSelectedClass, cbFunc);
     });
   }
 
@@ -123,28 +138,14 @@
   imageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     outputMainImage = true;
-    toggleElt(imagesContainer, 'images--hidden');
-    clearContent(gallery);
-    buildImages(gallery, 'images__image', 'images__image--selected', function (imageurl) {
-      enableElt(selectBtn);
-      serverRequest('/image?imageurl=' + imageurl, function (data) {
-        addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
-      });
-    });
+    buildGallery();
   });
 
   // Add Image Button on click
   addImageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     outputMainImage = false;
-    toggleElt(imagesContainer, 'images--hidden');
-    clearContent(gallery);
-    buildImages(gallery, 'images__image', 'images__image--selected', function (imageurl) {
-      enableElt(selectBtn);
-      serverRequest('/image?imageurl=' + imageurl, function (data) {
-        addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
-      });
-    });
+    buildGallery();
   });
 
   // Back Button
@@ -157,10 +158,7 @@
   uploadBtn.addEventListener('change', function (e) {
     retrieveFile(e, function (file) {
       serverRequest('/images?name=' + file.name, file.raw, function () {
-        clearContent(gallery);
-        buildImages(gallery, 'images__image', 'images__image--selected', function () {
-          enableElt(selectBtn);
-        });
+        buildGallery(true);
       });
     });
   }, false);
@@ -183,6 +181,7 @@
   // Preview Button
   previewBtn.addEventListener('click', function (e) {
     e.preventDefault();
+    console.log(postBody.value);
     serverRequest('/marked', postBody.value, function (htmlString) {
       outputBody.innerHTML = JSON.parse(htmlString).marked;
       toggleElts(outputBody, postBody, outputBody.style.display === 'none');
