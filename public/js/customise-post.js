@@ -20,6 +20,10 @@
 
   var outputMainImage = false;
 
+  // defaultImages
+
+  var defaultImages = ['site-logo.png', 'social-sprite.png'];
+
   /* Helpers */
 
   // Toggle Elt className
@@ -67,7 +71,7 @@
         imageElt.classList.add(selectedClassName);
         eventFunc(image);
       });
-      if (['site-logo.png', 'social-sprite.png'].indexOf(image) < 0) {
+      if (defaultImages.indexOf(image) < 0) {
         var imageDelete = document.createElement('span');
         imageDelete.className = 'images__delete';
         imageDelete.setAttribute('path', image);
