@@ -16,8 +16,10 @@ module.exports = {
         });
       } else {
         let payload = JSON.parse(req.payload);
-        updateImageTitle(payload.imageurl, payload.imagetitle, (err) => {
-          (err ? reply(err) : reply('updated image'));
+        let imageurl = payload.imageurl;
+        let imagetitle = payload.imagetitle || 'Custom Upload';
+        updateImageTitle(imageurl, imagetitle, (err) => {
+          (err ? reply(err) : reply(imagetitle));
         });
       }
     }

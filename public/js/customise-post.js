@@ -203,8 +203,8 @@
     serverRequest('/image', JSON.stringify({
       imagetitle: selectedTitle.value,
       imageurl: document.querySelector('.images__image--selected').getAttribute('path')
-    }), function (data) {
-      return;
+    }), function (title) {
+      addTitleToElt(title, selectedTitle);
     });
   });
 })();
