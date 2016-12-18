@@ -14,6 +14,12 @@ const writeImage = (filename, data, cb) => {
   });
 };
 
+const deleteImage = (filename, cb) => {
+  fs.writeFile(path.join(__dirname, '../../public/images', filename), (err) => {
+    err ? cb(err) : cb(null);
+  });
+};
+
 const sanitizeImagePath = (uri) => {
   uri = uri.replace(/\s/g, '-');
   uri = uri.toLowerCase();
@@ -53,5 +59,6 @@ module.exports = {
   readImages,
   writeImage,
   sanitizeImagePath,
-  decodeBase64Image
+  decodeBase64Image,
+  deleteImage
 };

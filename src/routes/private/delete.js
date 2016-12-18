@@ -1,6 +1,5 @@
-const {deleteImage} = require('../../dbrequests/delete');
-const fs = require('fs');
-const path = require('path');
+const deleteImageFromDb = require('../../dbrequests/delete').deleteImage;
+const deleteImage = require('../../helpers/image-helpers').deleteImage;
 
 module.exports = {
   path: '/delete',
@@ -9,13 +8,10 @@ module.exports = {
     let payload = JSON.parse(req.payload);
     if (payload.item === 'image') {
       let imageurl = payload.imageurl;
-      deleteImage(imageurl, (err) => {
-        if (err) reply(err);
-        else {
-          fs.unlink(path.join(__dirname, '../../../public/images', imageurl), (err) => {
-            err ? reply(err) : reply(`${imageurl} deleted`);
-          });
-        }
+      deleteImageFromDb(imageurl, (err) => {
+        err ? reply(err) : deleteImage(imageurl, (err) => {
+          err ? reply(err) : reply(`${imageurl} deleted`);
+        });
       });
     }
   }
