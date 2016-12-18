@@ -18,10 +18,8 @@ module.exports = {
         let imageData = decodeBase64Image(req.payload);
         let fileName = sanitizeImagePath(req.query.name);
         writeImage(fileName, imageData.data, (err) => {
-          if (err) throw err;
-          addImageToDb(fileName, (err) => {
-            if (err) throw err;
-            reply('done');
+          err ? reply(err) : addImageToDb(fileName, (err) => {
+            err ? reply(err) : reply('done');
           });
         });
       }

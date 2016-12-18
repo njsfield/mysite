@@ -162,7 +162,7 @@
 .images__delete {
   position: absolute;
   display: inline-block;
-  top: -.75rem;
+  bottom: -.75rem;
   right:  -.75rem;
   border-radius: 50%;
   border: 1px solid white;
