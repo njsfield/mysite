@@ -1,6 +1,6 @@
 {{#each posts}}
   {{#if this.live}}
-    <a class="snippet" href="post/{{this.postid}}">
+    <a class="snippet" href="blog/{{this.postid}}">
       <h2 class="snippet__title">{{this.posttitle}}</h2>
       <h3 class="snippet__date">{{this.creationdate}}</h3>
       <h4 class="snippet__category snippet__category--{{#categorycolor this.categoryname}}{{/categorycolor}}">{{this.categoryname}}</h4>

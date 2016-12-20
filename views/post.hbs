@@ -1,2 +1,6 @@
-{{> header}}
-<p>(Post)</p>
+<section class="container">
+{{> post isHome=false }}
+{{#if credentials.current_user}}
+  <a class="button button--black" href="/edit/{{post.postid}}">Edit</a>
+{{/if}}
+</section>

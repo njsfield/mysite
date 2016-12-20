@@ -12,7 +12,8 @@ module.exports = {
     },
     handler: (req, reply) => {
       if (req.method === 'get') {
-        getPost(1, (err, post) => {
+        let postid = req.params.id || 1;
+        getPost(postid, (err, post) => {
           if (err) throw err;
           getCategories((err, categories) => {
             if (err) throw err;

@@ -1,6 +1,7 @@
 const dbConn = require('../dbconnection.js');
 
-const getPostQuery = `SELECT p.postid,
+const getPostQuery = `SELECT
+      p.postid,
       pb.postbody,
       p.posttitle,
       i.imageurl,
@@ -18,10 +19,11 @@ LEFT JOIN images AS i
       ON i.imageid = p.imageid
 INNER JOIN categories AS c
       on c.categoryid = p.categoryid
-INNER JOIN owners as O
-      on o.ownerid = p.ownerid;`;
+INNER JOIN owners as o
+      on o.ownerid = p.ownerid
+      WHERE p.postid = $1;`;
 
-const getPostsQuery = getPostQuery.replace('$1', 'p.postid');
+const getPostsQuery = getPostQuery.replace('$1', 'p.postid').replace('WHERE p.postid = $1;', ';');
 
 const getPost = (postid, cb) => {
   dbConn.query(getPostQuery, [postid], (err, data) => {
