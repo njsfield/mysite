@@ -1,16 +1,23 @@
 const dbConn = require('../dbconnection.js');
 
 const firstQuery = `INSERT INTO posts (posttitle, imageid, creationdate, modifieddate, live, categoryid, ownerid)
-                VALUES ( $1 , $2 , CURRENT_DATE, CURRENT_DATE, TRUE, $3 , $4 );`;
+                VALUES (
+                $1 ,
+                (SELECT imageid FROM images WHERE imageurl = $2),
+                CURRENT_DATE,
+                CURRENT_DATE,
+                $3,
+                (SELECT categoryid FROM categories WHERE categoryname = $4),
+                (SELECT ownerid FROM owners WHERE ownerusername = $5));`;
 
 const secondQuery = `INSERT INTO postbodies (postid, postbody)
                 VALUES ((SELECT MAX(postid) FROM posts), $1 );`;
 
-const query = (title, imageid, categoryid, ownderid, postbody, cb) => {
+const query = ({posttitle, imageurl, live, categoryname, postbody, ownerusername}, cb) => {
   dbConn.query('BEGIN TRANSACTION;', () => {
-    dbConn.query(firstQuery, [title, imageid, categoryid, ownderid], () => {
+    dbConn.query(firstQuery, [posttitle, imageurl, live, categoryname, ownerusername], () => {
       dbConn.query(secondQuery, [postbody], (err, data) => {
-        (err) ? cb(err) : cb(null, data);
+        (err) ? cb(err) : cb(null);
         dbConn.query('COMMIT');
       });
     });

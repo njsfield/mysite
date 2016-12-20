@@ -2,6 +2,7 @@
   <h4 class="title">New Post</h4>
 
   <form class="edit" action="/compose" method="post">
+    <input type="text" value="{{credentials.current_user}}" name="ownerusername" hidden/>
     <!-- Triggers /images route-->
     <button class="edit__feature-image-btn button button--blue button--free-width">Select Image</button>
     <!-- Triggers /images route-->
