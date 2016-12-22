@@ -38,7 +38,7 @@ renderer.link = (href, title, text) => {
 
 /* Heading */
 renderer.heading = (text, level) => {
-  return `<h${level} class="title">${text}</h${level}>`;
+  return `<h${level} class="heading">${text}</h${level}>`;
 };
 
 /* List */
