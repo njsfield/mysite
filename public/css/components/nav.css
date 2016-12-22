@@ -218,8 +218,10 @@
 .nav__button:hover,
 .nav__logo:hover,
 .nav__social:hover {
-    opacity: .5;
+    /*opacity: .5;*/
     transform: scale(1.2);
+    -webkit-filter: invert(.75);
+    filter: invert(.75);
     transform-origin: 50% 70%;
 }
 
