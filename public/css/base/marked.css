@@ -1,6 +1,24 @@
 /* Marked */
 
 
+
+/* Paragraph */
+
+.p {
+    margin: 2em 0;
+}
+
+/* Anchor */
+
+.a {
+    color: rgb(100,150,255);
+    transition: all .3s ease;
+}
+
+.a:hover {
+    color: rgb(100, 0, 255);
+}
+
 /* List */
 
 .ul,
@@ -11,17 +29,19 @@
 }
 
 .li {
-    padding: .5rem 3rem;
+    padding: .2em 3em;
 }
 
 .ul .li:before {
     content: ' + ';
     position: relative;
-    top: .2rem;
-    font-size: 1.5rem;
+    top: .2em;
+    font-size: 1.5em;
 }
 
 .ol .li {
     list-style-type: upper-roman;
     list-style-position: inside;
 }
+
+/* Code */

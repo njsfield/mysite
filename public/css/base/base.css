@@ -24,9 +24,16 @@ input {
 
 /* General */
 .container {
+  font-size: .9em;
   display: block;
   width: 100%;
   max-width: 650px;
-  padding: 5rem 1rem .8rem .8rem;
+  padding: 5em 1em .8em .8em;
   margin: 0 auto;
+}
+
+@media screen and (min-width: 500px) {
+  .container {
+    font-size: 1em;
+  }
 }

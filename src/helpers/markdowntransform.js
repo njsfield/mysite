@@ -9,15 +9,31 @@ marked.setOptions({
   pedantic: false,
   sanitize: true,
   smartLists: true,
-  smartypants: false
+  smartypants: false,
+  highlight: (code) => require('highlight.js').highlightAuto(code).value
 });
 
-renderer.heading = (text, level) => {
-  let escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
-
-  return `<h${level} id="${escapedText}"class="title">${text}</h${level}>`;
+/* Paragraph */
+renderer.paragraph = (text) => {
+  return `<p class="p">${text}</p>`;
 };
 
+/* Code */
+renderer.code = (code, lang) => {
+  return `<pre class="code"><code class="code__${lang}">${code}</code></pre>`;
+};
+
+/* Link */
+renderer.link = (href, title, text) => {
+  return `<a class="a" href="${href}">${text}</a>`;
+};
+
+/* Heading */
+renderer.heading = (text, level) => {
+  return `<h${level} class="title">${text}</h${level}>`;
+};
+
+/* List */
 renderer.list = (body, boolean) => {
   return `<${boolean ? 'ol' : 'ul'} class="${boolean ? 'ol' : 'ul'}">${body}</${boolean ? 'ol' : 'ul'}>`;
 };
