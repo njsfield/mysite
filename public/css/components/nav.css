@@ -35,7 +35,7 @@
     transition: all .3s ease;
 }
 
-.nav__logo-nick {
+.nav__nick {
     display: inline-block;
     background: url(/images/site-logo.png) 0 0;
     background-size: cover;
@@ -45,7 +45,7 @@
     max-width: 3.2em;
 }
 
-.nav__logo-field {
+.nav__field {
     display: inline-block;
     background: url(/images/site-logo.png) -3.4em 0;
     background-size: cover;
@@ -60,7 +60,7 @@
 
 /* Toggle */
 
-.nav__button {
+.nav__toggle {
     font-size: 2rem;
     z-index: 2;
     width: 1em;
@@ -141,7 +141,7 @@
 
 /* Social */
 
-.nav__socials {
+.nav__social-box {
     display: flex;
     list-style: none;
     font-size: 1rem;
@@ -153,7 +153,7 @@
     padding-bottom: 4rem;
 }
 
-.nav__social {
+.nav__icon {
     color: white;
     display: inline-block;
     font-size: 1.7em;
@@ -162,30 +162,25 @@
     text-decoration: none;
     overflow: hidden;
     transition: all .3s ease;
-}
-
-.nav__social--twitter{
-    background: url(/images/social-sprite.png) 0 0;
     background-size: cover;
     background-repeat: no-repeat;
+    background-image: url(/images/social-sprite.png);
 }
 
-.nav__social--mail{
-    background: url(/images/social-sprite.png) -1em 0;
-    background-size: cover;
-    background-repeat: no-repeat;
+.nav__icon--twitter{
+    background-position: 0 0;
 }
 
-.nav__social--linkedin{
-    background: url(/images/social-sprite.png) -2em 0;
-    background-size: cover;
-    background-repeat: no-repeat;
+.nav__icon--mail{
+    background-position: -1em 0;
 }
 
-.nav__social--github{
-    background: url(/images/social-sprite.png) -3em 0;
-    background-size: cover;
-    background-repeat: no-repeat;
+.nav__icon--linkedin{
+    background-position: -2em 0;
+}
+
+.nav__icon--github{
+    background-position: -3em 0;
 }
 
 
@@ -219,9 +214,9 @@
 /*** Hover ***/
 
 
-.nav__button:hover,
+.nav__toggle:hover,
 .nav__logo:hover,
-.nav__social:hover {
+.nav__icon:hover {
     transform: scale(1.2);
     opacity: 0.5;
     transform-origin: 50% 70%;
@@ -254,7 +249,7 @@
     }
 
     .nav__links-container,
-    .nav__socials {
+    .nav__social-box {
         padding-bottom: 1rem;
     }
 
@@ -295,7 +290,7 @@
         margin-left: auto;
     }
 
-    .nav__button {
+    .nav__toggle {
         display: none;
     }
 

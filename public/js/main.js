@@ -1,6 +1,6 @@
 (function () {
   var nav = document.querySelector('nav');
-  var navButton = document.querySelector('.nav__button');
+  var navButton = document.querySelector('.nav__toggle');
 
   navButton.addEventListener('click', function () {
     if (nav.className.indexOf('nav--open') > -1) {
