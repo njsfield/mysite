@@ -95,9 +95,13 @@
     right: -.5rem;
 }
 
-.edit__submit {
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    width: 6rem;
+
+/* Actions */
+
+.edit__actions {
+  width: 100%;
+  padding: 1em 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }

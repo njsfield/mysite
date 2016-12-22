@@ -7,6 +7,7 @@
   margin: .5em auto;
   border-radius: .2em;
   border: none;
+  line-height: 1em;
   cursor: pointer;
   text-transform: uppercase;
   text-decoration: none;
@@ -23,6 +24,9 @@
   opacity: .5;
   border: none;
 }
+
+
+/* Colors */
 
 .button--grey {
   background: #607D8B;
@@ -55,17 +59,46 @@
   color: white;
 }
 
+.button--red {
+  background: white;
+  color: #D50000;
+  border: 1px solid #D50000;
+}
+
+.button--red:hover {
+  background: #D50000;
+  color: white;
+}
+
+
+/* Helpers */
+
 .button--spaced {
-  margin: 3rem auto;
+  margin: 3em auto;
 }
 
 .button--free-width {
     width: auto;
 }
 
+.button--inline-block {
+  display: inline-block;
+  margin: 0;
+}
+
+.button--right {
+  position: absolute;
+  right: 0;
+}
+
+.button--action {
+  padding: 1em;
+  width: 6rem;
+}
+
 .button--logout {
   font-size: .5em;
-  padding: 0 .5em;
+  padding: .5em;
   position: absolute;
   right: 0.3em;
   top: 0;

@@ -40,11 +40,11 @@
 
     <div class="edit__actions">
       <!-- Submit-->
-      <input class="edit__submit button button--white" type="submit" />
+      <input class="button button--white button--inline-block button--action" type="submit" />
 
       <!-- Delete-->
       {{#unless post.homepost}}
-        <a class="edit__delete-post" href="/delete/{{post.postid}}">delete</a>
+        <a class="button button--red button--inline-block button--right button--action" href="/delete/{{post.postid}}">delete</a>
       {{/unless}}
 
     </div>
