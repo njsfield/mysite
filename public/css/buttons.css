@@ -1,15 +1,15 @@
 .button {
-  width: 6rem;
+  font-size: .8rem;
+  width: 6em;
   text-align: center;
   display: block;
-  padding: .5rem;
-  margin: .5rem auto;
-  border-radius: .2rem;
+  padding: .5em;
+  margin: .5em auto;
+  border-radius: .2em;
   border: none;
   cursor: pointer;
   text-transform: uppercase;
   text-decoration: none;
-  font-size: .8rem;
   transition: all .2s ease;
   outline: none;
 }
@@ -61,4 +61,13 @@
 
 .button--free-width {
     width: auto;
+}
+
+.button--logout {
+  font-size: .5em;
+  padding: 0 .5em;
+  position: absolute;
+  right: 0.3em;
+  top: 0;
+  z-index: 8;
 }

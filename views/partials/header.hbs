@@ -26,4 +26,8 @@
             </ul>
         </div>
 
+        {{#if credentials.current_user}}
+          <a class="button button--white button--logout button--free-width" href="/logout">L/O</a>
+        {{/if}}
+
     </nav>
