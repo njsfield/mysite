@@ -99,7 +99,7 @@
 
 /* Site */
 
-.nav__links-container {
+.nav__links-group {
     display: block;
     background: black;
     position: fixed;
@@ -141,7 +141,7 @@
 
 /* Social */
 
-.nav__social-box {
+.nav__icons {
     display: flex;
     list-style: none;
     font-size: 1rem;
@@ -190,7 +190,7 @@
     color: white;
 }
 
-.nav--open .nav__links-container {
+.nav--open .nav__links-group {
     top: 0;
     opacity: 1;
 }
@@ -248,8 +248,8 @@
         font-size: 1.2rem;
     }
 
-    .nav__links-container,
-    .nav__social-box {
+    .nav__links-group,
+    .nav__icons {
         padding-bottom: 1rem;
     }
 
@@ -277,7 +277,7 @@
         font-size: 2rem
     }
 
-    .nav__links-container {
+    .nav__links-group {
         top: 0;
         opacity: 1;
         width: 25%;

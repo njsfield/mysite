@@ -74,11 +74,12 @@
 /* Helpers */
 
 .button--spaced {
+  display: block;
   margin: 3em auto;
 }
 
 .button--free-width {
-    width: auto;
+  width: auto;
 }
 
 .button--inline-block {
@@ -96,10 +97,15 @@
   width: 6rem;
 }
 
+.button--small {
+  font-size: .5em;
+}
+
 .button--logout {
   font-size: .5em;
   padding: .5em;
   position: absolute;
+  width: auto;
   right: 0.3em;
   top: 0;
   z-index: 8;

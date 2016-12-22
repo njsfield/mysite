@@ -1,5 +1,13 @@
 /** Portfolio Snippet **/
 
+.portfolio {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
 .portfolio__item {
   box-sizing: border-box;
   display: inline-flex;
@@ -15,7 +23,7 @@
   width: 100%;
   max-width: 19em;
   height: 19em;
-  margin: .15em auto;
+  margin: 1px auto;
   filter: grayscale(100%);
   transition: all .3s ease;
 }

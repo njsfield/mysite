@@ -12,13 +12,13 @@
         </button>
 
 
-        <div class="nav__links-container">
+        <div class="nav__links-group">
             <ul class="nav__links">
                 <li><a class="nav__link" href="/">Home</a></li>
                 <li><a class="nav__link" href="/blog">Blog</a></li>
                 <li><a class="nav__link" href="/portfolio">Portfolio</a></li>
             </ul>
-            <ul class="nav__social-box">
+            <ul class="nav__icons">
                 <li><a class="nav__icon nav__icon--twitter" href="https://twitter.com/nickjsfield"></a></li>
                 <li><a class="nav__icon nav__icon--mail" href="mailto:heyimnick@live.com"></a></li>
                 <li><a class="nav__icon nav__icon--linkedin" href="https://uk.linkedin.com/in/nickjackstanleyfield"></a></li>
@@ -27,7 +27,7 @@
         </div>
 
         {{#if credentials.current_user}}
-          <a class="button button--white button--logout button--free-width" href="/logout">L/O</a>
+          <a class="button button--white button--logout" href="/logout">L/O</a>
         {{/if}}
 
     </nav>
