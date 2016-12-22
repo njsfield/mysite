@@ -29,17 +29,23 @@
       <input id="live" class="edit__live-checkbox" type="checkbox" name="live" checked>
     </label>
 
-    <!-- Body -->
+    <!-- Post Body Area-->
     <label for="postbody" class="edit__label">Add Some Words</label>
     <div class="edit__post-container">
-      <!-- Triggers /images route-->
-      <button class="edit__add-image-btn button button--blue button--free-width">Add Image</button>
+
+      <!-- Button container -->
+      <div class="edit__post-mods">
+        <!-- Triggers /images route-->
+        <button class="edit__add-image-btn button button--blue button--free-width button--inline-block">Add Image</button>
+        <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
+        <button class="edit__preview-btn button button--black button--free-width button--inline-block">Preview</button>
+      </div>
+
       <!-- Markdown syntax -->
       <textarea name="postbody" class="edit__post-body"></textarea>
       <!-- Outputs HTML -->
       <div class="edit__post-body-output" style="display: none;"></div>
-      <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
-      <button class="edit__preview-btn button button--black">Preview</button>
+
     </div>
 
     <!-- Submit-->

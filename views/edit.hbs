@@ -25,19 +25,26 @@
       {{/each}}
     </select>
 
-    <!-- Body -->
-    <label for="postbody" class="edit__label">Post</label>
+    <!-- Post Body Area-->
+    <label for="postbody" class="edit__label">Add Some Words</label>
     <div class="edit__post-container">
-      <!-- Triggers /images route-->
-      <button class="edit__add-image-btn button button--blue button--free-width">Add Image</button>
+
+      <!-- Button container -->
+      <div class="edit__post-mods">
+        <!-- Triggers /images route-->
+        <button class="edit__add-image-btn button button--blue button--free-width button--inline-block">Add Image</button>
+        <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
+        <button class="edit__preview-btn button button--black button--free-width button--inline-block">Preview</button>
+      </div>
+
       <!-- Markdown syntax -->
       <textarea name="postbody" class="edit__post-body">{{post.postbody}}</textarea>
       <!-- Outputs HTML -->
       <div class="edit__post-body-output" style="display: none;"></div>
-      <!-- Triggers markdown route, takes edit__post-body value, makes xmthttprequest, then -->
-      <button class="edit__preview-btn button button--black">Preview</button>
+
     </div>
 
+    <!-- Actions -->
     <div class="edit__actions">
       <!-- Submit-->
       <input class="button button--white button--inline-block button--action" type="submit" />
@@ -55,13 +62,19 @@
 
 <!-- images -->
 <div class="images images--hidden">
+  <!-- Output gallery content here -->
   <div class="images__gallery">
   </div>
+  <!-- Changes alt attribute -->
   <input type='text' class='images__selected-title images__selected-title--purple'/>
+  <!-- Buttons container -->
   <div class="images__button-container">
+    <!--Back (triggers close) -->
     <button class="images__back-btn images__btn button button--grey">Back</button>
+    <!--Triggers file input-->
     <label for="file" class="images__btn images__upload-label button button--blue">Upload</label>
       <input style="display: none;" name="file" id="file" class="images__upload-btn" type="file" accept="image/*"/>
+      <!-- enabled when image selected -->
     <button class="images__select-btn images__btn button button--green" disabled>Select</button>
   </div>
 </div>

@@ -59,18 +59,23 @@
     padding-bottom: .1rem;
 }
 
+
+
+/* Postbody */
+
 .edit__post-container {
     position: relative;
 }
 
-.edit__add-image-btn {
+
+.edit__post-mods {
+    display: inline-block;
     position: absolute;
     top: -2.5rem;
-    right: 5.5rem;
+    right: 0;
 }
 
 
-/* Postbody */
 .edit__post-body {
     width: 100%;
     resize: none;
@@ -89,11 +94,7 @@
     padding: .5rem;
 }
 
-.edit__preview-btn {
-    position: absolute;
-    top: -2.5rem;
-    right: 0;
-}
+
 
 
 /* Actions */
