@@ -25,6 +25,9 @@ INNER JOIN owners as o
 const getPostsQuery = getPostQuery.replace('$1', 'p.postid')
                                   .replace(`WHERE p.postid = $1`, `WHERE c.categoryname <> 'Portfolio' ORDER BY p.creationdate DESC`);
 
+const getPortfolioItemsQuery = getPostQuery.replace('$1', 'p.postid')
+                                  .replace(`WHERE p.postid = $1`, `WHERE c.categoryname = 'Portfolio' ORDER BY p.creationdate DESC`);
+
 const getPost = (postid, cb) => {
   dbConn.query(getPostQuery, [postid], (err, data) => {
     (err ? cb(err) : cb(null, data.rows[0]));
@@ -32,12 +35,17 @@ const getPost = (postid, cb) => {
 };
 const getPosts = (cb) => {
   dbConn.query(getPostsQuery, (err, data) => {
-    console.log(err);
+    (err ? cb(err) : cb(null, data.rows));
+  });
+};
+const getPortfolioItems = (cb) => {
+  dbConn.query(getPortfolioItemsQuery, (err, data) => {
     (err ? cb(err) : cb(null, data.rows));
   });
 };
 
 module.exports = {
   getPost,
-  getPosts
+  getPosts,
+  getPortfolioItems
 };
