@@ -39,22 +39,6 @@
     padding: 0 1.5rem;
 }
 
-.snippet__category--blue {
-    background: rgb(0,100,255);
-}
-
-.snippet__category--pink {
-    background: salmon;
-}
-
-.snippet__category--red {
-    background: crimson;
-}
-
-.snippet__category--green {
-    background: rgb(0,255,200);
-}
-
 .snippet__description {
     height: 5rem;
     color: black;
@@ -69,6 +53,7 @@
 }
 
 /* Faded White */
+
 .snippet__description:after {
     content: '';
     display: block;
@@ -86,4 +71,38 @@
 .snippet:hover {
     border-color: lightgrey;
     transform: scale(1.03);
+}
+
+/* Colors */
+
+.snippet__category--blue {
+    background: rgb(0,100,255);
+}
+
+.snippet__category--pink {
+    background: salmon;
+}
+
+.snippet__category--red {
+    background: crimson;
+}
+
+.snippet__category--green {
+    background: rgb(0,255,200);
+}
+
+.snippet__category--grey {
+    background: rgb(100,100,100);
+}
+
+.snippet__category--purple {
+    background: rgb(100,50,100);
+}
+
+.snippet__category--orange {
+    background: orange;
+}
+
+.snippet__category--light-blue {
+    background: rgb(100,150,255);
 }
