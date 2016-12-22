@@ -6,6 +6,13 @@ const deleteImage = (imageurl, cb) => {
   });
 };
 
+const deletePost = (postid, cb) => {
+  dbConn.query(`DELETE FROM posts WHERE postid = $1;`, [postid], (err, data) => {
+    (err ? cb(err) : cb(null));
+  });
+};
+
 module.exports = {
-  deleteImage
+  deleteImage,
+  deletePost
 };

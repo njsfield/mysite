@@ -42,8 +42,7 @@
     <input class="edit__submit button button--white" type="submit" />
 
     {{#unless post.homepost}}
-      <button>Delete</button>
-      <button>Live</button>
+      <a class="button button--red" href="/delete/{{post.postid}}">Delete</a>
     {{/unless}}
 
   </form>

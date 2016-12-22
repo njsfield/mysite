@@ -1,4 +1,4 @@
-const deleteImage = require('../../dbrequests/delete').deleteImage;
+const {deleteImage, deletePost} = require('../../dbrequests/delete');
 const unlinkImage = require('../../helpers/image-helpers').unlinkImage;
 
 const removeImageRoute = (payload, req, reply) => {
@@ -13,12 +13,18 @@ const removeImageRoute = (payload, req, reply) => {
 // const delete
 
 module.exports = {
-  path: '/delete',
-  method: 'post',
+  path: '/delete/{id*}',
+  method: ['get', 'post'],
   handler: (req, reply) => {
-    let payload = JSON.parse(req.payload);
-    if (payload.item === 'image') {
-      removeImageRoute(payload, req, reply);
+    if (req.method === 'post') {
+      let payload = JSON.parse(req.payload);
+      if (payload.item === 'image') {
+        removeImageRoute(payload, req, reply);
+      }
+    } else {
+      deletePost(req.params.id, (err) => {
+        err ? reply(`error deleting post`) : reply.redirect('/blog');
+      });
     }
   }
 };
