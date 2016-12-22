@@ -1,0 +1,17 @@
+/***** Login *****/
+
+/** Form **/
+.login {
+    font-size: 1rem;
+    max-width: 20em;
+    padding: 1em;
+    margin: 0 auto;
+}
+
+.login__input {
+    display: inline-block;
+    width: 100%;
+    padding: 1em;
+    border: none;
+    border-bottom: 1px solid grey;
+}

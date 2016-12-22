@@ -1,4 +1,4 @@
-/* Base */
+/*** Base ***/
 
 * {
     box-sizing: border-box;
@@ -19,6 +19,17 @@ ul {
 input {
     outline: 0;
 }
+
+/* Container */
+
+.container {
+    display: block;
+    width: 100%;
+    max-width: 650px;
+    padding: 5rem 1rem .8rem .8rem;
+    margin: 0 auto;
+}
+
 
 /* Marked */
 

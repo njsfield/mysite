@@ -1,0 +1,103 @@
+/***** Edit Form *****/
+
+.edit {
+    padding: .5rem;
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.edit__feature-image-output {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+.edit__feature-image-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Clear */
+.edit__clear-image-btn {
+    position: absolute;
+    top: -.3rem;
+    right: -.3rem;
+    width: 2.5rem;
+    background: red;
+    border-radius: 50%;
+    border: 0;
+    color: white;
+    font-size: 2rem;
+    font-weight: 100;
+    opacity: 0;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.edit__clear-image-btn:hover {
+    opacity: 1;
+}
+
+
+.edit__label {
+    display: block;
+    margin: 1.5rem auto;
+    font-size: 1.2rem;
+    color: grey;
+}
+.edit__label--toggle {
+    margin: 3rem auto;
+}
+.edit__text-input {
+    display: block;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    width: 100%;
+    margin: 1rem auto;
+    padding-bottom: .1rem;
+}
+
+.edit__post-container {
+    position: relative;
+}
+
+.edit__add-image-btn {
+    position: absolute;
+    top: -2.5rem;
+    right: 5.5rem;
+}
+
+
+/* Postbody */
+.edit__post-body {
+    width: 100%;
+    resize: none;
+    overflow-y: scroll;
+    height: 25rem;
+    font-family: monospace;
+    line-height: 1rem;
+    outline: none;
+    padding: .5rem;
+}
+.edit__post-body-output {
+    width: 100%;
+    resize: none;
+    overflow-y: scroll;
+    height: 25rem;
+    padding: .5rem;
+}
+
+.edit__preview-btn {
+    position: absolute;
+    top: -2.5rem;
+    right: -.5rem;
+}
+
+.edit__submit {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    width: 6rem;
+}

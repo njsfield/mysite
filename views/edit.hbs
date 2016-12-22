@@ -38,12 +38,17 @@
       <button class="edit__preview-btn button button--black">Preview</button>
     </div>
 
-    <!-- Submit-->
-    <input class="edit__submit button button--white" type="submit" />
+    <div class="edit__actions">
+      <!-- Submit-->
+      <input class="edit__submit button button--white" type="submit" />
 
-    {{#unless post.homepost}}
-      <a class="button button--red" href="/delete/{{post.postid}}">Delete</a>
-    {{/unless}}
+      <!-- Delete-->
+      {{#unless post.homepost}}
+        <a class="edit__delete-post" href="/delete/{{post.postid}}">delete</a>
+      {{/unless}}
+
+    </div>
+
 
   </form>
 </section>
