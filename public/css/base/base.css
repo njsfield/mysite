@@ -22,10 +22,17 @@ input {
 
 /* Container */
 
+/* General */
 .container {
-    display: block;
-    width: 100%;
-    max-width: 650px;
-    padding: 5rem 1rem .8rem .8rem;
-    margin: 0 auto;
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  padding: 5rem 1rem .8rem .8rem;
+  margin: 0 auto;
+}
+/* Portfolio */
+.container--portfolio {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }

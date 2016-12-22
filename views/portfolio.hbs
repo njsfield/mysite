@@ -1,2 +1,6 @@
-{{> header}}
-<p>(Portfolio)</p>
+<section class="container container--portfolio">
+{{> portfolioitems}}
+</section>
+{{#if credentials.current_user}}
+  <a class="button button--black button--action" href="/compose">Compose</a>
+{{/if}}

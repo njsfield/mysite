@@ -1,0 +1,7 @@
+{{#each posts}}
+  {{#if this.live}}
+    <a class="portfolio__item" href="blog/{{this.postid}}" style="background-image: url('/images/{{this.imageurl}}');">
+      <h4 class="portfolio__title">{{this.posttitle}}</h4>
+    </a>
+  {{/if}}
+{{/each}}

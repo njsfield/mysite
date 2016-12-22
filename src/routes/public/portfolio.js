@@ -1,7 +1,33 @@
+const { getPost, getPortfolioItems } = require('../../dbrequests/posts.js');
+const credentialsCheck = require('../../helpers/credentialscheck');
+const markDownTransform = require('../../helpers/markdowntransform');
+
 module.exports = {
   path: '/portfolio/{id*}',
   method: 'get',
-  handler: (req, reply) => {
-    reply.view('portfolio');
+  config: {
+    auth: {
+      strategy: 'session',
+      mode: 'try'
+    },
+    plugins: {
+      'hapi-auth-cookie': {
+        redirectTo: false
+      }
+    },
+    handler: (req, reply) => {
+      if (req.params.id) {
+        let postid = req.params.id;
+        getPost(postid, (err, post) => {
+          post.postbody = markDownTransform(post.postbody);
+          err ? reply(err) : reply.view('post', {post: post, credentials: credentialsCheck(req)});
+        });
+      } else {
+        getPortfolioItems((err, posts) => {
+          err ? reply(err) : reply.view('portfolio', {posts: posts, credentials: credentialsCheck(req)});
+        }
+      );
+      }
+    }
   }
 };
