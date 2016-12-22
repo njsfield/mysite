@@ -220,10 +220,10 @@
 .nav__social:hover {
     /*opacity: .5;*/
     transform: scale(1.2);
-    -webkit-filter: invert(.75);
-    filter: invert(.75);
+    opacity: 0.5;
     transform-origin: 50% 70%;
 }
+
 
 .nav__link:hover {
     transform-origin: 50% 50%;
@@ -252,8 +252,8 @@
 
     .nav__links-container,
     .nav__socials {
-    padding-bottom: 1rem;
-}
+        padding-bottom: 1rem;
+    }
 
 }
 
@@ -298,5 +298,11 @@
 
     .nav__link:hover {
         transform-origin: 90% 30%;
+    }
+
+    .nav__logo:hover {
+        -webkit-filter: invert(.75);
+        opacity: 1;
+        filter: invert(.75);
     }
 }

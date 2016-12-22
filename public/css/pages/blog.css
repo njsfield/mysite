@@ -1,6 +1,11 @@
 /*** Blog (Snippets) ***/
 
 .snippet {
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: dotted;
+    border-color: rgba(0,0,0,0);
+    transition: all .2s ease;
     text-decoration: none;
     font-size: 1rem;
     width: 100%;
@@ -59,8 +64,11 @@
     text-overflow: ellipsis;
     margin: .5rem 1.5rem;
     position: relative;
+    transition: all .5s ease;
+
 }
 
+/* Faded White */
 .snippet__description:after {
     content: '';
     display: block;
@@ -70,4 +78,12 @@
     background: linear-gradient(rgba(0,0,0,0), white);
     top: 0;
     left: 0;
+    transition: all .5s ease;
+}
+
+/* Hover */
+
+.snippet:hover {
+    border-color: lightgrey;
+    transform: scale(1.03);
 }
