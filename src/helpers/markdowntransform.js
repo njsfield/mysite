@@ -1,5 +1,9 @@
 const marked = require('marked');
 const renderer = new marked.Renderer();
+const highlightjs = require('highlight.js');
+highlightjs.configure({
+  classPrefix: 'code--'
+});
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -9,8 +13,7 @@ marked.setOptions({
   pedantic: false,
   sanitize: true,
   smartLists: true,
-  smartypants: false,
-  highlight: (code) => require('highlight.js').highlightAuto(code).value
+  smartypants: false
 });
 
 /* Paragraph */
@@ -19,8 +22,13 @@ renderer.paragraph = (text) => {
 };
 
 /* Code */
-renderer.code = (code, lang) => {
-  return `<pre class="code"><code class="code__${lang}">${code}</code></pre>`;
+renderer.code = (code, language) => {
+  // Check whether the given language is valid for highlight.js.
+  const validLang = !!(language && highlightjs.getLanguage(language));
+  // Highlight only if the language is valid.
+  const highlighted = validLang ? highlightjs.highlight(language, code).value : code;
+  // Render the highlighted code with `hljs` class.
+  return `<pre class="code"><code class="code__${language}">${highlighted}</code></pre>`;
 };
 
 /* Link */

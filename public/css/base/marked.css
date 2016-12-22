@@ -44,4 +44,41 @@
     list-style-position: inside;
 }
 
-/* Code */
+/*** Code ***/
+
+.code {
+    padding: .2em;
+}
+
+/* JavaScript */
+
+.code__javascript {
+
+}
+
+/* General Purpose */
+.code--keyword,
+.code--built-in,
+.code--class,
+.code--function {
+    color: #8E24AA; /* e.g. function, const */
+}
+.code--title,
+.code--symbol,
+.code--built_in,
+.code--literal {
+    color: #FFA000;
+}
+.code--params {
+    color: rgba(0,0,0,0.6);
+}
+.code--string {
+    color: #8BC34A;
+}
+.code--number {
+    color: #FF6F00;
+}
+.code--regexp,
+.code--subst  {
+    color: #B71C1C;
+}
