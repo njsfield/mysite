@@ -50,13 +50,19 @@
 
 <!-- images -->
 <div class="images images--hidden">
+  <!-- Output gallery content here -->
   <div class="images__gallery">
   </div>
+  <!-- Changes alt attribute -->
   <input type='text' class='images__selected-title images__selected-title--purple'/>
+  <!-- Buttons container -->
   <div class="images__button-container">
+    <!--Back (triggers close) -->
     <button class="images__back-btn images__btn button button--grey">Back</button>
+    <!--Triggers file input-->
     <label for="file" class="images__btn images__upload-label button button--blue">Upload</label>
       <input style="display: none;" name="file" id="file" class="images__upload-btn" type="file" accept="image/*"/>
+      <!-- enabled when image selected -->
     <button class="images__select-btn images__btn button button--green" disabled>Select</button>
   </div>
 </div>
