@@ -8,7 +8,6 @@ const getPostQuery = `SELECT
       i.imagetitle,
       TO_CHAR(p.creationdate, 'DD - MM - YYYY') "creationdate",
       TO_CHAR(p.modifieddate, 'DD - MM - YYYY') "modifieddate",
-      p.modifieddate,
       p.live,
       c.categoryname,
       o.ownername
@@ -23,7 +22,7 @@ INNER JOIN owners as o
       on o.ownerid = p.ownerid
       WHERE p.postid = $1;`;
 
-const getPostsQuery = getPostQuery.replace('$1', 'p.postid').replace('WHERE p.postid = $1;', ';');
+const getPostsQuery = getPostQuery.replace('$1', 'p.postid').replace('WHERE p.postid = $1', 'ORDER BY p.creationdate DESC');
 
 const getPost = (postid, cb) => {
   dbConn.query(getPostQuery, [postid], (err, data) => {
