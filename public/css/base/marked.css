@@ -1,5 +1,14 @@
 /* Marked */
 
+/* Paragraph */
+
+.p {
+    margin: 1.5em 0;
+    line-height: 170%;
+    font-weight: 300;
+    color: #333;
+}
+
 /* Heading */
 .h1,
 .h2,
@@ -7,9 +16,19 @@
 .h4,
 .h5,
 .h6 {
-  margin: 2em;
+  margin: 2em 0;
+  text-align: left;
+}
+/* Center Mod */
+.h1--center,
+.h2--center,
+.h3--center,
+.h4--center,
+.h5--center,
+.h6--center {
   text-align: center;
 }
+
 
 .h1 {
   font-weight: 200;
@@ -30,13 +49,6 @@
   font-weight: 700;
 }
 
-/* Paragraph */
-
-.p {
-    margin: 2em 0;
-    line-height: 170%;
-    color: #333;
-}
 
 /* Anchor */
 
@@ -55,17 +67,24 @@
 .ol {
     list-style: none;
     padding: 0;
-    margin: .5em;
+    margin: .3em;
+}
+
+.li {
+    padding-left: 1.5em;
+    font-weight: 300;
 }
 
 .ul .li {
-    padding: .2em 3em;
+    padding-top: .2em;
+    padding-bottom: .2em;
 }
 
 .ol .li {
     list-style-type: upper-roman;
     list-style-position: inside;
-    padding: .4em 3em;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
 .ul .li:before {
@@ -143,4 +162,83 @@
   -webkit-box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
   -moz-box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
   box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
+}
+
+/** Tables **/
+
+.table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+.table__th,
+.table__td {
+  padding: .5em;
+}
+
+.table__th:not(:last-child),
+.table__td:not(:last-child) {
+  border-right: 1px dotted black;
+}
+
+.table__thead {
+  border-bottom: 1px dotted black;
+}
+
+/*font styles*/
+.table__th {
+  font-weight: 600;
+  letter-spacing: 3px;
+}
+
+.table__td {
+  font-weight: 300;
+  font-size: .9em;
+}
+
+.table__td--left {
+  text-align: left;
+}
+
+.table__td--center {
+  text-align: center;
+}
+
+.table__td--right {
+  text-align: right;
+}
+
+
+/* Block Quote */
+
+.blockquote {
+  box-sizing: border-box;
+  display: block;
+  font-size: .9em;
+  margin: 0;
+  width: 100%;
+  padding: 1em;
+  position: relative;
+  text-align: center;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+.blockquote:before,
+.blockquote:after {
+  position: absolute;
+  font-size: 3em;
+  color: black;
+  font-family: 'Times New Roman', serif;
+}
+
+.blockquote:before {
+  content: open-quote;
+  top: 0;
+  left: 0;
+}
+
+.blockquote:after {
+  content: close-quote;
+  bottom: 0;
+  right: 0;
 }

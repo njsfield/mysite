@@ -83,18 +83,20 @@
     box-sizing: border-box;
     width: 100%;
     height: 10%;
-    background: black;
+    background: rgb(120,120,120);
     border-top: 1px solid white;
     display: block;
     transition: all 150ms ease;
 }
 
 .nav__toggle-line--top {
+    background: rgb(210,210,210);
     position: absolute;
     top: 0;
 }
 
 .nav__toggle-line--bottom {
+    background: black;
     position: absolute;
     bottom: 0;
 }
@@ -207,6 +209,7 @@
 }
 
 .nav--open .nav__toggle-line {
+    background: rgba(0,0,0,0);
     border-top: 0;
 }
 

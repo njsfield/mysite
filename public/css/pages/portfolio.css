@@ -23,8 +23,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 19em;
-  height: 19em;
+  max-width: 17em;
+  height: 17em;
   margin: 1px auto;
   filter: grayscale(100%);
   transition: all .3s ease;
