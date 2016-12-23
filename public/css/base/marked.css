@@ -55,24 +55,29 @@
 .ol {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: .5em;
 }
 
-.li {
+.ul .li {
     padding: .2em 3em;
-}
-
-.ul .li:before {
-    content: ' + ';
-    position: relative;
-    top: .2em;
-    font-size: 1.5em;
 }
 
 .ol .li {
     list-style-type: upper-roman;
     list-style-position: inside;
+    padding: .4em 3em;
 }
+
+.ul .li:before {
+    content: ' + ';
+    position: relative;
+    display: inline-block;
+    margin-right: .2em;
+    top: .1em;
+    font-size: 1.5em;
+}
+
+
 
 /*** Code ***/
 

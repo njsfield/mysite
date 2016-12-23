@@ -88,16 +88,19 @@
 
 .edit__post-body {
     box-sizing: border-box;
+    font-size: .8em;
     width: 100%;
     resize: none;
     overflow-y: scroll;
     height: 25em;
     line-height: 1em;
+    color: rgb(90,90,90);
     outline: none;
     padding: .5em;
 }
 .edit__post-body-output {
     box-sizing: border-box;
+    font-size: .8em;
     width: 100%;
     resize: none;
     overflow-y: scroll;
