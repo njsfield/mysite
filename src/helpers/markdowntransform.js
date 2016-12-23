@@ -11,9 +11,9 @@ marked.setOptions({
   tables: true,
   breaks: true,
   pedantic: false,
-  sanitize: true,
+  sanitize: false,
   smartLists: true,
-  smartypants: false
+  smartypants: true
 });
 
 /* Paragraph */
@@ -31,6 +31,11 @@ renderer.code = (code, language) => {
   return `<pre class="code"><code class="code__${language}">${highlighted}</code></pre>`;
 };
 
+/* Inline Code */
+renderer.codespan = (code) => {
+  return `<code class="code__inline">${code}</code>`;
+};
+
 /* Link */
 renderer.link = (href, title, text) => {
   return `<a class="a" href="${href}">${text}</a>`;
@@ -38,7 +43,7 @@ renderer.link = (href, title, text) => {
 
 /* Heading */
 renderer.heading = (text, level) => {
-  return `<h${level} class="heading">${text}</h${level}>`;
+  return `<h${level} class="h${level}">${text}</h${level}>`;
 };
 
 /* List */

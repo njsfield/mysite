@@ -1,6 +1,7 @@
 /* Menus */
 
 .select {
+    box-sizing: border-box;
     display: block;
     width: 100%;
     border-radius: 0;

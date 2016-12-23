@@ -1,7 +1,7 @@
 /*** Base ***/
 
-* {
-    box-sizing: border-box;
+html {
+    font-size: 1em;
 }
 
 a {
@@ -24,7 +24,7 @@ input {
 
 /* General */
 .container {
-  font-size: .9em;
+  box-sizing: border-box;
   display: block;
   width: 100%;
   max-width: 650px;
@@ -33,7 +33,7 @@ input {
 }
 
 @media screen and (min-width: 500px) {
-  .container {
-    font-size: 1em;
+  html {
+    font-size: 1.1em;
   }
 }

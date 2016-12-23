@@ -1,6 +1,7 @@
 /** Portfolio Snippet **/
 
 .portfolio {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -30,6 +31,7 @@
 }
 
 .portfolio__title {
+  box-sizing: border-box;
   font-size: 1em;
   color: black;
   text-align: center;

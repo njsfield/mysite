@@ -1,0 +1,10 @@
+/* Type */
+
+body {
+    font-family: 'Open Sans', arial, sans-serif;
+}
+
+code,
+textarea {
+    font-family: 'Space Mono', monospace;
+}

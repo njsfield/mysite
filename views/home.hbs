@@ -1,6 +1,15 @@
 <section class="container">
-{{> post isHome=true }}
-{{#if credentials.current_user}}
-  <a class="button button--black button--action" href="/edit/1">Edit</a>
-{{/if}}
+  <div class="post">
+    <!-- Image -->
+    {{#if post.imageurl}}
+      <img src="/images/{{post.imageurl}}" alt="{{post.imagetitle}}" class="post__image"/>
+    {{/if}}
+    <!-- Body -->
+    <div class="post__body">{{{post.postbody}}}</div>
+  </div>
+
+  <!-- Edit -->
+  {{#if credentials.current_user}}
+    <a class="button button--black button--action" href="/edit/1">Edit</a>
+  {{/if}}
 </section>

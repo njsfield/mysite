@@ -1,14 +1,41 @@
 /* Marked */
 
 /* Heading */
-.header {
-    
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin: 2em;
+  text-align: center;
+}
+
+.h1 {
+  font-weight: 200;
+}
+.h2 {
+  font-weight: 300;
+}
+.h3 {
+  font-weight: 400;
+}
+.h4 {
+  font-weight: 500;
+}
+.h5 {
+  font-weight: 600;
+}
+.h6 {
+  font-weight: 700;
 }
 
 /* Paragraph */
 
 .p {
     margin: 2em 0;
+    line-height: 170%;
+    color: #333;
 }
 
 /* Anchor */
@@ -50,9 +77,18 @@
 /*** Code ***/
 
 .code {
-    padding: .2em;
+  font-size: .8em;
+  font-weight: 200;
+  line-height: 130%;
+  padding: .5em;
 }
 
+
+/* Inline */
+
+.code__inline {
+  background-color: rgba(0,0,0,0.1);
+}
 /* JavaScript */
 
 .code__javascript {
@@ -84,4 +120,22 @@
 .code--regexp,
 .code--subst  {
     color: #B71C1C;
+}
+
+/* icons */
+
+.i {
+  box-sizing: border-box;
+  display: inline;
+
+}
+
+.i--key {
+  font-style: normal;
+  border: 1px solid rgb(100,100,100);
+  padding: 0 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
+  -moz-box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
+  box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
 }

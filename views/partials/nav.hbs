@@ -1,33 +1,38 @@
 <nav class="nav nav--fixed">
 
-        <a class="nav__logo" href="/">
-            <span class="nav__nick"></span>
-            <span class="nav__field"></span>
-        </a>
+    <!-- Logo -->
+    <a class="nav__logo" href="/">
+        <span class="nav__nick"></span>
+        <span class="nav__field"></span>
+    </a>
 
-        <button class="nav__toggle">
-            <span class="nav__toggle-line nav__toggle-line--top"></span>
-            <span class="nav__toggle-line"></span>
-            <span class="nav__toggle-line nav__toggle-line--bottom"></span>
-        </button>
+    <!-- Toggle -->
+    <button class="nav__toggle">
+        <span class="nav__toggle-line nav__toggle-line--top"></span>
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line nav__toggle-line--bottom"></span>
+    </button>
 
+    <!-- Social/hrefs-->
+    <div class="nav__links-group">
+        <!-- hrefs-->
+        <ul class="nav__links">
+            <li><a class="nav__link" href="/">Home</a></li>
+            <li><a class="nav__link" href="/blog">Blog</a></li>
+            <li><a class="nav__link" href="/portfolio">Portfolio</a></li>
+        </ul>
+        <!-- socials-->
+        <ul class="nav__icons">
+            <li><a class="nav__icon nav__icon--twitter" href="https://twitter.com/nickjsfield"></a></li>
+            <li><a class="nav__icon nav__icon--mail" href="mailto:heyimnick@live.com"></a></li>
+            <li><a class="nav__icon nav__icon--linkedin" href="https://uk.linkedin.com/in/nickjackstanleyfield"></a></li>
+            <li><a class="nav__icon nav__icon--github" href="https://github.com/njsfield/"></a></li>
+        </ul>
+    </div>
 
-        <div class="nav__links-group">
-            <ul class="nav__links">
-                <li><a class="nav__link" href="/">Home</a></li>
-                <li><a class="nav__link" href="/blog">Blog</a></li>
-                <li><a class="nav__link" href="/portfolio">Portfolio</a></li>
-            </ul>
-            <ul class="nav__icons">
-                <li><a class="nav__icon nav__icon--twitter" href="https://twitter.com/nickjsfield"></a></li>
-                <li><a class="nav__icon nav__icon--mail" href="mailto:heyimnick@live.com"></a></li>
-                <li><a class="nav__icon nav__icon--linkedin" href="https://uk.linkedin.com/in/nickjackstanleyfield"></a></li>
-                <li><a class="nav__icon nav__icon--github" href="https://github.com/njsfield/"></a></li>
-            </ul>
-        </div>
+    <!-- Logout -->
+    {{#if credentials.current_user}}
+      <a class="button button--white button--logout" href="/logout">L/O</a>
+    {{/if}}
 
-        {{#if credentials.current_user}}
-          <a class="button button--white button--logout" href="/logout">L/O</a>
-        {{/if}}
-
-    </nav>
+</nav>

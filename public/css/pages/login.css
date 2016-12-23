@@ -2,6 +2,7 @@
 
 /** Form **/
 .login {
+    box-sizing: border-box;
     font-size: 1rem;
     max-width: 20em;
     padding: 1em;
@@ -9,6 +10,7 @@
 }
 
 .login__input {
+    box-sizing: border-box;
     display: inline-block;
     width: 100%;
     padding: 1em;

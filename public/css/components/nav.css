@@ -5,6 +5,7 @@
 /* General */
 
 .nav {
+    box-sizing: border-box;
     display: flex;
     font-size: 1rem;
     justify-content: space-between;
@@ -24,6 +25,7 @@
 /* Logo */
 
 .nav__logo {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     font-size: 1rem;
@@ -36,6 +38,7 @@
 }
 
 .nav__nick {
+    box-sizing: border-box;
     display: inline-block;
     background: url(/images/site-logo.png) 0 0;
     background-size: cover;
@@ -46,6 +49,7 @@
 }
 
 .nav__field {
+    box-sizing: border-box;
     display: inline-block;
     background: url(/images/site-logo.png) -3.4em 0;
     background-size: cover;
@@ -61,6 +65,7 @@
 /* Toggle */
 
 .nav__toggle {
+    box-sizing: border-box;
     font-size: 2rem;
     z-index: 2;
     width: 1em;
@@ -75,6 +80,7 @@
     transition: all .3s ease;
 }
 .nav__toggle-line {
+    box-sizing: border-box;
     width: 100%;
     height: 10%;
     background: black;
@@ -100,6 +106,7 @@
 /* Site */
 
 .nav__links-group {
+    box-sizing: border-box;
     display: block;
     background: black;
     position: fixed;
@@ -116,6 +123,7 @@
 }
 
 .nav__links {
+    box-sizing: border-box;
     list-style: none;
     display: flex;
     justify-content: center;
@@ -129,6 +137,7 @@
 
 
 .nav__link {
+    box-sizing: border-box;
     display: block;
     padding: 4em;
     font-weight: 200;
@@ -142,6 +151,7 @@
 /* Social */
 
 .nav__icons {
+    box-sizing: border-box;
     display: flex;
     list-style: none;
     font-size: 1rem;
@@ -154,6 +164,7 @@
 }
 
 .nav__icon {
+    box-sizing: border-box;
     color: white;
     display: inline-block;
     font-size: 1.7em;

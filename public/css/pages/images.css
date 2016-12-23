@@ -1,6 +1,7 @@
 /* Images */
 
 .images {
+  box-sizing: border-box;
   display: block;
   width: 100%;
   height: 100vh;
@@ -12,10 +13,12 @@
 }
 
 .images--hidden {
+  box-sizing: border-box;
   display: none;
 }
 
 .images__gallery {
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -31,6 +34,7 @@
 }
 
 .images__image {
+  box-sizing: border-box;
   width: 20%;
   height: 20%;
   margin: 1rem;
@@ -52,6 +56,7 @@
 
 /* Delete Buttons */
 .images__delete {
+  box-sizing: border-box;
   position: absolute;
   display: inline-block;
   bottom: -.75rem;
@@ -82,6 +87,7 @@
 
 
 .images__button-container {
+  box-sizing: border-box;
   display: block;
   width: 100%;
   text-align: center;
@@ -90,20 +96,24 @@
 }
 
 .images__btn {
+  box-sizing: border-box;
   display: inline-block;
   line-height: 1rem;
 }
 
 .images__upload-label {
+  box-sizing: border-box;
   position: relative;
   top: 1px;
 }
 
 .images__select-btn {
+  box-sizing: border-box;
   padding-top: .6rem;
 }
 
 .images__selected-title {
+  box-sizing: border-box;
   display: none;
   position: absolute;
   bottom: 4rem;
