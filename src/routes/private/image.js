@@ -18,6 +18,7 @@ module.exports = {
         let payload = JSON.parse(req.payload);
         let imageurl = payload.imageurl;
         let imagetitle = payload.imagetitle || 'Custom Upload';
+        console.log(imageurl, imagetitle);
         updateImageTitle(imageurl, imagetitle, (err) => {
           (err ? reply(err) : reply(imagetitle));
         });

@@ -1,22 +1,4 @@
 (function () {
-  // Edit Form elts
-  var imageBtn = document.querySelector('.edit__feature-image-btn');
-  var clearImageBtn = document.querySelector('.edit__clear-image-btn');
-  var addImageBtn = document.querySelector('.edit__add-image-btn');
-  var previewBtn = document.querySelector('.edit__preview-btn');
-  var imageInput = document.querySelector('.edit__feature-image-input');
-  var imageOutput = document.querySelector('.edit__feature-image-output');
-  var postBody = document.querySelector('.edit__post-body');
-  var outputBody = document.querySelector('.edit__post-body-output');
-
-  // Image Container elts
-  var imagesContainer = document.querySelector('.images');
-  var gallery = document.querySelector('.images__gallery');
-  var selectedTitle = document.querySelector('.images__selected-title');
-  var backBtn = document.querySelector('.images__back-btn');
-  var selectBtn = document.querySelector('.images__select-btn');
-  var uploadBtn = document.querySelector('.images__upload-btn');
-
   /* Helpers */
 
   // Toggle Elt className
@@ -47,10 +29,7 @@
   const removeClass = (elt, className) => { elt.classList.remove(className); };
 
   // set Attribute
-  const setAttr = (elt, attr, val) => { elt[attr] = val; };
-
-  // set Attribute
-  const getAttr = (elt, attr) => { elt.getAttribute(attr); };
+  const setAttr = (elt, attr, val) => { elt.setAttribute(attr, val); };
 
   // Create raw elt from str
   const createRawElt = (str) => {
@@ -61,9 +40,6 @@
 
   // Check if hidden
   const isHidden = (elt) => elt.style.display === 'none';
-
-  // Check if visible
-  const isVisible = (elt) => elt.style.display !== 'none';
 
   // querySelector
   const elt = (elt) => document.querySelector(elt);
@@ -96,7 +72,7 @@
   };
 
   // Request
-  const serverRequest = (path, payload, cb) => {
+  const serverRequest = function (path, payload, cb) {
     let method = 'post';
     if (arguments.length === 2) {
       cb = payload;
@@ -124,9 +100,7 @@
 
   // Build Images
   const buildGallery = (fromGallery) => {
-    if (!fromGallery) {
-      toggleClass(elt('.images'), 'images--hidden');
-    }
+    if (!fromGallery) toggleClass(elt('.images'), 'images--hidden');
     clearHTML(elt('.images__gallery'));
     serverRequest('/images', (raw) => {
       JSON.parse(raw).images.forEach((image) => {
@@ -142,11 +116,9 @@
           });
         });
         let imageDelete = createRawElt(`<span class="images__delete" path="${image}"></span>`);
-        onClick(imageDelete, 'click', () => {
-          serverRequest('/delete', JSON.stringify({
-            item: 'image',
-            imageurl: image
-          }), (data) => {
+        onClick(imageDelete, () => {
+          serverRequest('/delete', JSON.stringify({item: 'image', imageurl: image}), (data) => {
+            hideElt(elt('.images__selected-title'));
             buildGallery(true);
           });
         });
@@ -181,7 +153,7 @@
   // Upload Button
   elt('.images__upload-btn').addEventListener('change', (e) => {
     retrieveFile(e, (file) => {
-      serverRequest('/images?name=' + file.name, file.raw, function () {
+      serverRequest(`/images?name=${file.name}`, file.raw, () => {
         buildGallery(true);
       });
     });
@@ -191,7 +163,7 @@
   elt('.images__select-btn').addEventListener('click', (e) => {
     stopE(e);
     let path = elt('.images__image--selected').getAttribute('path');
-    if (elt('images__select-btn').getAttribute('outputMainImage')) {
+    if (elt('.images__select-btn').getAttribute('outputMainImage')) {
       setAttr(elt('.edit__feature-image-output'), 'value', path);
       setAttr(elt('.edit__feature-image-output'), 'src', '/images/' + path);
     } else {
@@ -219,7 +191,7 @@
   elt('.images__selected-title').addEventListener('focusout', (e) => {
     serverRequest('/image', JSON.stringify({
       imagetitle: elt('.images__selected-title').value,
-      imageurl: getAttr(elt('.images__image--selected'), 'path')
+      imageurl: elt('.images__image--selected').getAttribute('path')
     }), (title) => {
       setEltValue(elt('.images__selected-title'), title);
     });
