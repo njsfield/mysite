@@ -43,7 +43,7 @@ renderer.link = (href, title, text) => {
 
 /* Heading */
 renderer.heading = (text, level) => {
-  const align = /^{.+}$/.test(text) ? `h${level}--center` : '';
+  const align = /^{.+}$/.test(text) ? `h${level}--center` : ''; // Centered class add if '{ }'
   text = align ? text.split('').slice(1, -1).join('') : text;
   return `<h${level} class="h${level} ${align}">${text}</h${level}>`;
 };

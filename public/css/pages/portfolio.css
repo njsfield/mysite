@@ -32,7 +32,7 @@
 
 .portfolio__title {
   box-sizing: border-box;
-  font-size: 1em;
+  font-weight: 500;
   color: black;
   text-align: center;
   z-index: 2;

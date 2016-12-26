@@ -25,7 +25,7 @@ const userNotFound = {
 const wrongPassword = (username) => {
   return {
     message: 'Wrong password',
-    errorclass: 'title--red',
+    errorclass: 'prompt--error',
     username: username
   };
 };
@@ -41,7 +41,7 @@ const loginHandler = (username, password, req, reply) => {
         if (err) {
           throw err;
         } else if (!isMatch) {
-          reply.view('login', wrongPassword);
+          reply.view('login', wrongPassword(username));
         } else {
           req.cookieAuth.set({current_user: username});
           reply.redirect('/');
