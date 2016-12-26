@@ -28,12 +28,8 @@
   /* Helpers */
 
   // Toggle Elt className
-  function toggleElt (elt, className) {
-    if (elt.className.indexOf(className) > -1) {
-      elt.classList.remove(className);
-    } else {
-      elt.classList.add(className);
-    }
+  function toggleClass (obj, className) {
+    ([...obj.classList].includes(className)) ? obj.classList.remove(className) : obj.classList.add(className);
   }
 
   // Toggle Disabled
@@ -152,7 +148,7 @@
       });
     };
     if (!fromGallery) {
-      toggleElt(parentElt, 'images--hidden');
+      toggleClass(parentElt, 'images--hidden');
     }
     clearContent(elt);
     serverRequest('/images', function (raw) {
@@ -184,7 +180,7 @@
   // Back Button
   backBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    toggleElt(imagesContainer, 'images--hidden');
+    toggleClass(imagesContainer, 'images--hidden');
   });
 
   // Upload Button
@@ -208,7 +204,7 @@
     }
 
     disableElt(selectBtn);
-    toggleElt(imagesContainer, 'images--hidden');
+    toggleClass(imagesContainer, 'images--hidden');
   });
 
   // Preview Button
