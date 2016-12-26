@@ -17,175 +17,170 @@
   var selectBtn = document.querySelector('.images__select-btn');
   var uploadBtn = document.querySelector('.images__upload-btn');
 
-  // Output elt
-
-  var outputMainImage = false;
-
-  // defaultImages
-
-  var defaultImages = ['site-logo.png', 'social-sprite.png'];
-
   /* Helpers */
 
   // Toggle Elt className
-  function toggleClass (obj, className) {
-    ([...obj.classList].includes(className)) ? obj.classList.remove(className) : obj.classList.add(className);
-  }
+  const toggleClass = (elt, className) => ([...elt.classList].includes(className)) ? removeClass(elt, className) : addClass(elt, className);
 
   // Toggle Disabled
-  function disableElt (elt) {
-    elt.disabled = true;
-  }
-  // Toggle Disabled
-  function enableElt (elt) {
-    elt.disabled = false;
-  }
+  const disableElt = (elt) => { elt.disabled = true; };
 
-  // clearContent
-  function clearContent (elt) {
-    elt.innerHTML = '';
-  }
+  // Toggle Disabled
+  const enableElt = (elt) => { elt.disabled = false; };
+
+  // clearHTML
+  const clearHTML = (elt) => { elt.innerHTML = ''; };
+
+  // setHTML
+  const setHTML = (elt, html) => { elt.innerHTML = html; };
 
   // Display elt
-  function displayElt (elt) {
-    elt.style.display = 'block';
-  }
+  const displayElt = (elt) => { elt.style.display = 'block'; };
 
-  // Inject Images
-  function injectImages (images, elt, className, selectedClassName, eventFunc) {
-    // Add array method
-    var DOMForEach = Array.prototype.forEach;
+  // Hide elt
+  const hideElt = (elt) => { elt.style.display = 'none'; };
 
-    images.forEach(function (image) {
-      var imageElt = document.createElement('span');
-      imageElt.style.backgroundImage = 'url(/images/' + image + ')';
-      imageElt.className = className;
-      imageElt.setAttribute('path', image);
-      imageElt.addEventListener('click', function () {
-        DOMForEach.call(elt.children, function (elt) {
-          elt.classList.remove(selectedClassName);
-        });
-        imageElt.classList.add(selectedClassName);
-        eventFunc(image);
-      });
-      if (defaultImages.indexOf(image) < 0) {
-        var imageDelete = document.createElement('span');
-        imageDelete.className = 'images__delete';
-        imageDelete.setAttribute('path', image);
-        imageDelete.addEventListener('click', deleteImage);
-        imageElt.appendChild(imageDelete);
-      }
-      elt.appendChild(imageElt);
-    });
-  }
+  // Set className
+  const addClass = (elt, className) => { elt.classList.add(className); };
 
-  // deleteImage
-  function deleteImage (e) {
-    var path = e.target.getAttribute('path');
-    var payload = {
-      item: 'image',
-      imageurl: path
-    };
-    serverRequest('/delete', JSON.stringify(payload), function (data) {
-      buildGallery(true);
-    });
-  }
+  // remove className
+  const removeClass = (elt, className) => { elt.classList.remove(className); };
+
+  // set Attribute
+  const setAttr = (elt, attr, val) => { elt[attr] = val; };
+
+  // set Attribute
+  const getAttr = (elt, attr) => { elt.getAttribute(attr); };
+
+  // Create raw elt from str
+  const createRawElt = (str) => {
+    let elt = document.createElement('span');
+    elt.innerHTML = str;
+    return elt.children[0];
+  };
+
+  // Check if hidden
+  const isHidden = (elt) => elt.style.display === 'none';
+
+  // Check if visible
+  const isVisible = (elt) => elt.style.display !== 'none';
+
+  // querySelector
+  const elt = (elt) => document.querySelector(elt);
+
+  // on Click
+  const onClick = (elt, func) => { elt.addEventListener('click', func); };
+
+  // for Each Elt
+  const forEachElt = (elts, func) => { Array.prototype.forEach.call(elts, func); };
+
+  // get parent Elt
+  const parentElt = (elt) => elt.parentElement;
+
+  // prevent event default
+  const stopE = (e) => e.preventDefault();
+
+  // stealClass
+  const stealClass = (elt, className) => {
+    forEachElt(parentElt(elt).children, child => removeClass(child, className));
+    addClass(elt, className);
+  };
+
+  // set value
+  const setEltValue = (elt, value) => { elt.value = value; };
+
+  // Elt toggle
+  const toggleElts = (elt1, elt2, bool) => {
+    bool ? displayElt(elt1) : displayElt(elt2);
+    bool ? hideElt(elt2) : hideElt(elt1);
+  };
 
   // Request
-  function serverRequest (path, payload, cb) {
-    var method = 'post';
-    // If payload
+  const serverRequest = (path, payload, cb) => {
+    let method = 'post';
     if (arguments.length === 2) {
       cb = payload;
       payload = undefined;
       method = 'get';
     }
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', function (data) {
+    let xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', (data) => {
       cb(xhr.responseText);
     });
     xhr.open(method, path);
     xhr.send(payload);
-  }
+  };
 
   // Retrieve File
-  function retrieveFile (evt, cb) {
-    var files = evt.target.files;
-    var f = files[0];
-    var reader = new FileReader();
-    reader.onload = function (raw) {
+  const retrieveFile = (evt, cb) => {
+    let files = evt.target.files;
+    let f = files[0];
+    let reader = new FileReader();
+    reader.onload = (raw) => {
       cb({name: f.name, raw: raw.target.result});
     };
     reader.readAsDataURL(f);
-  }
-
-  // Elt toggle
-  function toggleElts (elt1, elt2, bool) {
-    if (bool) {
-      elt1.style.display = 'block';
-      elt2.style.display = 'none';
-    } else {
-      elt2.style.display = 'block';
-      elt1.style.display = 'none';
-    }
-  }
+  };
 
   // Build Images
-  function buildGallery (fromGallery) {
-    var parentElt = imagesContainer;
-    var elt = gallery;
-    var imageClass = 'images__image';
-    var imageSelectedClass = 'images__image--selected';
-
-    // For each image on click
-    var cbFunc = function (imageurl) {
-      enableElt(selectBtn);
-      serverRequest('/image?imageurl=' + imageurl, function (data) {
-        if (data) {
-          addTitleToElt(JSON.parse(data).imagetitle, selectedTitle);
-          displayElt(selectedTitle);
-        }
-      });
-    };
+  const buildGallery = (fromGallery) => {
     if (!fromGallery) {
-      toggleClass(parentElt, 'images--hidden');
+      toggleClass(elt('.images'), 'images--hidden');
     }
-    clearContent(elt);
-    serverRequest('/images', function (raw) {
-      injectImages(JSON.parse(raw).images, elt, imageClass, imageSelectedClass, cbFunc);
+    clearHTML(elt('.images__gallery'));
+    serverRequest('/images', (raw) => {
+      JSON.parse(raw).images.forEach((image) => {
+        let imageElt = createRawElt(`<span class="images__image" style="background-image: url(/images/${image})" path="${image}"></span>`);
+        onClick(imageElt, () => {
+          stealClass(imageElt, 'images__image--selected');
+          enableElt(elt('.images__select-btn'));
+          serverRequest('/image?imageurl=' + image, (data) => {
+            if (data) {
+              setEltValue(elt('.images__selected-title'), JSON.parse(data).imagetitle);
+              displayElt(elt('.images__selected-title'));
+            }
+          });
+        });
+        let imageDelete = createRawElt(`<span class="images__delete" path="${image}"></span>`);
+        onClick(imageDelete, 'click', () => {
+          serverRequest('/delete', JSON.stringify({
+            item: 'image',
+            imageurl: image
+          }), (data) => {
+            buildGallery(true);
+          });
+        });
+        imageElt.appendChild(imageDelete);
+        elt('.images__gallery').appendChild(imageElt);
+      });
     });
-  }
-
-  // Add title
-  function addTitleToElt (title, elt) {
-    elt.value = title;
-  }
+  };
 
   /** Events **/
 
   // Image Button on click
-  imageBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    outputMainImage = true;
+  elt('.edit__feature-image-btn').addEventListener('click', (e) => {
+    stopE(e);
+    setAttr(elt('.images__select-btn'), 'outputMainImage', 'true');
     buildGallery();
   });
 
   // Add Image Button on click
-  addImageBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    outputMainImage = false;
+  elt('.edit__add-image-btn').addEventListener('click', (e) => {
+    stopE(e);
+    setAttr(elt('.images__select-btn'), 'outputMainImage', '');
     buildGallery();
   });
 
   // Back Button
-  backBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    toggleClass(imagesContainer, 'images--hidden');
+  elt('.images__back-btn').addEventListener('click', (e) => {
+    stopE(e);
+    toggleClass(elt('.images'), 'images--hidden');
   });
 
   // Upload Button
-  uploadBtn.addEventListener('change', function (e) {
-    retrieveFile(e, function (file) {
+  elt('.images__upload-btn').addEventListener('change', (e) => {
+    retrieveFile(e, (file) => {
       serverRequest('/images?name=' + file.name, file.raw, function () {
         buildGallery(true);
       });
@@ -193,47 +188,47 @@
   }, false);
 
   // Select Image
-  selectBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    var path = document.querySelector('.images__image--selected').getAttribute('path');
-    if (outputMainImage) {
-      imageInput.setAttribute('value', path);
-      imageOutput.setAttribute('src', '/images/' + path);
+  elt('.images__select-btn').addEventListener('click', (e) => {
+    stopE(e);
+    let path = elt('.images__image--selected').getAttribute('path');
+    if (elt('images__select-btn').getAttribute('outputMainImage')) {
+      setAttr(elt('.edit__feature-image-output'), 'value', path);
+      setAttr(elt('.edit__feature-image-output'), 'src', '/images/' + path);
     } else {
-      postBody.value = postBody.value + ' ![' + selectedTitle.value + '](/images/' + path + ')';
+      elt('.edit__post-body').value = `${elt('.edit__post-body').value} ![${elt('.images__selected-title').value}](/images/${path})`;
     }
-
-    disableElt(selectBtn);
-    toggleClass(imagesContainer, 'images--hidden');
+    disableElt('.images__select-btn');
+    toggleClass(elt('.images'), 'images--hidden');
   });
 
   // Preview Button
-  previewBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    serverRequest('/marked', postBody.value, function (htmlString) {
-      outputBody.innerHTML = JSON.parse(htmlString).marked;
-      toggleElts(outputBody, postBody, outputBody.style.display === 'none');
+  elt('.edit__preview-btn').addEventListener('click', (e) => {
+    stopE(e);
+    serverRequest('/marked', elt('.edit__post-body').value, (htmlString) => {
+      setHTML(elt('.edit__post-body-output'), JSON.parse(htmlString).marked);
+      toggleElts(elt('.edit__post-body-output'), elt('.edit__post-body'), isHidden(elt('.edit__post-body-output')));
     });
   });
 
   // Output body
-  outputBody.addEventListener('click', function (e) {
-    toggleElts(outputBody, postBody, outputBody.style.display === 'none');
+  elt('.edit__post-body-output').addEventListener('click', (e) => {
+    toggleElts(elt('.edit__post-body-output'), elt('.edit__post-body'), isHidden(elt('.edit__post-body-output')));
   });
 
   // Selected Title
-  selectedTitle.addEventListener('focusout', function (e) {
+  elt('.images__selected-title').addEventListener('focusout', (e) => {
     serverRequest('/image', JSON.stringify({
-      imagetitle: selectedTitle.value,
-      imageurl: document.querySelector('.images__image--selected').getAttribute('path')
-    }), function (title) {
-      addTitleToElt(title, selectedTitle);
+      imagetitle: elt('.images__selected-title').value,
+      imageurl: getAttr(elt('.images__image--selected'), 'path')
+    }), (title) => {
+      setEltValue(elt('.images__selected-title'), title);
     });
   });
 
-  clearImageBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    imageInput.setAttribute('value', '');
-    imageOutput.setAttribute('src', '');
+  // Clear Image btn
+  elt('.edit__clear-image-btn').addEventListener('click', (e) => {
+    stopE(e);
+    setAttr(elt('.edit__feature-image-input'), 'value', '');
+    setAttr(elt('.edit__feature-image-output'), 'src', '');
   });
 })();
