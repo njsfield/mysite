@@ -4,12 +4,13 @@
     {{#if post.imageurl}}
       <img src="/images/{{post.imageurl}}" alt="{{post.imagetitle}}" class="post__image"/>
     {{/if}}
-    <!-- Body -->
+    <!-- Body (post in markdown, converted to HTML)-->
     <div class="post__body">{{{post.postbody}}}</div>
   </div>
 
-  <!-- Edit -->
+
   {{#if credentials.current_user}}
+    <!-- Edit -->
     <a class="button button--black button--action" href="/edit/1">Edit</a>
   {{/if}}
 </section>

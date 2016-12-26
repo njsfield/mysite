@@ -1,5 +1,16 @@
 /***** Login *****/
 
+
+/* Message */
+.prompt {
+    text-align: center;
+}
+
+.prompt--error {
+    color: red;
+}
+
+
 /** Form **/
 .login {
     box-sizing: border-box;
