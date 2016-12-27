@@ -1,5 +1,6 @@
 const {readImages, writeImage, decodeBase64Image, sanitizeImagePath} = require('../../helpers/image-helpers');
 const addImageToDb = require('../../dbrequests/addimage');
+const privateImgs = (img) => !['site-logo.png', 'social-sprite.png'].includes(img);
 
 module.exports = {
   path: '/images',
@@ -12,7 +13,7 @@ module.exports = {
     handler: (req, reply) => {
       if (req.method === 'get') {
         readImages((err, images) => {
-          err ? reply(err) : reply({images: images});
+          err ? reply(err) : reply({images: images.filter(privateImgs)});
         });
       } else {
         let imageData = decodeBase64Image(req.payload);
