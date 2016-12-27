@@ -71,19 +71,23 @@
     bool ? hideElt(elt2) : hideElt(elt1);
   };
 
-  // Request
-  const serverRequest = function (path, payload, cb) {
-    let method = 'post';
-    if (arguments.length === 2) {
-      cb = payload;
-      payload = undefined;
-      method = 'get';
-    }
+  // get Request
+  const getReq = (path, cb) => {
     let xhr = new XMLHttpRequest();
     xhr.addEventListener('load', (data) => {
       cb(xhr.responseText);
     });
-    xhr.open(method, path);
+    xhr.open('get', path);
+    xhr.send();
+  };
+
+  // post Request
+  const postReq = (path, payload, cb) => {
+    let xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', (data) => {
+      cb(xhr.responseText);
+    });
+    xhr.open('post', path);
     xhr.send(payload);
   };
 
@@ -98,32 +102,65 @@
     reader.readAsDataURL(f);
   };
 
+  // Buttons
+
+  const featureImgBtn = elt('.edit__feature-image-btn');
+  const addImgBtn = elt('.edit__add-image-btn');
+  const backBtn = elt('.images__back-btn');
+  const uploadBtn = elt('.images__upload-btn');
+  const selectBtn = elt('.images__select-btn');
+  const previewBtn = elt('.edit__preview-btn');
+  const clearImgbtn = elt('.edit__clear-image-btn');
+
+  const featureImgInputElt = elt('.edit__feature-image-input');
+  const featureImgOutpuElt = elt('.edit__feature-image-output');
+  const overlayElt = elt('.images');
+  const galleryElt = elt('.images__gallery');
+  const titleElt = elt('.images__selected-title');
+
+  const postBodyElt = elt('.edit__post-body');
+  const postBodyOutputElt = elt('.edit__post-body-output');
+
+  // enableTitleElt
+  const setTitleElt = (image) => {
+    getReq(`/image?imageurl=${image}`, (data) => {
+      if (data) {
+        setEltValue(titleElt, JSON.parse(data).imagetitle);
+        displayElt(titleElt);
+      }
+    });
+  };
+
+  // Delete Elt
+  const deleteImg = (image, cb) => {
+    let payload = JSON.stringify({item: 'image', imageurl: image});
+    postReq('/delete', payload, (data) => {
+      cb();
+    });
+  };
+
   // Build Images
   const buildGallery = (fromGallery) => {
-    if (!fromGallery) toggleClass(elt('.images'), 'images--hidden');
-    clearHTML(elt('.images__gallery'));
-    serverRequest('/images', (raw) => {
-      JSON.parse(raw).images.forEach((image) => {
+    let selectedClass = 'images__image--selected';
+    getReq('/images', (raw) => {
+      let images = JSON.parse(raw).images;
+      images.forEach((image) => {
         let imageElt = createRawElt(`<span class="images__image" style="background-image: url(/images/${image})" path="${image}"></span>`);
         onClick(imageElt, () => {
-          stealClass(imageElt, 'images__image--selected');
-          enableElt(elt('.images__select-btn'));
-          serverRequest('/image?imageurl=' + image, (data) => {
-            if (data) {
-              setEltValue(elt('.images__selected-title'), JSON.parse(data).imagetitle);
-              displayElt(elt('.images__selected-title'));
-            }
+          stealClass(imageElt, selectedClass);
+          enableElt(selectBtn);
+          setTitleElt(image);
+        });
+        let deleteElt = createRawElt(`<span class="images__delete" path="${image}"></span>`);
+        onClick(deleteElt, () => {
+          deleteImg(image, () => {
+            hideElt(titleElt);
+            clearHTML(galleryElt);
+            buildGallery();
           });
         });
-        let imageDelete = createRawElt(`<span class="images__delete" path="${image}"></span>`);
-        onClick(imageDelete, () => {
-          serverRequest('/delete', JSON.stringify({item: 'image', imageurl: image}), (data) => {
-            hideElt(elt('.images__selected-title'));
-            buildGallery(true);
-          });
-        });
-        imageElt.appendChild(imageDelete);
-        elt('.images__gallery').appendChild(imageElt);
+        imageElt.appendChild(deleteElt);
+        galleryElt.appendChild(imageElt);
       });
     });
   };
@@ -131,76 +168,81 @@
   /** Events **/
 
   // Image Button on click
-  elt('.edit__feature-image-btn').addEventListener('click', (e) => {
+  featureImgBtn.addEventListener('click', (e) => {
     stopE(e);
-    setAttr(elt('.images__select-btn'), 'outputMainImage', 'true');
+    setAttr(selectBtn, 'outputMainImage', 'true');
+    toggleClass(overlayElt, 'images--hidden');
+    clearHTML(galleryElt);
     buildGallery();
   });
 
   // Add Image Button on click
-  elt('.edit__add-image-btn').addEventListener('click', (e) => {
+  addImgBtn.addEventListener('click', (e) => {
     stopE(e);
-    setAttr(elt('.images__select-btn'), 'outputMainImage', '');
+    setAttr(selectBtn, 'outputMainImage', '');
+    toggleClass(overlayElt, 'images--hidden');
+    clearHTML(galleryElt);
     buildGallery();
   });
 
   // Back Button
-  elt('.images__back-btn').addEventListener('click', (e) => {
+  backBtn.addEventListener('click', (e) => {
     stopE(e);
-    toggleClass(elt('.images'), 'images--hidden');
+    toggleClass(overlayElt, 'images--hidden');
   });
 
   // Upload Button
-  elt('.images__upload-btn').addEventListener('change', (e) => {
+  uploadBtn.addEventListener('change', (e) => {
     retrieveFile(e, (file) => {
-      serverRequest(`/images?name=${file.name}`, file.raw, () => {
-        buildGallery(true);
+      postReq(`/images?name=${file.name}`, file.raw, () => {
+        clearHTML(galleryElt);
+        buildGallery();
       });
     });
   }, false);
 
   // Select Image
-  elt('.images__select-btn').addEventListener('click', (e) => {
+  selectBtn.addEventListener('click', (e) => {
     stopE(e);
     let path = elt('.images__image--selected').getAttribute('path');
-    if (elt('.images__select-btn').getAttribute('outputMainImage')) {
-      setAttr(elt('.edit__feature-image-output'), 'value', path);
-      setAttr(elt('.edit__feature-image-output'), 'src', '/images/' + path);
+    if (selectBtn.getAttribute('outputMainImage')) {
+      setAttr(featureImgOutpuElt, 'value', path);
+      setAttr(featureImgOutpuElt, 'src', `/images/${path}`);
     } else {
-      elt('.edit__post-body').value = `${elt('.edit__post-body').value} ![${elt('.images__selected-title').value}](/images/${path})`;
+      postBodyElt.value = `${postBodyElt.value} ![${titleElt.value}](/images/${path})`;
     }
-    disableElt('.images__select-btn');
-    toggleClass(elt('.images'), 'images--hidden');
+    disableElt(selectBtn);
+    toggleClass(overlayElt, 'images--hidden');
   });
 
   // Preview Button
-  elt('.edit__preview-btn').addEventListener('click', (e) => {
+  previewBtn.addEventListener('click', (e) => {
     stopE(e);
-    serverRequest('/marked', elt('.edit__post-body').value, (htmlString) => {
-      setHTML(elt('.edit__post-body-output'), JSON.parse(htmlString).marked);
-      toggleElts(elt('.edit__post-body-output'), elt('.edit__post-body'), isHidden(elt('.edit__post-body-output')));
+    postReq('/marked', postBodyElt.value, (htmlString) => {
+      setHTML(postBodyOutputElt, JSON.parse(htmlString).marked);
+      toggleElts(postBodyOutputElt, postBodyElt, isHidden(postBodyOutputElt));
     });
   });
 
   // Output body
-  elt('.edit__post-body-output').addEventListener('click', (e) => {
-    toggleElts(elt('.edit__post-body-output'), elt('.edit__post-body'), isHidden(elt('.edit__post-body-output')));
+  postBodyOutputElt.addEventListener('click', (e) => {
+    toggleElts(postBodyOutputElt, postBodyElt, isHidden(postBodyOutputElt));
   });
 
   // Selected Title
-  elt('.images__selected-title').addEventListener('focusout', (e) => {
-    serverRequest('/image', JSON.stringify({
-      imagetitle: elt('.images__selected-title').value,
+  titleElt.addEventListener('focusout', (e) => {
+    postReq('/image', JSON.stringify({
+      imagetitle: titleElt.value,
       imageurl: elt('.images__image--selected').getAttribute('path')
     }), (title) => {
-      setEltValue(elt('.images__selected-title'), title);
+      setEltValue(titleElt, title);
     });
   });
 
   // Clear Image btn
-  elt('.edit__clear-image-btn').addEventListener('click', (e) => {
+  clearImgbtn.addEventListener('click', (e) => {
     stopE(e);
-    setAttr(elt('.edit__feature-image-input'), 'value', '');
-    setAttr(elt('.edit__feature-image-output'), 'src', '');
+    setAttr(featureImgInputElt, 'value', '');
+    setAttr(featureImgOutpuElt, 'src', '');
   });
 })();
