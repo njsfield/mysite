@@ -12,12 +12,12 @@
     width: 100%;
     display: block;
     margin: 3em 0;
+    
     // Hover
     &:hover {
         border-color: lightgrey;
         transform: scale(1.03);
     }
-
     // Title
     &__title {
         box-sizing: border-box;

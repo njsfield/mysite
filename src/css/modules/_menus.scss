@@ -1,6 +1,6 @@
 /* Menus */
-
 .select {
+    font-size: 1rem;
     box-sizing: border-box;
     display: block;
     width: 100%;
@@ -11,6 +11,6 @@
     background: none;
     border-bottom: 1px solid $opaque-grey;
     cursor: pointer;
-    margin: 1rem auto;
+    margin: 1em auto;
     -webkit-appearance: none;
 }
