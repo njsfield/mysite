@@ -23,10 +23,11 @@ module.exports = {
       if (req.method === 'get') {
         if (req.params.url) {
           let imageurl = req.params.url;
-          // Get image blob
+          // Get image, decode, then send back in correct format
           getImage(imageurl, (err, image) => {
-            image = decodeBase64Image(image.imagebody).data;
-            err ? reply(err) : reply(image);
+            if (err) reply(err);
+            image = decodeBase64Image(image.imagebody);
+            reply(image.data).header('content-type', image.type);
           });
         } else {
           // Get all image urls

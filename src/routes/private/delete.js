@@ -1,7 +1,7 @@
 const {deleteImage, deletePost} = require('../../dbrequests/delete');
 
 const removeImageFromDb = (req, reply) => {
-  let imageurl = req.payload.imageurl;
+  let imageurl = JSON.parse(req.payload).imageurl;
   deleteImage(imageurl, (err) => {
     err ? reply(`db delete: 1`) : reply(`${imageurl} deleted`);
   });
