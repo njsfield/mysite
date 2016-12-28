@@ -1,5 +1,13 @@
-const getImage = require('../../dbrequests/getimages').getImage;
-const updateImageTitle = require('../../dbrequests/updateimage');
+const { getImage, updateImageTitle } = require('../../dbrequests/images');
+
+const imageTitleHandler = (req, reply) => {
+  let payload = JSON.parse(req.payload);
+  let imageurl = payload.imageurl;
+  let imagetitle = payload.imagetitle || 'Custom Upload';
+  updateImageTitle(imageurl, imagetitle, (err) => {
+    (err ? reply(err) : reply(imagetitle));
+  });
+};
 
 module.exports = {
   path: '/image',
@@ -15,12 +23,7 @@ module.exports = {
           (err ? reply(err) : reply(image));
         });
       } else {
-        let payload = JSON.parse(req.payload);
-        let imageurl = payload.imageurl;
-        let imagetitle = payload.imagetitle || 'Custom Upload';
-        updateImageTitle(imageurl, imagetitle, (err) => {
-          (err ? reply(err) : reply(imagetitle));
-        });
+        imageTitleHandler(req, reply);
       }
     }
   }

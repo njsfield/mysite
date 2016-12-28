@@ -14,7 +14,6 @@ const images = require('./private/images');
 const image = require('./private/image');
 const login = require('./private/login');
 const logout = require('./private/logout');
-const show = require('./private/show');
 const marked = require('./private/marked');
 
 module.exports = [
@@ -28,7 +27,6 @@ module.exports = [
   edit,
   hide,
   image,
-  show,
   images,
   marked
 ];

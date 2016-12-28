@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { getImages } = require('../dbrequests/images');
 
 const readImages = (cb) => {
   fs.readdir(path.join(__dirname, '../../public/images'), (err, images) => {
@@ -20,25 +21,26 @@ const unlinkImage = (filename, cb) => {
   });
 };
 
-const sanitizeImagePath = (uri) => {
+const sanitizeImagePath = (uri, cb) => {
   uri = uri.replace(/\s/g, '-');
   uri = uri.toLowerCase();
-  let images = fs.readdirSync(path.join(__dirname, '../../public/images'));
-
-  // Check for images
-  let imageFind = (uri) => {
-    return images.indexOf(uri) > -1;
-  };
-
-  // While found
-  while (imageFind(uri)) {
-    if (/\d(?=\.)/.test(uri)) {
-      uri = uri.replace(/\d(?=\.)/, (match) => { return `${++match}`; });
-    } else {
-      uri = uri.replace(/\./, '1.');
+  getImages((err, images) => {
+    if (err) cb(err);
+    images = images.map(image => image.imageurl);
+    // Check for images
+    let imageFind = (uri) => {
+      return images.indexOf(uri) > -1;
+    };
+    // While found
+    while (imageFind(uri)) {
+      if (/\d(?=\.)/.test(uri)) {
+        uri = uri.replace(/\d(?=\.)/, (match) => { return `${++match}`; });
+      } else {
+        uri = uri.replace(/\./, '1.');
+      }
     }
-  }
-  return uri;
+    cb(null, uri);
+  });
 };
 
 const decodeBase64Image = (dataString) => {

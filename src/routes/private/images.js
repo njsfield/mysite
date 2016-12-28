@@ -1,9 +1,18 @@
-const {readImages, writeImage, decodeBase64Image, sanitizeImagePath} = require('../../helpers/image-helpers');
-const addImageToDb = require('../../dbrequests/addimage');
-const privateImgs = (img) => !['site-logo.png', 'social-sprite.png'].includes(img);
+const { decodeBase64Image, sanitizeImagePath } = require('../../helpers/image-helpers');
+const { addImage, getImages, getImage } = require('../../dbrequests/images');
+
+const addImageToDb = (req, reply) => {
+  let imageData = req.payload;
+  sanitizeImagePath(req.query.name, (err, fileName) => {
+    if (err) throw err;
+    addImage(fileName, imageData, (err) => {
+      err ? reply(err) : reply('done');
+    });
+  });
+};
 
 module.exports = {
-  path: '/images',
+  path: '/images/{url*}',
   method: ['get', 'post'],
   config: {
     auth: {
@@ -12,17 +21,23 @@ module.exports = {
     },
     handler: (req, reply) => {
       if (req.method === 'get') {
-        readImages((err, images) => {
-          err ? reply(err) : reply({images: images.filter(privateImgs)});
-        });
-      } else {
-        let imageData = decodeBase64Image(req.payload);
-        let fileName = sanitizeImagePath(req.query.name);
-        writeImage(fileName, imageData.data, (err) => {
-          err ? reply(err) : addImageToDb(fileName, (err) => {
-            err ? reply(err) : reply('done');
+        if (req.params.url) {
+          let imageurl = req.params.url;
+          // Get image blob
+          getImage(imageurl, (err, image) => {
+            image = decodeBase64Image(image.imagebody).data;
+            err ? reply(err) : reply(image);
           });
-        });
+        } else {
+          // Get all image urls
+          getImages((err, images) => {
+            images = images.map(image => image.imageurl);
+            err ? reply(err) : reply({images: images});
+          });
+        }
+      } else {
+        // Add image
+        addImageToDb(req, reply);
       }
     }
   }

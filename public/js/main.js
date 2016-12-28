@@ -103,7 +103,7 @@
 
 	// Feature Image
 	var featureImgInputElt = elt('.edit__feature-image-input');
-	var featureImgOutpuElt = elt('.edit__feature-image-output');
+	var featureImgOutputElt = elt('.edit__feature-image-output');
 
 	// Gallery
 	var overlayElt = elt('.images');
@@ -201,8 +201,8 @@
 	  stopE(e);
 	  var path = elt('.images__image--selected').getAttribute('path');
 	  if (selectBtn.getAttribute('outputMainImage')) {
-	    setAttr(featureImgOutpuElt, 'value', path);
-	    setAttr(featureImgOutpuElt, 'src', '/images/' + path);
+	    setAttr(featureImgInputElt, 'value', path);
+	    setAttr(featureImgOutputElt, 'src', '/images/' + path);
 	  } else {
 	    postBodyElt.value = postBodyElt.value + ' ![' + titleElt.value + '](/images/' + path + ')';
 	  }
@@ -238,7 +238,7 @@
 	clearImgbtn.addEventListener('click', function (e) {
 	  stopE(e);
 	  setAttr(featureImgInputElt, 'value', '');
-	  setAttr(featureImgOutpuElt, 'src', '');
+	  setAttr(featureImgOutputElt, 'src', '');
 	});
 
 /***/ },

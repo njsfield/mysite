@@ -32,7 +32,7 @@ const clearImgbtn = elt('.edit__clear-image-btn');
 
 // Feature Image
 const featureImgInputElt = elt('.edit__feature-image-input');
-const featureImgOutpuElt = elt('.edit__feature-image-output');
+const featureImgOutputElt = elt('.edit__feature-image-output');
 
 // Gallery
 const overlayElt = elt('.images');
@@ -130,8 +130,8 @@ selectBtn.addEventListener('click', (e) => {
   stopE(e);
   let path = elt('.images__image--selected').getAttribute('path');
   if (selectBtn.getAttribute('outputMainImage')) {
-    setAttr(featureImgOutpuElt, 'value', path);
-    setAttr(featureImgOutpuElt, 'src', `/images/${path}`);
+    setAttr(featureImgInputElt, 'value', path);
+    setAttr(featureImgOutputElt, 'src', `/images/${path}`);
   } else {
     postBodyElt.value = `${postBodyElt.value} ![${titleElt.value}](/images/${path})`;
   }
@@ -167,5 +167,5 @@ titleElt.addEventListener('focusout', (e) => {
 clearImgbtn.addEventListener('click', (e) => {
   stopE(e);
   setAttr(featureImgInputElt, 'value', '');
-  setAttr(featureImgOutpuElt, 'src', '');
+  setAttr(featureImgOutputElt, 'src', '');
 });

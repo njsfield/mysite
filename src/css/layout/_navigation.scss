@@ -60,7 +60,7 @@
     &__nick {
         box-sizing: border-box;
         display: inline-block;
-        background: url(/images/site-logo.png) 0 0;
+        background: url(/imgs/site-logo.png) 0 0;
         background-size: cover;
         background-repeat: no-repeat;
         overflow: hidden;
@@ -72,7 +72,7 @@
     &__field {
         box-sizing: border-box;
         display: inline-block;
-        background: url(/images/site-logo.png) -3.4em 0;
+        background: url(/imgs/site-logo.png) -3.4em 0;
         background-size: cover;
         background-repeat: no-repeat;
         overflow: hidden;
@@ -243,7 +243,7 @@
         transition: all .3s ease;
         background-size: cover;
         background-repeat: no-repeat;
-        background-image: url(/images/social-sprite.png);
+        background-image: url(/imgs/social-sprite.png);
         // Hover
         &:hover {
             transform: scale(1.2);
