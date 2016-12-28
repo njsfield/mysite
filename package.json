@@ -4,8 +4,10 @@
   "description": "A personal website to host a biography, a blog, and personal/professional projects. Users can view blog posts and filter them by category. The owner can log in, edit/create/delete/hide blog and portfolio posts.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js && webpack --watch",
+    "dev": "nodemon index.js",
+    "dev-webpack": "nodemon index.js && webpack --watch",
     "start": "node index.js",
+    "style-check": "doiuse public/css/style.css",
     "build-db": "node src/database_builder/build_database.js"
   },
   "repository": {
@@ -33,10 +35,13 @@
     "vision": "^4.1.1"
   },
   "devDependencies": {
+    "autoprefixer": "^6.6.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
     "css-loader": "^0.26.1",
+    "cssnano": "^3.9.1",
+    "doiuse": "^2.5.0",
     "eslint": "^3.11.1",
     "eslint-config-semistandard": "^7.0.0",
     "eslint-config-standard": "^6.2.1",
@@ -45,6 +50,7 @@
     "eslint-plugin-standard": "^2.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^4.1.1",
+    "postcss-loader": "^1.2.1",
     "sass-loader": "^4.1.1",
     "scss-lint": "0.0.0",
     "style-loader": "^0.13.1",

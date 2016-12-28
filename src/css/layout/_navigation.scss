@@ -18,7 +18,9 @@
       }
       @media screen and (min-width: $break-extra-large) {
           justify-content: flex-end;
-          padding: 2rem 2.5rem;
+          padding: 2em 2.5em;
+          width: 25%;
+          height: calc(50% - 11em);
       }
 
     // Fixed
@@ -26,10 +28,6 @@
         position: fixed;
         width: 100%;
         z-index: 4;
-          @media screen and (min-width: $break-extra-large) {
-              width: 25%;
-              height: calc(50% - 11rem);
-          }
     }
     // Logo
     &__logo {
@@ -66,7 +64,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         overflow: hidden;
-        width: 10rem;
+        width: 10em;
         height: 2em;
         max-width: 3.2em;
     }
@@ -150,6 +148,7 @@
     }
     // Links Group
     &__links-group {
+        font-size: 1rem;
         box-sizing: border-box;
         display: block;
         background: black;
@@ -163,13 +162,13 @@
         opacity: 0;
         transition: all .3s cubic-bezier(.27,.89,.29,.82);
         z-index: 1;
-        padding-bottom: 4rem;
+        padding-bottom: 4em;
         .nav--open & {
             top: 0;
             opacity: 1;
         }
           @media screen and (min-width: $break-large) {
-              padding-bottom: 1rem;
+              padding-bottom: 1em;
           }
           @media screen and (min-width: $break-extra-large) {
               top: 0;
@@ -209,7 +208,7 @@
             }
         }
         @media screen and (min-width: $break-extra-large) {
-            padding: 3rem;
+            padding: 3em;
             text-align: right;
             margin-left: auto;
         }
@@ -223,12 +222,12 @@
         font-size: 1rem;
         justify-content: space-between;
         width: 100%;
-        padding: 1rem;
+        padding: 1em;
         position: absolute;
         bottom: 0;
-        padding-bottom: 4rem;
+        padding-bottom: 4em;
           @media screen and (min-width: $break-large) {
-              padding-bottom: 1rem;
+              padding-bottom: 1em;
           }
     }
     // Social Icon
