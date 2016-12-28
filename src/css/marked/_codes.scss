@@ -1,0 +1,39 @@
+/* Code */
+.code {
+    font-size: .8em;
+    font-weight: 200;
+    line-height: 130%;
+    padding: .5em;
+
+    // Inner element
+    &__inline {
+      background-color: $opaque-grey;
+    }
+
+    // Code Colors
+    &--keyword,
+    &--built-in,
+    &--class,
+    &--function {
+        color: $pink;
+    }
+    &--title,
+    &--symbol,
+    &--built_in,
+    &--literal {
+        color: $orange;
+    }
+    &--params {
+        color: $opaque-black;
+    }
+    &--string {
+        color: $lime;
+    }
+    &--number {
+        color: $deep-orange;
+    }
+    &--regexp,
+    &--subst  {
+        color: $crimson;
+    }
+}

@@ -1,0 +1,15 @@
+/* Icons */
+
+.i {
+  box-sizing: border-box;
+  display: inline;
+  
+  // Key
+  &--key {
+    font-style: normal;
+    border: 1px solid $bluegrey;
+    padding: 0 2px;
+    border-radius: 2px;
+    box-shadow: 0px 5px 5px -3px rgba(122,122,122,0.78);
+  }
+}

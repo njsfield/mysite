@@ -47,18 +47,27 @@
 	'use strict';
 
 	// Fetches base sass file to build style.css file to /public
-	// require('./src/css/index.scss');
-	// Fetches base js file to build app.js file to /public
 	__webpack_require__(1);
+	// Fetches base js file to build app.js file to /public
+	__webpack_require__(5);
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	/* Import Custom Library */
-	var _require = __webpack_require__(2),
+	var _require = __webpack_require__(6),
 	    toggleClass = _require.toggleClass,
 	    disableElt = _require.disableElt,
 	    enableElt = _require.enableElt,
@@ -233,7 +242,7 @@
 	});
 
 /***/ },
-/* 2 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';

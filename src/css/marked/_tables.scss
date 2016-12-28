@@ -1,0 +1,33 @@
+/* Tables */
+
+.table {
+    width: 100%;
+    min-width: $container-max;
+    border-collapse: collapse;
+    // Head Container
+    &__thead {
+      border-bottom: 1px dotted $black;
+    }
+
+    // Head
+    &__th {
+        font-weight: 600;
+        letter-spacing: 3px;
+        padding: .5em;
+        &:not(:last-child) {
+            border-right: 1px dotted $black;
+        }
+    }
+    // Row
+    &__td {
+        font-weight: 300;
+        font-size: .9em;
+        padding: .5em;
+        &:not(:last-child) {
+            border-right: 1px dotted $black;
+        }
+        &--left {text-align: left;}
+        &--center {text-align: center;}
+        &--right {text-align: right;}
+    }
+}

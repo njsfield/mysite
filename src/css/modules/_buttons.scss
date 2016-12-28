@@ -1,0 +1,104 @@
+/* Button */
+
+.button {
+  box-sizing: border-box;
+  font-size: .8rem;
+  width: 6em;
+  text-align: center;
+  display: block;
+  padding: .5em;
+  margin: .5em auto;
+  border-radius: .2em;
+  border: none;
+  line-height: 1em;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  @extend %transition-very-fast;
+  outline: none;
+
+  // States
+  &:disabled {
+    opacity: .5;
+    cursor: default;
+  }
+  &:hover {
+    opacity: .5;
+    border: none;
+  }
+
+  // Colors
+  &--grey {
+    background: $bluegrey;
+    color: white;
+  }
+  &--blue {
+    background: $aqua;
+    color: white;
+  }
+  &--green {
+    background: $green;
+    color: white;
+  }
+  &--black {
+    background: $black;
+    color: white;
+  }
+  &--white {
+    background: white;
+    color: $black;
+    border: 1px solid $black;
+    &:hover {
+      background: $green;
+      color: white;
+    }
+  }
+  &--red {
+    background: white;
+    color: $crimson;
+    border: 1px solid $crimson;
+    &:hover {
+      background: $crimson;
+      color: white;
+    }
+  }
+
+  // Helpers
+  &--spaced {
+    display: block;
+    margin: 3em auto;
+  }
+
+  &--free-width {
+    width: auto;
+  }
+
+  &--inline-block {
+    display: inline-block;
+    margin: 0;
+  }
+
+  &--right {
+    position: absolute;
+    right: 0;
+  }
+
+  &--action {
+    padding: 1em;
+    width: 6rem;
+  }
+
+  &--small {
+    font-size: .5em;
+  }
+
+  &--logout {
+    font-size: .5em;
+    padding: .5em;
+    position: absolute;
+    width: auto;
+    right: 0.3em;
+    top: 0;
+    z-index: 8;
+  }
+}

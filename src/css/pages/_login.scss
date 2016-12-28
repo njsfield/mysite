@@ -1,0 +1,27 @@
+/* Login */
+
+/* Message */
+.prompt {
+    text-align: center;
+    &--error {
+        color: $crimson;
+    }
+}
+
+
+/** Form **/
+.login {
+    box-sizing: border-box;
+    font-size: 1rem;
+    max-width: 20em;
+    padding: 1em;
+    margin: 0 auto;
+    &__input {
+        box-sizing: border-box;
+        display: inline-block;
+        width: 100%;
+        padding: 1em;
+        border: none;
+        border-bottom: 1px solid $grey;
+    }
+}
