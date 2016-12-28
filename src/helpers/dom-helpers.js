@@ -83,6 +83,9 @@ const postReq = (path, payload, cb) => {
   xhr.addEventListener('load', (data) => {
     cb(xhr.responseText);
   });
+  xhr.addEventListener('error', (error) => {
+    cb(error);
+  });
   xhr.open('post', path);
   xhr.send(payload);
 };

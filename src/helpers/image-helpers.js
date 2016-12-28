@@ -21,9 +21,13 @@ const unlinkImage = (filename, cb) => {
   });
 };
 
-const sanitizeImagePath = (uri, cb) => {
+const sanitizeImagePath = (uri) => {
   uri = uri.replace(/\s/g, '-');
   uri = uri.toLowerCase();
+  return uri;
+};
+
+const checkDbForImage = (uri, cb) => {
   getImages((err, images) => {
     if (err) cb(err);
     images = images.map(image => image.imageurl);
@@ -58,5 +62,6 @@ module.exports = {
   writeImage,
   sanitizeImagePath,
   decodeBase64Image,
-  unlinkImage
+  unlinkImage,
+  checkDbForImage
 };

@@ -47,7 +47,7 @@ const postBodyOutputElt = elt('.edit__post-body-output');
 
 // enableTitleElt
 const setTitleElt = (image) => {
-  getReq(`/image?imageurl=${image}`, (data) => {
+  getReq(`/images?imageurl=${image}`, (data) => {
     if (data) {
       setEltValue(titleElt, JSON.parse(data).imagetitle);
       displayElt(titleElt);
@@ -118,7 +118,7 @@ backBtn.addEventListener('click', (e) => {
 // Upload Button
 uploadBtn.addEventListener('change', (e) => {
   retrieveFile(e, (file) => {
-    postReq(`/images?name=${file.name}`, file.raw, () => {
+    postReq(`/addimage?name=${file.name}`, file.raw, (response) => {
       clearHTML(galleryElt);
       buildGallery();
     });
@@ -155,7 +155,7 @@ postBodyOutputElt.addEventListener('click', (e) => {
 
 // Selected Title
 titleElt.addEventListener('focusout', (e) => {
-  postReq('/image', JSON.stringify({
+  postReq('/images', JSON.stringify({
     imagetitle: titleElt.value,
     imageurl: elt('.images__image--selected').getAttribute('path')
   }), (title) => {

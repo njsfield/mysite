@@ -46,28 +46,20 @@
 
 	'use strict';
 
-	// Fetches base sass file to build style.css file to /public
 	__webpack_require__(1);
+	// Fetches base sass file to build style.css file to /public
+
+	// require('./src/css/main.scss');
 	// Fetches base js file to build app.js file to /public
-	__webpack_require__(5);
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	/* Import Custom Library */
-	var _require = __webpack_require__(6),
+	var _require = __webpack_require__(2),
 	    toggleClass = _require.toggleClass,
 	    disableElt = _require.disableElt,
 	    enableElt = _require.enableElt,
@@ -118,7 +110,7 @@
 
 	// enableTitleElt
 	var setTitleElt = function setTitleElt(image) {
-	  getReq('/image?imageurl=' + image, function (data) {
+	  getReq('/images?imageurl=' + image, function (data) {
 	    if (data) {
 	      setEltValue(titleElt, JSON.parse(data).imagetitle);
 	      displayElt(titleElt);
@@ -189,7 +181,7 @@
 	// Upload Button
 	uploadBtn.addEventListener('change', function (e) {
 	  retrieveFile(e, function (file) {
-	    postReq('/images?name=' + file.name, file.raw, function () {
+	    postReq('/addimage?name=' + file.name, file.raw, function (response) {
 	      clearHTML(galleryElt);
 	      buildGallery();
 	    });
@@ -226,7 +218,7 @@
 
 	// Selected Title
 	titleElt.addEventListener('focusout', function (e) {
-	  postReq('/image', JSON.stringify({
+	  postReq('/images', JSON.stringify({
 	    imagetitle: titleElt.value,
 	    imageurl: elt('.images__image--selected').getAttribute('path')
 	  }), function (title) {
@@ -242,7 +234,7 @@
 	});
 
 /***/ },
-/* 6 */
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -369,6 +361,9 @@
 	  var xhr = new XMLHttpRequest();
 	  xhr.addEventListener('load', function (data) {
 	    cb(xhr.responseText);
+	  });
+	  xhr.addEventListener('error', function (error) {
+	    cb(error);
 	  });
 	  xhr.open('post', path);
 	  xhr.send(payload);

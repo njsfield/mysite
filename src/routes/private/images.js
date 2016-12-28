@@ -1,13 +1,36 @@
-const { decodeBase64Image, sanitizeImagePath } = require('../../helpers/image-helpers');
-const { addImage, getImages, getImage } = require('../../dbrequests/images');
+const { decodeBase64Image } = require('../../helpers/image-helpers');
+const { getImages, getImage, updateImageTitle } = require('../../dbrequests/images');
 
-const addImageToDb = (req, reply) => {
-  let imageData = req.payload;
-  sanitizeImagePath(req.query.name, (err, fileName) => {
-    if (err) throw err;
-    addImage(fileName, imageData, (err) => {
-      err ? reply(err) : reply('done');
-    });
+// Send Raw Image
+const sendRawImage = (req, reply) => {
+  let imageurl = req.params.url;
+  getImage(imageurl, (err, image) => {
+    if (err) reply(err);
+    image = decodeBase64Image(image.imagebody);
+    reply(image.data).header('content-type', image.type);
+  });
+};
+
+const getAllImageUrls = (req, reply) => {
+  getImages((err, images) => {
+    images = images.map(image => image.imageurl);
+    err ? reply(err) : reply({images: images});
+  });
+};
+
+// UpdateImageTitle
+const imageTitleHandler = (req, reply) => {
+  let payload = JSON.parse(req.payload);
+  let imageurl = payload.imageurl;
+  let imagetitle = payload.imagetitle || 'Custom Upload';
+  updateImageTitle(imageurl, imagetitle, (err) => {
+    (err ? reply(err) : reply(imagetitle));
+  });
+};
+
+const getImageData = (req, reply) => {
+  getImage(req.query.imageurl, (err, image) => {
+    (err ? reply(err) : reply(image));
   });
 };
 
@@ -22,23 +45,14 @@ module.exports = {
     handler: (req, reply) => {
       if (req.method === 'get') {
         if (req.params.url) {
-          let imageurl = req.params.url;
-          // Get image, decode, then send back in correct format
-          getImage(imageurl, (err, image) => {
-            if (err) reply(err);
-            image = decodeBase64Image(image.imagebody);
-            reply(image.data).header('content-type', image.type);
-          });
+          sendRawImage(req, reply);
+        } else if (req.query.imageurl) {
+          getImageData(req, reply);
         } else {
-          // Get all image urls
-          getImages((err, images) => {
-            images = images.map(image => image.imageurl);
-            err ? reply(err) : reply({images: images});
-          });
+          getAllImageUrls(req, reply);
         }
       } else {
-        // Add image
-        addImageToDb(req, reply);
+        imageTitleHandler(req, reply);
       }
     }
   }
