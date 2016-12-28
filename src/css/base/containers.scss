@@ -1,0 +1,9 @@
+/* Container */
+.container {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: $container-max;
+  padding: 5em 1em .8em .8em;
+  margin: 0 auto;
+}

@@ -1,0 +1,123 @@
+/***** Edit Form *****/
+
+.edit {
+    font-size: 1em;
+    box-sizing: border-box;
+    padding: .5em;
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.edit__feature-image-output {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+.edit__feature-image-btn {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Clear */
+.edit__clear-image-btn {
+    box-sizing: border-box;
+    position: absolute;
+    top: -.3em;
+    right: -.3em;
+    width: 1.2em;
+    background: red;
+    border-radius: 50%;
+    border: 0;
+    color: white;
+    font-size: 2em;
+    font-weight: 100;
+    opacity: 0;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.edit__clear-image-btn:hover {
+    opacity: 1;
+}
+
+
+.edit__label {
+    box-sizing: border-box;
+    display: block;
+    margin: 1.5em auto;
+    font-size: 1.2em;
+    color: grey;
+}
+.edit__label--toggle {
+    box-sizing: border-box;
+    margin: 3em auto;
+}
+.edit__text-input {
+    box-sizing: border-box;
+    display: block;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    width: 100%;
+    margin: 1em auto;
+    padding-bottom: .1em;
+}
+
+
+
+/* Postbody */
+
+.edit__post-container {
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.edit__post-mods {
+    box-sizing: border-box;
+    display: inline-block;
+    position: absolute;
+    top: -2.5em;
+    right: 0;
+}
+
+
+.edit__post-body {
+    box-sizing: border-box;
+    font-size: .9em;
+    width: 100%;
+    resize: none;
+    overflow-y: scroll;
+    height: 25em;
+    line-height: 1.3em;
+    color: rgb(90,90,90);
+    outline: none;
+    padding: .5em;
+}
+.edit__post-body-output {
+    box-sizing: border-box;
+    font-size: .9em;
+    width: 100%;
+    resize: none;
+    overflow-y: scroll;
+    height: 25em;
+    padding: .5em;
+}
+
+
+
+
+/* Actions */
+
+.edit__actions {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}

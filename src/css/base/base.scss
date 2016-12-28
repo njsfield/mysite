@@ -1,0 +1,33 @@
+@import 'normalize';
+@import 'variables';
+@import 'mixins';
+@import 'fonts';
+@import 'containers';
+@import 'marked';
+
+/*** Base ***/
+
+html {
+    font-size: 1em;
+    @media screen and (min-width: $break-small) {
+        font-size: 1.1em;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+}
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    outline: 0;
+}

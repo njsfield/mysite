@@ -1,0 +1,10 @@
+/* Type */
+
+body {
+    @include font-open-sans;
+}
+
+code,
+textarea {
+    @include font-space-mono;
+}
