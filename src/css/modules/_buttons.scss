@@ -1,3 +1,5 @@
+/* Button */
+
 .button {
   box-sizing: border-box;
   font-size: .8rem;
@@ -12,8 +14,10 @@
   cursor: pointer;
   text-transform: uppercase;
   text-decoration: none;
-  transition: all .2s ease;
+  @extend %transition-very-fast;
   outline: none;
+
+  // States
   &:disabled {
     opacity: .5;
     cursor: default;
@@ -22,8 +26,10 @@
     opacity: .5;
     border: none;
   }
+
+  // Colors
   &--grey {
-    background: $lightgrey;
+    background: $bluegrey;
     color: white;
   }
   &--blue {
@@ -56,6 +62,8 @@
       color: white;
     }
   }
+
+  // Helpers
   &--spaced {
     display: block;
     margin: 3em auto;

@@ -1,0 +1,15 @@
+//Mixins
+
+// .h1,.h2,.h3,.h4,.h5,.h6
+@mixin heading-set {
+  @for $i from 1 through 6 {
+    .h#{$i} {
+      margin: 2em 0;
+      text-align: left;
+      font-weight: $i * 100 + 100;
+      &--center {
+        text-align: center;
+      }
+    }
+  }
+}

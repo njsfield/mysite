@@ -1,0 +1,10 @@
+/* Anchor */
+
+.a {
+    color: $lightblue;
+    @extend %transition-fast;
+    // Hover
+    &:hover {
+        color: $purple;
+    }
+}

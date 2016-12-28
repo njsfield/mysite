@@ -1,0 +1,39 @@
+/* List */
+
+// Unordered
+.ul {
+    list-style: none;
+    padding: 0;
+    margin: .3em;
+    // List '+'
+    .li {
+        padding-top: .2em;
+        padding-bottom: .2em;
+        padding-left: 1.5em;
+        font-weight: 300;
+        &:before {
+            content: ' + ';
+            position: relative;
+            display: inline-block;
+            margin-right: .2em;
+            top: .1em;
+            font-size: 1.5em;
+        }
+    }
+}
+
+// Ordered
+.ol {
+    list-style: none;
+    padding: 0;
+    margin: .3em;
+    // List 'IIV'
+    .li {
+        list-style-type: upper-roman;
+        list-style-position: inside;
+        padding-top: .5em;
+        padding-bottom: .5em;
+        padding-left: 1.5em;
+        font-weight: 300;
+    }
+}

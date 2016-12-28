@@ -1,0 +1,24 @@
+// Placeholders
+
+//Fast transition
+%transition-fast {
+    transition: all .3s ease;
+}
+
+//Very fast transition
+%transition-very-fast {
+    transition: all .2s ease;
+}
+
+// Fonts
+%font-times {
+    font-family: 'Times New Roman', serif;
+}
+
+%font-open-sans {
+    font-family: 'Open Sans', arial, sans-serif;
+}
+
+%font-space-mono {
+    font-family: 'Space Mono', monospace;
+}

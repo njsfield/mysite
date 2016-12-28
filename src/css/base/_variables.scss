@@ -1,0 +1,43 @@
+// Break Points
+$break-small: 500px;
+$break-medium: 700px;
+$break-large: 900px;
+$break-extra-large: 1500px;
+
+// Max width of container
+$container-max: 650px;
+
+// Colors
+
+$lightgrey: #D2D2D2;
+$bluegrey: #607D8B;
+$softgrey: #787878;
+$grey: #333;
+$black: #000;
+
+$lightblue: #78AAFF;
+$blue: #0064FF;
+$purple: #6400FF;
+$deeppurple: #643264;
+$pink: #8E24AA;
+
+$aqua: #00BCD4;
+$lightgreen: #00FFC8;
+$green: #009688;
+$lime: #8BC34A;
+
+$orange: #FFA000;
+$salmon: salmon;
+$deep-orange: #FF6F00;
+$crimson: #B71C1C;
+
+
+$opaque-black: rgba(0,0,0,0.6);
+$opaque-grey: rgba(0,0,0,0.1);
+$transparent: rgba(0,0,0,0);
+$almost-black: rgba(0,0,0,0.9);
+
+// Toggle Colors
+$toggle-top-line-color: $lightgrey;
+$toggle-mid-line-color: $softgrey;
+$toggle-bottom-line-color: black;

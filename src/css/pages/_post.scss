@@ -1,0 +1,34 @@
+/* Post */
+
+.post {
+  font-size: 1em;
+
+  /* Heading Container */
+  &__heading {
+    margin: 3em 0;
+  }
+
+  /* Heading & Date */
+  &__header {
+      display: block;
+      font-weight: 500;
+      color: $black;
+      text-align: center;
+      position: relative;
+      letter-spacing: .1em;
+      margin: 1em;
+  }
+  &__date {
+      display: block;
+      font-weight: 100;
+      text-align: center;
+      position: relative;
+      margin: 1em;
+      letter-spacing: .3em;
+  }
+
+  &__body {
+      font-size: 1em;
+  }
+
+}

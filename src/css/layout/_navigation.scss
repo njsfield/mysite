@@ -1,0 +1,275 @@
+/* Navigation
+============*/
+
+.nav {
+    box-sizing: border-box;
+    display: flex;
+    font-size: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    @extend %transition-fast;
+    text-transform: uppercase;
+      @media screen and (min-width: $break-small) {
+          padding: 2em;
+      }
+      @media screen and (min-width: $break-large) {
+          font-size: 1.2rem;
+      }
+      @media screen and (min-width: $break-extra-large) {
+          justify-content: flex-end;
+          padding: 2rem 2.5rem;
+      }
+
+    // Fixed
+    &--fixed {
+        position: fixed;
+        width: 100%;
+        z-index: 4;
+          @media screen and (min-width: $break-extra-large) {
+              width: 25%;
+              height: calc(50% - 11rem);
+          }
+    }
+    // Logo
+    &__logo {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        font-size: 1rem;
+        justify-content: flex-end;
+        align-items: flex-end;
+        height: 100%;
+        width: auto;
+        z-index: 2;
+        @extend %transition-fast;
+        &:hover {
+            transform: scale(1.2);
+            opacity: 0.5;
+            transform-origin: 50% 70%;
+        }
+        .nav--open & {
+            color: white;
+        }
+          @media screen and (min-width: $break-extra-large) {
+              flex-direction: column;
+              height: 100%;
+              font-size: 2rem
+          }
+    }
+
+    // 'Nick'
+    &__nick {
+        box-sizing: border-box;
+        display: inline-block;
+        background: url(/images/site-logo.png) 0 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        width: 10rem;
+        height: 2em;
+        max-width: 3.2em;
+    }
+    // 'Field'
+    &__field {
+        box-sizing: border-box;
+        display: inline-block;
+        background: url(/images/site-logo.png) -3.4em 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        width: 10rem;
+        height: 2em;
+        max-width: 3.5em;
+    }
+    // Toggle
+    &__toggle {
+        box-sizing: border-box;
+        font-size: 2rem;
+        z-index: 2;
+        width: 1em;
+        height: .75em;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        @extend %transition-fast;
+        // Hover
+        &:hover {
+            transform: scale(1.2);
+            opacity: 0.5;
+            transform-origin: 50% 70%;
+            @media screen and (min-width: $break-extra-large) {
+                -webkit-filter: invert(.75);
+                opacity: 1;
+                filter: invert(.75);
+            }
+        }
+        @media screen and (min-width: $break-extra-large) {
+            display: none;
+        }
+    }
+    // Toggle Line
+    &__toggle-line {
+        box-sizing: border-box;
+        width: 100%;
+        height: 10%;
+        background: $toggle-mid-line-color;
+        border-top: 1px solid white;
+        display: block;
+        @extend %transition-very-fast;
+        .nav--open & {
+            background: $transparent;
+            border-top: 0;
+        }
+        // Top
+        &--top {
+            background: $toggle-top-line-color;
+            position: absolute;
+            top: 0;
+            .nav--open & {
+                top: 45%;
+                transform: rotate(45deg);
+                background: white;
+            }
+        }
+        // Bottom
+        &--bottom {
+            background: $toggle-bottom-line-color;
+            position: absolute;
+            bottom: 0;
+            .nav--open & {
+                bottom: 45%;
+                transform: rotate(-45deg);
+                background: white;
+            }
+        }
+    }
+    // Links Group
+    &__links-group {
+        box-sizing: border-box;
+        display: block;
+        background: black;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: -100%;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        opacity: 0;
+        transition: all .3s cubic-bezier(.27,.89,.29,.82);
+        z-index: 1;
+        padding-bottom: 4rem;
+        .nav--open & {
+            top: 0;
+            opacity: 1;
+        }
+          @media screen and (min-width: $break-large) {
+              padding-bottom: 1rem;
+          }
+          @media screen and (min-width: $break-extra-large) {
+              top: 0;
+              opacity: 1;
+              width: 25%;
+              transition-duration: 0ms;
+          }
+
+    }
+    // Links
+    &__links {
+        box-sizing: border-box;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    // Link
+    &__link {
+        box-sizing: border-box;
+        display: block;
+        padding: 4em;
+        font-weight: 200;
+        text-decoration: none;
+        color: white;
+        opacity: 1;
+        transition: all .3s ease;
+        &:hover {
+            opacity: 0.5;
+            @media screen and (min-width: $break-extra-large) {
+                transform-origin: 90% 30%;
+            }
+        }
+        @media screen and (min-width: $break-extra-large) {
+            padding: 3rem;
+            text-align: right;
+            margin-left: auto;
+        }
+
+    }
+    // Social Container
+    &__icons {
+        box-sizing: border-box;
+        display: flex;
+        list-style: none;
+        font-size: 1rem;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1rem;
+        position: absolute;
+        bottom: 0;
+        padding-bottom: 4rem;
+          @media screen and (min-width: $break-large) {
+              padding-bottom: 1rem;
+          }
+    }
+    // Social Icon
+    &__icon {
+        box-sizing: border-box;
+        color: white;
+        display: inline-block;
+        font-size: 1.7em;
+        width: 1em;
+        height: 1em;
+        text-decoration: none;
+        overflow: hidden;
+        transition: all .3s ease;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url(/images/social-sprite.png);
+        // Hover
+        &:hover {
+            transform: scale(1.2);
+            opacity: 0.5;
+            transform-origin: 50% 70%;
+        }
+        // Twitter
+        &--twitter{
+            background-position: 0 0;
+        }
+
+        // Mail
+        &--mail{
+            background-position: -1em 0;
+        }
+
+        // LinkedIn
+        &--linkedin{
+            background-position: -2em 0;
+        }
+
+        // Github
+        &--github{
+            background-position: -3em 0;
+        }
+
+    }
+}
