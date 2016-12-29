@@ -33,15 +33,18 @@ const addImage = (imageurl, imagebody, cb) => {
   ($1, 'Custom Upload', CURRENT_DATE);`;
 
   let secondQuery = `INSERT INTO imagebodies (imageid, imagebody)
-                  VALUES ((SELECT MAX(imageid) FROM images), $1 );`;
+                  VALUES ((SELECT imageid FROM images WHERE imageurl = $1), $2 );`;
 
-  dbConn.query('BEGIN TRANSACTION;', () => {
-    dbConn.query(firstQuery, [imageurl], () => {
-      dbConn.query(secondQuery, [imagebody], (err, data) => {
-        (err) ? cb(err) : cb(null);
-        dbConn.query('COMMIT');
+  dbConn.query(firstQuery, [imageurl], (err) => {
+    if (err) throw err;
+    else {
+      dbConn.query(secondQuery, [imageurl, imagebody], (err, data) => {
+        if (err) throw err;
+        else {
+          cb(data);
+        }
       });
-    });
+    }
   });
 };
 

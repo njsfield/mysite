@@ -46,20 +46,24 @@
 
 	'use strict';
 
-	__webpack_require__(1);
+	__webpack_require__(5);
 	// Fetches base sass file to build style.css file to /public
 	//
 	// require('./src/css/main.scss');
 	// Fetches base js file to build app.js file to /public
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	/* Import Custom Library */
-	var _require = __webpack_require__(2),
+	var _require = __webpack_require__(6),
 	    toggleClass = _require.toggleClass,
 	    disableElt = _require.disableElt,
 	    enableElt = _require.enableElt,
@@ -181,8 +185,8 @@
 	// Upload Button
 	uploadBtn.addEventListener('change', function (e) {
 	  retrieveFile(e, function (file) {
-	    // console.log('filename: ', file.name);
-	    postReq('/addimage?name=' + file.name, file.raw, function (response) {
+	    var name = file.name.replace(/\s/g, '-').toLowerCase();
+	    postReq('/addimage?name=' + name, file.raw, function (response) {
 	      clearHTML(galleryElt);
 	      buildGallery();
 	      uploadBtn.value = '';
@@ -236,7 +240,7 @@
 	});
 
 /***/ },
-/* 2 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
