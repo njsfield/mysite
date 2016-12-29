@@ -1,10 +1,26 @@
 const {deleteImage, deletePost} = require('../../dbrequests/delete');
+const credentialsCheck = require('../../helpers/credentialscheck');
 
 const removeImageFromDb = (req, reply) => {
-  let imageurl = JSON.parse(req.payload).imageurl;
-  deleteImage(imageurl, (err) => {
-    err ? reply(`db delete: 1`) : reply(`${imageurl} deleted`);
-  });
+  if (!credentialsCheck(req)) {
+    reply('Not Authorized');
+  } else {
+    let payload = JSON.parse(req.payload);
+    let imageurl = payload.imageurl;
+    deleteImage(imageurl, (err) => {
+      err ? console.log('Failed to delete Image from DB') : reply(`${imageurl} deleted`);
+    });
+  }
+};
+
+const deletePostFromDb = (req, reply) => {
+  if (!credentialsCheck(req)) {
+    reply('Not Authorized');
+  } else {
+    deletePost(req.params.id, (err) => {
+      err ? console.log('Failed to delete post from DB') : reply.redirect('/blog');
+    });
+  }
 };
 
 // const delete
@@ -12,16 +28,22 @@ const removeImageFromDb = (req, reply) => {
 module.exports = {
   path: '/delete/{id*}',
   method: ['get', 'post'],
-  handler: (req, reply) => {
-    if (req.method === 'post') {
-      let payload = JSON.parse(req.payload);
-      if (payload.item === 'image') {
-        removeImageFromDb(req, reply);
+  config: {
+    auth: {
+      strategy: 'session',
+      mode: 'try'
+    },
+    plugins: {
+      'hapi-auth-cookie': {
+        redirectTo: false
       }
-    } else {
-      deletePost(req.params.id, (err) => {
-        err ? reply(`error deleting post`) : reply.redirect('/blog');
-      });
+    },
+    handler: (req, reply) => {
+      if (req.method === 'post') {
+        removeImageFromDb(req, reply);
+      } else {
+        deletePostFromDb(req, reply);
+      }
     }
   }
 };

@@ -46,6 +46,11 @@
             transform: scale(1.2);
             opacity: 0.5;
             transform-origin: 50% 70%;
+            @media screen and (min-width: $break-extra-large) {
+                -webkit-filter: invert(.75);
+                opacity: 1;
+                filter: invert(.75);
+            }
         }
         .nav--open & {
             color: white;

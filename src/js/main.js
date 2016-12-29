@@ -118,9 +118,11 @@ backBtn.addEventListener('click', (e) => {
 // Upload Button
 uploadBtn.addEventListener('change', (e) => {
   retrieveFile(e, (file) => {
+    // console.log('filename: ', file.name);
     postReq(`/addimage?name=${file.name}`, file.raw, (response) => {
       clearHTML(galleryElt);
       buildGallery();
+      uploadBtn.value = '';
     });
   });
 }, false);

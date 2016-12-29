@@ -181,9 +181,11 @@
 	// Upload Button
 	uploadBtn.addEventListener('change', function (e) {
 	  retrieveFile(e, function (file) {
+	    // console.log('filename: ', file.name);
 	    postReq('/addimage?name=' + file.name, file.raw, function (response) {
 	      clearHTML(galleryElt);
 	      buildGallery();
+	      uploadBtn.value = '';
 	    });
 	  });
 	}, false);
@@ -375,7 +377,8 @@
 	  var f = files[0];
 	  var reader = new FileReader();
 	  reader.onload = function (raw) {
-	    cb({ name: f.name, raw: raw.target.result });
+	    var result = raw.target.result;
+	    cb({ name: f.name, raw: result });
 	  };
 	  reader.readAsDataURL(f);
 	};
