@@ -1,5 +1,6 @@
 const { decodeBase64Image } = require('../../helpers/image-helpers');
 const { getImages, getImage, updateImageTitle } = require('../../dbrequests/images');
+const credentialsCheck = require('../../helpers/credentialscheck');
 
 // Send Raw Image
 const sendRawImage = (req, reply) => {
@@ -12,26 +13,38 @@ const sendRawImage = (req, reply) => {
 };
 
 const getAllImageUrls = (req, reply) => {
-  getImages((err, images) => {
-    images = images.map(image => image.imageurl);
-    err ? reply(err) : reply({images: images});
-  });
+  if (!credentialsCheck(req)) {
+    reply('Not Authorized');
+  } else {
+    getImages((err, images) => {
+      images = images.map(image => image.imageurl);
+      err ? reply(err) : reply({images: images});
+    });
+  }
 };
 
 // UpdateImageTitle
 const imageTitleHandler = (req, reply) => {
-  let payload = JSON.parse(req.payload);
-  let imageurl = payload.imageurl;
-  let imagetitle = payload.imagetitle || 'Custom Upload';
-  updateImageTitle(imageurl, imagetitle, (err) => {
-    (err ? reply(err) : reply(imagetitle));
-  });
+  if (!credentialsCheck(req)) {
+    reply('Not Authorized');
+  } else {
+    let payload = JSON.parse(req.payload);
+    let imageurl = payload.imageurl;
+    let imagetitle = payload.imagetitle || 'Custom Upload';
+    updateImageTitle(imageurl, imagetitle, (err) => {
+      (err ? reply(err) : reply(imagetitle));
+    });
+  }
 };
 
 const getImageData = (req, reply) => {
-  getImage(req.query.imageurl, (err, image) => {
-    (err ? reply(err) : reply(image));
-  });
+  if (!credentialsCheck(req)) {
+    reply('Not Authorized');
+  } else {
+    getImage(req.query.imageurl, (err, image) => {
+      (err ? reply(err) : reply(image));
+    });
+  }
 };
 
 module.exports = {
@@ -41,6 +54,11 @@ module.exports = {
     auth: {
       strategy: 'session',
       mode: 'try'
+    },
+    plugins: {
+      'hapi-auth-cookie': {
+        redirectTo: false
+      }
     },
     handler: (req, reply) => {
       if (req.method === 'get') {
