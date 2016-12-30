@@ -27,6 +27,7 @@
     "hapi": "^15.2.0",
     "hapi-auth-cookie": "^6.1.1",
     "hapi-context-credentials": "^2.0.0",
+    "hapi-error": "^1.6.0",
     "highlight.js": "^9.9.0",
     "inert": "^4.0.3",
     "joi": "^10.0.1",

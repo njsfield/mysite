@@ -49,7 +49,7 @@
 	__webpack_require__(1);
 	// Fetches base sass file to build style.css file to /public
 	//
-	// require('./src/css/main.scss');
+	__webpack_require__(3);
 	// Fetches base js file to build app.js file to /public
 
 /***/ },
@@ -416,7 +416,12 @@
 	};
 
 /***/ },
-/* 3 */,
+/* 3 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
 /* 4 */,
 /* 5 */,
 /* 6 */,

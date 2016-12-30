@@ -1,3 +1,13 @@
 /* Heading */
 
 @include heading-set;
+
+.h1 {
+  &--huge {
+    font-size: 4em;
+    margin: 0;
+    @media screen and (min-width: $break-medium) {
+      font-size: 9em;
+    }
+  }
+}
