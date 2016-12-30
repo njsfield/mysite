@@ -30,7 +30,9 @@ const wrongPassword = (username) => {
   };
 };
 
-const loginHandler = (username, password, req, reply) => {
+const loginHandler = (req, reply) => {
+  let username = req.payload.username;
+  let password = req.payload.password;
   checkUser(username, (err, data) => {
     if (err) {
       throw err;
@@ -59,9 +61,7 @@ module.exports = {
       if (req.method === 'get') {
         reply.view('login', { message: 'Please Kindly Log In' });
       } else {
-        let username = req.payload.username;
-        let password = req.payload.password;
-        loginHandler(username, password, req, reply);
+        loginHandler(req, reply);
       }
     }
   }

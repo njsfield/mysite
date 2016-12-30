@@ -1,14 +1,14 @@
 const {deleteImage, deletePost} = require('../../dbrequests/delete');
 const credentialsCheck = require('../../helpers/credentialscheck');
 
-const removeImageFromDb = (req, reply) => {
+const deleteImageFromDb = (req, reply) => {
   if (!credentialsCheck(req)) {
     reply('Not Authorized');
   } else {
     let payload = JSON.parse(req.payload);
     let imageurl = payload.imageurl;
     deleteImage(imageurl, (err) => {
-      err ? console.log('Failed to delete Image from DB') : reply(`${imageurl} deleted`);
+      err ? reply(err) : reply(`${imageurl} deleted`);
     });
   }
 };
@@ -18,7 +18,7 @@ const deletePostFromDb = (req, reply) => {
     reply('Not Authorized');
   } else {
     deletePost(req.params.id, (err) => {
-      err ? console.log('Failed to delete post from DB') : reply.redirect('/blog');
+      err ? reply(err) : reply.redirect('/blog');
     });
   }
 };
@@ -40,7 +40,7 @@ module.exports = {
     },
     handler: (req, reply) => {
       if (req.method === 'post') {
-        removeImageFromDb(req, reply);
+        deleteImageFromDb(req, reply);
       } else {
         deletePostFromDb(req, reply);
       }

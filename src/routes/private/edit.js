@@ -2,8 +2,33 @@ const { getPost } = require('../../dbrequests/posts');
 const getCategories = require('../../dbrequests/getcategories');
 const updatePost = require('../../dbrequests/updatepost');
 
+// Get Post contents via uri, send contents
+const sendPostContentsToEdit = (req, reply) => {
+  let posturi = req.params.uri;
+  getPost(posturi, (err, post) => {
+    if (err) throw err;
+    getCategories((err, categories) => {
+      if (err) throw err;
+      if (post.postid === 1) post.homepost = true;
+      reply.view('edit', {post: post, categories: categories});
+    });
+  });
+};
+
+// Update post to DB and redirect
+const updatePostToDb = (req, reply) => {
+  let payload = req.payload;
+  payload.live = payload.live === 'on';
+  payload.posturi = req.params.uri;
+  updatePost(payload, (err) => {
+    if (err) throw err;
+    let uri = `/blog/${payload.posturi}`;
+    reply.redirect(uri);
+  });
+};
+
 module.exports = {
-  path: '/edit/{id}',
+  path: '/edit/{uri}',
   method: ['get', 'post'],
   config: {
     auth: {
@@ -12,24 +37,9 @@ module.exports = {
     },
     handler: (req, reply) => {
       if (req.method === 'get') {
-        let postid = req.params.id || 1;
-        getPost(postid, (err, post) => {
-          if (err) throw err;
-          getCategories((err, categories) => {
-            if (err) throw err;
-            if (post.postid === 1) post.homepost = true;
-            reply.view('edit', {post: post, categories: categories});
-          });
-        });
+        sendPostContentsToEdit(req, reply);
       } else {
-        let payload = req.payload;
-        payload.live = payload.live === 'on';
-        updatePost(payload, (err) => {
-          if (err) throw err;
-          let postid = req.url.path.slice(-1);
-          let uri = postid === '1' ? '/' : `/blog/${postid}`;
-          reply.redirect(uri);
-        });
+        updatePostToDb(req, reply);
       }
     }
   }

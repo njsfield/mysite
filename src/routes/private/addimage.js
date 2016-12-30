@@ -1,22 +1,16 @@
-const { checkDbForImage } = require('../../helpers/image-helpers');
-const { addImage } = require('../../dbrequests/images');
+const { prepareURIForDb } = require('../../helpers/uri-helpers');
+const { addImage, getImages } = require('../../dbrequests/images');
 const credentialsCheck = require('../../helpers/credentialscheck');
 
 // Add Image to Database
 const addImageToDb = (req, reply) => {
   if (!credentialsCheck(req)) {
-    // console.log('Not authorized');
     reply('Not Authorized');
   } else {
     let imageData = req.payload;
-    // console.log('name:', req.query.name);
-    // console.log('payload length:', req.payload.length);
-    checkDbForImage(req.query.name, (err, fileName) => {
-      // console.log('error checking filename:', err);
-      // console.log('filename: ', fileName);
-      err ? reply(err) : addImage(fileName, imageData, (err) => {
-        // console.log('error adding image: ', err);
-        // console.log('============================');
+    let uri = req.query.name;
+    prepareURIForDb(uri, getImages, 'imageurl', (err, newURI) => {
+      err ? reply(err) : addImage(newURI, imageData, (err) => {
         err ? reply(err) : reply('done');
       });
     });
@@ -40,7 +34,6 @@ module.exports = {
       }
     },
     handler: (req, reply) => {
-      // console.log('Addimage route called');
       addImageToDb(req, reply);
     }
   }

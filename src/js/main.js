@@ -19,6 +19,9 @@ getReq,
 postReq,
 retrieveFile } = require('../helpers/dom-helpers.js');
 
+// Sanitize URI
+const { sanitizeURI } = require('../helpers/uri-helpers.js');
+
 /** Dom Elements **/
 
 // Buttons
@@ -118,7 +121,7 @@ backBtn.addEventListener('click', (e) => {
 // Upload Button
 uploadBtn.addEventListener('change', (e) => {
   retrieveFile(e, (file) => {
-    let name = file.name.replace(/\s/g, '-').toLowerCase();
+    let name = sanitizeURI(file.name);
     postReq(`/addimage?name=${name}`, file.raw, (response) => {
       clearHTML(galleryElt);
       buildGallery();

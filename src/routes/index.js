@@ -9,7 +9,6 @@ const portfolio = require('./public/portfolio');
 const compose = require('./private/compose');
 const del = require('./private/delete');
 const edit = require('./private/edit');
-const hide = require('./private/hide');
 const images = require('./private/images');
 const addimage = require('./private/addimage');
 const login = require('./private/login');
@@ -25,7 +24,6 @@ module.exports = [
   compose,
   del,
   edit,
-  hide,
   addimage,
   images,
   marked

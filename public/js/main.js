@@ -46,24 +46,20 @@
 
 	'use strict';
 
-	__webpack_require__(5);
+	__webpack_require__(1);
 	// Fetches base sass file to build style.css file to /public
 	//
 	// require('./src/css/main.scss');
 	// Fetches base js file to build app.js file to /public
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	/* Import Custom Library */
-	var _require = __webpack_require__(6),
+	var _require = __webpack_require__(2),
 	    toggleClass = _require.toggleClass,
 	    disableElt = _require.disableElt,
 	    enableElt = _require.enableElt,
@@ -83,6 +79,12 @@
 	    getReq = _require.getReq,
 	    postReq = _require.postReq,
 	    retrieveFile = _require.retrieveFile;
+
+	// Sanitize URI
+
+
+	var _require2 = __webpack_require__(7),
+	    sanitizeURI = _require2.sanitizeURI;
 
 	/** Dom Elements **/
 
@@ -185,7 +187,7 @@
 	// Upload Button
 	uploadBtn.addEventListener('change', function (e) {
 	  retrieveFile(e, function (file) {
-	    var name = file.name.replace(/\s/g, '-').toLowerCase();
+	    var name = sanitizeURI(file.name);
 	    postReq('/addimage?name=' + name, file.raw, function (response) {
 	      clearHTML(galleryElt);
 	      buildGallery();
@@ -240,7 +242,7 @@
 	});
 
 /***/ },
-/* 6 */
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -411,6 +413,51 @@
 	  getReq: getReq,
 	  postReq: postReq,
 	  retrieveFile: retrieveFile
+	};
+
+/***/ },
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// Convert URIs. E.G 'Welcome To "My Site"' becomes 'welcome-to-%22my-site%22'
+	var sanitizeURI = function sanitizeURI(uri) {
+	  return encodeURIComponent(uri.toLowerCase().replace(/\s/g, '-'));
+	};
+
+	// Takes uri, query function (e.g. getImages), a key to check, and calls back an incremented (if necessary) uri
+	var prepareURIForDb = function prepareURIForDb(uri, queryFunc, key, cb) {
+	  queryFunc(function (err, data) {
+	    if (err) cb(err);
+	    data = data ? data.map(function (data) {
+	      return data[key];
+	    }) : [];
+	    // Check URI function
+	    var existingURI = function existingURI(currentUri) {
+	      return data.indexOf(currentUri) > -1;
+	    };
+	    // While found, increments URI. E.G 'Welcome To My Site1' becomes 'Welcome To My Site2'
+	    while (existingURI(uri)) {
+	      if (/\d(?=\.)/.test(uri)) {
+	        uri = uri.replace(/\d(?=\.)/, function (match) {
+	          return '' + ++match;
+	        });
+	      } else {
+	        uri = uri.replace(/\./, '1.');
+	      }
+	    }
+	    cb(null, uri);
+	  });
+	};
+
+	module.exports = {
+	  sanitizeURI: sanitizeURI,
+	  prepareURIForDb: prepareURIForDb
 	};
 
 /***/ }

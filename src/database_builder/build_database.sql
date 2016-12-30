@@ -10,6 +10,7 @@ DROP  TABLE IF EXISTS imagebodies cascade;
 CREATE TABLE posts (
   postid SERIAL PRIMARY KEY NOT NULL,
   posttitle Text NOT NULL,
+  posturi Text NOT NULL,
   imageid INTEGER,
   creationdate DATE NOT NULL,
   modifieddate DATE NOT NULL,
@@ -59,10 +60,14 @@ INSERT INTO categories (categoryname) VALUES
 ('CSS'),
 ('JavaScript'),
 ('Design'),
-('Portfolio');
+('Portfolio'),
+('Databases'),
+('Testing'),
+('HTML'),
+('Personal');
 
-INSERT INTO posts (posttitle, imageid, creationdate, modifieddate, live, categoryid, ownerid) VALUES
-('Welcome To My Site', null, CURRENT_DATE, CURRENT_DATE, TRUE, 1, 1);
+INSERT INTO posts (posttitle, posturi, imageid, creationdate, modifieddate, live, categoryid, ownerid) VALUES
+('Welcome To My Site', 'welcome-to-my-site', null, CURRENT_DATE, CURRENT_DATE, TRUE, 1, 1);
 
 INSERT INTO postbodies (postid, postbody) VALUES
 ((SELECT MAX(postid) FROM posts),
