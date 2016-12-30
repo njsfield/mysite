@@ -83,4 +83,12 @@ renderer.blockquote = (quote) => {
   return `<div class="blockquote">${quote}</blockquote>`;
 };
 
+/* Image */
+renderer.image = (href, title, text) => {
+  let mods = text.match(/--\w+/g);
+  mods.forEach(m => { text = text.replace(m, ''); });
+  let modClasses = mods ? `${mods.map(m => 'img' + m).join(' ')}` : '';
+  return `<img class="img ${modClasses}" src="${href}" alt="${text}" title="${text}">`;
+};
+
 module.exports = (text) => marked(text, {renderer: renderer});

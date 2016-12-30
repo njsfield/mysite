@@ -1,0 +1,16 @@
+/* Images */
+
+.img {
+    box-sizing: border-box;
+    width: 100%;
+    &--center {
+        display: block;
+        margin: 0 auto;
+    }
+    &--round {
+        border-radius: 50%;
+    }
+    &--small {
+        width: 50%;
+    }
+}
