@@ -12,7 +12,7 @@
     width: 100%;
     display: block;
     margin: 3em 0;
-    
+
     // Hover
     &:hover {
         border-color: lightgrey;
@@ -33,6 +33,7 @@
     // Date
     &__date {
         box-sizing: border-box;
+        font-weight: 100;
         text-align: left;
         color: lightgrey;
         margin: .4em 0;
