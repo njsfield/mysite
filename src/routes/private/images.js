@@ -1,4 +1,4 @@
-const { decodeBase64Image } = require('../../helpers/image-helpers');
+const decodeBase64Image = require('../../helpers/decodebase64image');
 const { getImages, getImage, updateImageTitle } = require('../../dbrequests/images');
 const credentialsCheck = require('../../helpers/credentialscheck');
 

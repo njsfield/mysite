@@ -1,7 +1,7 @@
 <section class="container">
   <h4 class="title">Editing: {{post.posttitle}}</h4>
 
-  <form class="edit" action="/edit/{{post.postid}}" method="post">
+  <form class="edit" action="/edit/{{post.posturi}}" method="post">
     <!-- Hidden Post ID -->
     <input type="text" name="postid" value="{{post.postid}}" hidden />
     <!-- Triggers /images route-->
@@ -13,22 +13,24 @@
     <!-- Output Image -->
     <img class="edit__feature-image-output" src="/images/{{post.imageurl}}"/>
 
-    <!--Title-->
-    <label for="edit__title-input" class="edit__label">Title</label>
-      <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" value="{{post.posttitle}}" required/>
+    <!-- No ability to edit home post title and category -->
 
-    <!-- Category Select -->
-    <label for="categoryname" class="edit__label">Category</label>
-    <select class="select" name="categoryname">
-      {{#each categories}}
-        <option class="select__option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
-      {{/each}}
-    </select>
+      <!--Title-->
+      <label for="edit__title-input" class="edit__label">Title</label>
+        <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" value="{{post.posttitle}}" {{#if post.homepost}} hidden {{else}} required{{/if}}/>
 
-    <!-- Live -->
-    <label for="live" class="edit__label edit__label--toggle">Live
-      <input id="live" class="edit__live-checkbox" type="checkbox" name="live" {{#if post.live}}checked{{/if}}>
-    </label>
+      <!-- Category Select -->
+      <label for="categoryname" class="edit__label">Category</label>
+      <select class="select" name="categoryname" {{#if post.homepost}} hidden {{else}} required{{/if}}/>
+        {{#each categories}}
+          <option class="select__option" {{#select this ../post.categoryname}}{{/select}}>{{this}}</option>
+        {{/each}}
+      </select>
+
+      <!-- Live -->
+      <label for="live" class="edit__label edit__label--toggle">Live
+        <input id="live" class="edit__live-checkbox" type="checkbox" name="live" {{#if post.homepost}} checked {{else if post.live}}checked{{/if}}/>
+      </label>
 
     <!-- Post Body Area-->
     <label for="postbody" class="edit__label">Add Some Words</label>

@@ -6,21 +6,14 @@ const firstQuery = `Update posts
         modifieddate = CURRENT_DATE,
         categoryid = (SELECT categoryid FROM categories WHERE categoryname = $3),
         live = $4
-    WHERE postid = $5;`;
+    WHERE posturi = $5;`;
 
 const secondQuery = `Update postbodies SET postbody = $1
     WHERE postid = $2;`;
 
-const query = (payload, cb) => {
-  let imageurl = payload.imageurl;
-  let posttitle = payload.posttitle;
-  let categoryname = payload.categoryname;
-  let postbody = payload.postbody;
-  let postid = payload.postid;
-  let live = payload.live;
-
+const query = ({posttitle, imageurl, categoryname, postbody, postid, live, posturi}, cb) => {
   dbConn.query('BEGIN TRANSACTION;', () => {
-    dbConn.query(firstQuery, [posttitle, imageurl, categoryname, live, postid], (err, data) => {
+    dbConn.query(firstQuery, [posttitle, imageurl, categoryname, live, posturi], (err, data) => {
       if (err) throw err;
       dbConn.query(secondQuery, [postbody, postid], (err, data) => {
         (err) ? cb(err) : cb(null);

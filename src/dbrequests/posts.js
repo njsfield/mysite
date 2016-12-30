@@ -2,6 +2,7 @@ const dbConn = require('../dbconnection.js');
 
 const getPostQuery = `SELECT
       p.postid,
+      p.posturi,
       pb.postbody,
       p.posttitle,
       i.imageurl,
@@ -13,23 +14,23 @@ const getPostQuery = `SELECT
       o.ownername
       FROM posts AS p
 INNER JOIN postbodies AS pb
-      ON pb.postid = $1
+      ON pb.postid = (SELECT p.postid from posts as p WHERE posturi = $1)
 LEFT JOIN images AS i
       ON i.imageid = p.imageid
 INNER JOIN categories AS c
       on c.categoryid = p.categoryid
 INNER JOIN owners as o
       on o.ownerid = p.ownerid
-      WHERE p.postid = $1;`;
+      WHERE p.posturi = $1;`;
 
-const getPostsQuery = getPostQuery.replace('$1', 'p.postid')
-                                  .replace(`WHERE p.postid = $1`, `WHERE c.categoryname <> 'Portfolio' ORDER BY p.creationdate DESC`);
+const getPostsQuery = getPostQuery.replace('(SELECT p.postid from posts as p WHERE posturi = $1)', 'p.postid')
+                                  .replace(`WHERE p.posturi = $1`, `WHERE c.categoryname <> 'Portfolio' ORDER BY p.creationdate DESC`);
 
-const getPortfolioItemsQuery = getPostQuery.replace('$1', 'p.postid')
-                                  .replace(`WHERE p.postid = $1`, `WHERE c.categoryname = 'Portfolio' ORDER BY p.creationdate DESC`);
+const getPortfolioItemsQuery = getPostQuery.replace('(SELECT p.postid from posts as p WHERE posturi = $1)', 'p.postid')
+                                          .replace(`WHERE p.posturi = $1`, `WHERE c.categoryname = 'Portfolio' ORDER BY p.creationdate DESC`);
 
-const getPost = (postid, cb) => {
-  dbConn.query(getPostQuery, [postid], (err, data) => {
+const getPost = (posturi, cb) => {
+  dbConn.query(getPostQuery, [posturi], (err, data) => {
     (err ? cb(err) : cb(null, data.rows[0]));
   });
 };

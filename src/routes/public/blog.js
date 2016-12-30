@@ -2,8 +2,25 @@ const { getPost, getPosts } = require('../../dbrequests/posts.js');
 const credentialsCheck = require('../../helpers/credentialscheck');
 const markDownTransform = require('../../helpers/markdowntransform');
 
+// Get post via url, prepare markdown and send with credentials
+const preparePostAndSend = (req, reply) => {
+  let posturi = req.params.uri;
+  getPost(posturi, (err, post) => {
+    post.postbody = markDownTransform(post.postbody);
+    err ? reply(err) : reply.view('post', {post: post, credentials: credentialsCheck(req)});
+  });
+};
+
+// Get posts and send with credentials
+const preparePostsAndSend = (req, reply) => {
+  getPosts((err, posts) => {
+    err ? reply(err) : reply.view('blog', {posts: posts, credentials: credentialsCheck(req)});
+  }
+);
+};
+
 module.exports = {
-  path: '/blog/{id*}',
+  path: '/blog/{uri*}',
   method: 'get',
   config: {
     auth: {
@@ -16,17 +33,10 @@ module.exports = {
       }
     },
     handler: (req, reply) => {
-      if (req.params.id) {
-        let postid = req.params.id;
-        getPost(postid, (err, post) => {
-          post.postbody = markDownTransform(post.postbody);
-          err ? reply(err) : reply.view('post', {post: post, credentials: credentialsCheck(req)});
-        });
+      if (req.params.uri) {
+        preparePostAndSend(req, reply);
       } else {
-        getPosts((err, posts) => {
-          err ? reply(err) : reply.view('blog', {posts: posts, credentials: credentialsCheck(req)});
-        }
-      );
+        preparePostsAndSend(req, reply);
       }
     }
   }
