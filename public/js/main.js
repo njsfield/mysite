@@ -46,18 +46,14 @@
 
 	'use strict';
 
-	// Fetches base sass file to build style.css file to /public
-	__webpack_require__(1);
-	// Fetches base js file to build app.js file to /public
 	__webpack_require__(5);
+	// Fetches base sass file to build style.css file to /public
+	//
+	// require('./src/css/main.scss');
+	// Fetches base js file to build app.js file to /public
 
 /***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
+/* 1 */,
 /* 2 */,
 /* 3 */,
 /* 4 */,
@@ -103,7 +99,7 @@
 
 	// Feature Image
 	var featureImgInputElt = elt('.edit__feature-image-input');
-	var featureImgOutpuElt = elt('.edit__feature-image-output');
+	var featureImgOutputElt = elt('.edit__feature-image-output');
 
 	// Gallery
 	var overlayElt = elt('.images');
@@ -118,7 +114,7 @@
 
 	// enableTitleElt
 	var setTitleElt = function setTitleElt(image) {
-	  getReq('/image?imageurl=' + image, function (data) {
+	  getReq('/images?imageurl=' + image, function (data) {
 	    if (data) {
 	      setEltValue(titleElt, JSON.parse(data).imagetitle);
 	      displayElt(titleElt);
@@ -189,9 +185,11 @@
 	// Upload Button
 	uploadBtn.addEventListener('change', function (e) {
 	  retrieveFile(e, function (file) {
-	    postReq('/images?name=' + file.name, file.raw, function () {
+	    var name = file.name.replace(/\s/g, '-').toLowerCase();
+	    postReq('/addimage?name=' + name, file.raw, function (response) {
 	      clearHTML(galleryElt);
 	      buildGallery();
+	      uploadBtn.value = '';
 	    });
 	  });
 	}, false);
@@ -201,8 +199,8 @@
 	  stopE(e);
 	  var path = elt('.images__image--selected').getAttribute('path');
 	  if (selectBtn.getAttribute('outputMainImage')) {
-	    setAttr(featureImgOutpuElt, 'value', path);
-	    setAttr(featureImgOutpuElt, 'src', '/images/' + path);
+	    setAttr(featureImgInputElt, 'value', path);
+	    setAttr(featureImgOutputElt, 'src', '/images/' + path);
 	  } else {
 	    postBodyElt.value = postBodyElt.value + ' ![' + titleElt.value + '](/images/' + path + ')';
 	  }
@@ -226,7 +224,7 @@
 
 	// Selected Title
 	titleElt.addEventListener('focusout', function (e) {
-	  postReq('/image', JSON.stringify({
+	  postReq('/images', JSON.stringify({
 	    imagetitle: titleElt.value,
 	    imageurl: elt('.images__image--selected').getAttribute('path')
 	  }), function (title) {
@@ -238,7 +236,7 @@
 	clearImgbtn.addEventListener('click', function (e) {
 	  stopE(e);
 	  setAttr(featureImgInputElt, 'value', '');
-	  setAttr(featureImgOutpuElt, 'src', '');
+	  setAttr(featureImgOutputElt, 'src', '');
 	});
 
 /***/ },
@@ -370,6 +368,9 @@
 	  xhr.addEventListener('load', function (data) {
 	    cb(xhr.responseText);
 	  });
+	  xhr.addEventListener('error', function (error) {
+	    cb(error);
+	  });
 	  xhr.open('post', path);
 	  xhr.send(payload);
 	};
@@ -380,7 +381,8 @@
 	  var f = files[0];
 	  var reader = new FileReader();
 	  reader.onload = function (raw) {
-	    cb({ name: f.name, raw: raw.target.result });
+	    var result = raw.target.result;
+	    cb({ name: f.name, raw: result });
 	  };
 	  reader.readAsDataURL(f);
 	};

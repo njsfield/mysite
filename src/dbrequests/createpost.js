@@ -8,19 +8,20 @@ const firstQuery = `INSERT INTO posts (posttitle, imageid, creationdate, modifie
                 CURRENT_DATE,
                 $3,
                 (SELECT categoryid FROM categories WHERE categoryname = $4),
-                (SELECT ownerid FROM owners WHERE ownerusername = $5));`;
+                (SELECT ownerid FROM owners WHERE ownerusername = $5)) RETURNING postid;`;
 
 const secondQuery = `INSERT INTO postbodies (postid, postbody)
-                VALUES ((SELECT MAX(postid) FROM posts), $1 );`;
+                VALUES ($1, $2 );`;
 
 const query = ({posttitle, imageurl, live, categoryname, postbody, ownerusername}, cb) => {
-  dbConn.query('BEGIN TRANSACTION;', () => {
-    dbConn.query(firstQuery, [posttitle, imageurl, live, categoryname, ownerusername], () => {
-      dbConn.query(secondQuery, [postbody], (err, data) => {
+  dbConn.query(firstQuery, [posttitle, imageurl, live, categoryname, ownerusername], (err, data) => {
+    if (err) throw err;
+    else {
+      let postid = data.rows[0].postid;
+      dbConn.query(secondQuery, [postid, postbody], (err, data) => {
         (err) ? cb(err) : cb(null);
-        dbConn.query('COMMIT');
       });
-    });
+    }
   });
 };
 

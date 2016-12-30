@@ -5,10 +5,7 @@ const firstQuery = `Update posts
         imageid = (SELECT imageid FROM images WHERE imageurl = $2),
         modifieddate = CURRENT_DATE,
         categoryid = (SELECT categoryid FROM categories WHERE categoryname = $3)
-    WHERE postid = $4 AND ownerid IN
-      (SELECT ownerid FROM owners
-        WHERE owners.ownerusername = 'njsfield' AND
-              owners.ownerpassword = '$2a$10$IJETvwsaxVYjxPDeRarqjOrYZQWFQCgQp6VohxK0N1JbBYxRpIz7e');`;
+    WHERE postid = $4;`;
 
 const secondQuery = `Update postbodies SET postbody = $1
     WHERE postid = $2;`;

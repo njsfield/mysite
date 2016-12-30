@@ -83,6 +83,9 @@ const postReq = (path, payload, cb) => {
   xhr.addEventListener('load', (data) => {
     cb(xhr.responseText);
   });
+  xhr.addEventListener('error', (error) => {
+    cb(error);
+  });
   xhr.open('post', path);
   xhr.send(payload);
 };
@@ -93,7 +96,8 @@ const retrieveFile = (evt, cb) => {
   let f = files[0];
   let reader = new FileReader();
   reader.onload = (raw) => {
-    cb({name: f.name, raw: raw.target.result});
+    let result = raw.target.result;
+    cb({name: f.name, raw: result});
   };
   reader.readAsDataURL(f);
 };

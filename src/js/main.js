@@ -32,7 +32,7 @@ const clearImgbtn = elt('.edit__clear-image-btn');
 
 // Feature Image
 const featureImgInputElt = elt('.edit__feature-image-input');
-const featureImgOutpuElt = elt('.edit__feature-image-output');
+const featureImgOutputElt = elt('.edit__feature-image-output');
 
 // Gallery
 const overlayElt = elt('.images');
@@ -47,7 +47,7 @@ const postBodyOutputElt = elt('.edit__post-body-output');
 
 // enableTitleElt
 const setTitleElt = (image) => {
-  getReq(`/image?imageurl=${image}`, (data) => {
+  getReq(`/images?imageurl=${image}`, (data) => {
     if (data) {
       setEltValue(titleElt, JSON.parse(data).imagetitle);
       displayElt(titleElt);
@@ -118,9 +118,11 @@ backBtn.addEventListener('click', (e) => {
 // Upload Button
 uploadBtn.addEventListener('change', (e) => {
   retrieveFile(e, (file) => {
-    postReq(`/images?name=${file.name}`, file.raw, () => {
+    let name = file.name.replace(/\s/g, '-').toLowerCase();
+    postReq(`/addimage?name=${name}`, file.raw, (response) => {
       clearHTML(galleryElt);
       buildGallery();
+      uploadBtn.value = '';
     });
   });
 }, false);
@@ -130,8 +132,8 @@ selectBtn.addEventListener('click', (e) => {
   stopE(e);
   let path = elt('.images__image--selected').getAttribute('path');
   if (selectBtn.getAttribute('outputMainImage')) {
-    setAttr(featureImgOutpuElt, 'value', path);
-    setAttr(featureImgOutpuElt, 'src', `/images/${path}`);
+    setAttr(featureImgInputElt, 'value', path);
+    setAttr(featureImgOutputElt, 'src', `/images/${path}`);
   } else {
     postBodyElt.value = `${postBodyElt.value} ![${titleElt.value}](/images/${path})`;
   }
@@ -155,7 +157,7 @@ postBodyOutputElt.addEventListener('click', (e) => {
 
 // Selected Title
 titleElt.addEventListener('focusout', (e) => {
-  postReq('/image', JSON.stringify({
+  postReq('/images', JSON.stringify({
     imagetitle: titleElt.value,
     imageurl: elt('.images__image--selected').getAttribute('path')
   }), (title) => {
@@ -167,5 +169,5 @@ titleElt.addEventListener('focusout', (e) => {
 clearImgbtn.addEventListener('click', (e) => {
   stopE(e);
   setAttr(featureImgInputElt, 'value', '');
-  setAttr(featureImgOutpuElt, 'src', '');
+  setAttr(featureImgOutputElt, 'src', '');
 });
