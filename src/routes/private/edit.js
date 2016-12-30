@@ -22,7 +22,9 @@ module.exports = {
           });
         });
       } else {
-        updatePost(req.payload, (err) => {
+        let payload = req.payload;
+        payload.live = payload.live === 'on';
+        updatePost(payload, (err) => {
           if (err) throw err;
           let postid = req.url.path.slice(-1);
           let uri = postid === '1' ? '/' : `/blog/${postid}`;

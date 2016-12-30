@@ -6,5 +6,13 @@
       <h4 class="snippet__category snippet__category--{{#categorycolor this.categoryname}}{{/categorycolor}}">{{this.categoryname}}</h4>
       <p class="snippet__description">{{#removemarked this.postbody}}{{/removemarked}}</p>
     </a>
+    {{else if ../credentials.current_user}}
+      <a class="snippet" href="blog/{{this.postid}}" style="opacity: 0.5;">
+        <h2 class="snippet__title" style="color: red;">{{this.posttitle}} NOT LIVE</h2>
+        <h4 class="snippet__date">{{this.creationdate}}</h4>
+        <h4 class="snippet__category snippet__category--{{#categorycolor this.categoryname}}{{/categorycolor}}">{{this.categoryname}}</h4>
+        <p class="snippet__description">{{#removemarked this.postbody}}{{/removemarked}}</p>
+      </a>
+    {{else}}
   {{/if}}
 {{/each}}

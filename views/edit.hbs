@@ -25,6 +25,11 @@
       {{/each}}
     </select>
 
+    <!-- Live -->
+    <label for="live" class="edit__label edit__label--toggle">Live
+      <input id="live" class="edit__live-checkbox" type="checkbox" name="live" {{#if post.live}}checked{{/if}}>
+    </label>
+
     <!-- Post Body Area-->
     <label for="postbody" class="edit__label">Add Some Words</label>
     <div class="edit__post-container">

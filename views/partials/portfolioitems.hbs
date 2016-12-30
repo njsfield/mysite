@@ -4,6 +4,11 @@
       <a class="portfolio__item" href="blog/{{this.postid}}" style="background-image: url('/images/{{this.imageurl}}');">
         <h3 class="portfolio__title">{{this.posttitle}}</h3>
       </a>
+    {{else if ../credentials.current_user}}
+      <a class="portfolio__item" href="blog/{{this.postid}}" style="background-image: url('/images/{{this.imageurl}}'); opacity: 0.3;">
+        <h3 class="portfolio__title" style="color: red;">{{this.posttitle}} NOT LIVE</h3>
+      </a>
+    {{else}}
     {{/if}}
   {{/each}}
 </div>

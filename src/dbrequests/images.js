@@ -30,10 +30,10 @@ const updateImageTitle = (imageurl, imagetitle, cb) => {
 // Add Image
 const addImage = (imageurl, imagebody, cb) => {
   let firstQuery = `INSERT INTO images (imageurl, imagetitle, uploaddate) VALUES
-  ($1, 'Custom Upload', CURRENT_DATE) RETURNING imageid;`;
+                    ($1, 'Custom Upload', CURRENT_DATE) RETURNING imageid;`;
 
   let secondQuery = `INSERT INTO imagebodies (imageid, imagebody)
-                  VALUES ($1, $2 );`;
+                    VALUES ($1, $2 );`;
 
   dbConn.query(firstQuery, [imageurl], (err, data) => {
     if (err) throw err;
