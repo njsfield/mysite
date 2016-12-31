@@ -1,27 +1,27 @@
 const sqlLogin = require('../../dbrequests/getuser.js');
 const compare = require('bcrypt').compare;
 
+// Check user, if none found callback none, otherwise reply user
 const checkUser = (username, cb) => {
   sqlLogin(username, (err, data) => {
-    if (err) cb(err);
-    else if (!data) cb(null);
-    else cb(null, data);
+    err ? cb(err) : !data ? cb(null) : cb(null, data);
   });
 };
 
+// Check password, if no match callback null, otherwise reply true
 const comparePasswords = (reqpass, dbpass, cb) => {
   compare(reqpass, dbpass, (err, isMatch) => {
-    if (err) cb(err);
-    else if (!isMatch) cb(null);
-    else cb(null, true);
+    err ? cb(err) : !isMatch ? cb(null) : cb(null, true);
   });
 };
 
+// Template error message
 const userNotFound = {
   message: 'Non existent user',
-  error: 'login-error'
+  errorclass: 'prompt--error'
 };
 
+// Template wrong password message
 const wrongPassword = (username) => {
   return {
     message: 'Wrong password',
@@ -31,25 +31,22 @@ const wrongPassword = (username) => {
 };
 
 const loginHandler = (req, reply) => {
-  let username = req.payload.username;
-  let password = req.payload.password;
+  let { username, password } = req.payload;
+  // Check user first
   checkUser(username, (err, data) => {
-    if (err) {
-      throw err;
-    } else if (!data) {
-      reply.view('login', userNotFound);
-    } else {
+    // Get Username/pass. Reply error/User not found if needed. Otherwise...
+    err ? reply(err) : !data ? reply.view('login', userNotFound) : (
+      // Compare passwords
       comparePasswords(password, data.ownerpassword, (err, isMatch) => {
-        if (err) {
-          throw err;
-        } else if (!isMatch) {
-          reply.view('login', wrongPassword(username));
-        } else {
-          req.cookieAuth.set({current_user: username});
-          reply.redirect('/');
-        }
-      });
-    }
+        // Reply error/wrongpassword message if needed. Otherwise...
+        err ? reply(err) : !isMatch ? reply.view('login', wrongPassword(username)) : (
+          // Set cookie & redirect to home
+          req.cookieAuth.set({current_user: username}),
+          reply.redirect('/')
+        );
+      }
+      )
+    );
   });
 };
 
