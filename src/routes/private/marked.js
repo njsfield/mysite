@@ -1,4 +1,5 @@
 const markDownTransform = require('../../helpers/markdowntransform');
+const makeJson = JSON.stringify;
 
 module.exports = {
   path: '/marked',
@@ -9,8 +10,7 @@ module.exports = {
       mode: 'try'
     },
     handler: (req, reply) => {
-      let marked = markDownTransform(req.payload);
-      reply(JSON.stringify({marked: marked}));
+      reply(makeJson({marked: markDownTransform(req.payload)}));
     }
   }
 };
