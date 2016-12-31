@@ -161,7 +161,7 @@ postBodyOutputElt.addEventListener('click', (e) => {
 // Selected Title
 titleElt.addEventListener('focusout', (e) => {
   postReq('/images', JSON.stringify({
-    imagetitle: titleElt.value,
+    imagetitle: titleElt.value || 'Custom Upload',
     imageurl: elt('.images__image--selected').getAttribute('path')
   }), (title) => {
     setEltValue(titleElt, title);

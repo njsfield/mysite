@@ -1,50 +1,38 @@
 const decodeBase64Image = require('../../helpers/decodebase64image');
 const { getImages, getImage, updateImageTitle } = require('../../dbrequests/images');
 const credentialsCheck = require('../../helpers/credentialscheck');
+const notJson = JSON.parse;
+const authError = new Error('Not Authorized');
 
 // Send Raw Image
 const sendRawImage = (req, reply) => {
-  let imageurl = req.params.url;
-  getImage(imageurl, (err, image) => {
+  getImage(req.params.url, (err, image) => {
     if (err) reply(err);
     image = decodeBase64Image(image.imagebody);
     reply(image.data).header('content-type', image.type);
   });
 };
 
+// Get all imageurls as array and send back
 const getAllImageUrls = (req, reply) => {
-  if (!credentialsCheck(req)) {
-    reply('Not Authorized');
-  } else {
-    getImages((err, images) => {
-      images = images.map(image => image.imageurl);
-      err ? reply(err) : reply({images: images});
-    });
-  }
+  (!credentialsCheck(req)) ? reply(authError) : getImages((err, images) => {
+    err ? reply(err) : reply({images: images.map(image => image.imageurl)});
+  });
 };
 
 // UpdateImageTitle
 const imageTitleHandler = (req, reply) => {
-  if (!credentialsCheck(req)) {
-    reply('Not Authorized');
-  } else {
-    let payload = JSON.parse(req.payload);
-    let imageurl = payload.imageurl;
-    let imagetitle = payload.imagetitle || 'Custom Upload';
-    updateImageTitle(imageurl, imagetitle, (err) => {
-      (err ? reply(err) : reply(imagetitle));
-    });
-  }
+  let payload = notJson(req.payload);
+  (!credentialsCheck(req)) ? reply(authError) : updateImageTitle(payload.imageurl, payload.imagetitle, (err) => {
+    err ? reply(err) : reply(payload.imagetitle);
+  });
 };
 
+// Get Image Data
 const getImageData = (req, reply) => {
-  if (!credentialsCheck(req)) {
-    reply('Not Authorized');
-  } else {
-    getImage(req.query.imageurl, (err, image) => {
-      (err ? reply(err) : reply(image));
-    });
-  }
+  (!credentialsCheck(req)) ? reply(authError) : getImage(req.query.imageurl, (err, image) => {
+    (err ? reply(err) : reply(image));
+  });
 };
 
 module.exports = {

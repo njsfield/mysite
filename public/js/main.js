@@ -226,7 +226,7 @@
 	// Selected Title
 	titleElt.addEventListener('focusout', function (e) {
 	  postReq('/images', JSON.stringify({
-	    imagetitle: titleElt.value,
+	    imagetitle: titleElt.value || 'Custom Upload',
 	    imageurl: elt('.images__image--selected').getAttribute('path')
 	  }), function (title) {
 	    setEltValue(titleElt, title);
