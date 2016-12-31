@@ -1,23 +1,22 @@
 <section class="container">
   <div class="post">
-    <!-- Image -->
     {{#if post.imageurl}}
+      <!-- Lovely post image html here -->
       <img src="/images/{{post.imageurl}}" alt="{{post.imagetitle}}" class="post__image"/>
     {{/if}}
-    <!-- Heading Container -->
     <div class="post__heading">
-      <!-- Title -->
+      <!-- Lovely Title -->
       <h1 class="post__header">{{post.posttitle}}</h1>
-      <!-- Date -->
+      <!-- Good Date -->
       <h5 class="post__date">{{post.creationdate}}</h5>
     </div>
 
-    <!-- Body -->
+    <!-- Bit of body too-->
     <div class="post__body">{{{post.postbody}}}</div>
   </div>
 
-  <!-- Edit -->
   {{#if credentials.current_user}}
+    <!-- Edit -->
     <a class="button button--black button--action" href="/edit/{{post.posturi}}">Edit</a>
   {{/if}}
 </section>

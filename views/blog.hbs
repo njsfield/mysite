@@ -1,6 +1,7 @@
 <section class="container">
 {{> posts}}
 {{#if credentials.current_user}}
+  <!-- Compose Button if logged In -->
   <a class="button button--black" href="/compose">Compose</a>
 {{/if}}
 </section>

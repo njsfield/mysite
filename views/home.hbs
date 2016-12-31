@@ -1,7 +1,7 @@
 <section class="container">
   <div class="post">
-    <!-- Image -->
     {{#if post.imageurl}}
+      <!-- Lovely Homepage img HTMl -->
       <img src="/images/{{post.imageurl}}" alt="{{post.imagetitle}}" class="post__image"/>
     {{/if}}
     <!-- Body (post in markdown, converted to HTML)-->
@@ -10,7 +10,7 @@
 
 
   {{#if credentials.current_user}}
-    <!-- Edit -->
+    <!-- Edit Button if logged In-->
     <a class="button button--black button--action" href="/edit/welcome-to-my-site">Edit</a>
   {{/if}}
 </section>
