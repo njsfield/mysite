@@ -10,10 +10,12 @@ const prepareURIForDb = (uri, queryFunc, key, cb) => {
     let existingURI = (currentUri) => data.indexOf(currentUri) > -1;
     // While found, increments URI. E.G 'Welcome To My Site1' becomes 'Welcome To My Site2'
     while (existingURI(uri)) {
-      if (/\d(?=\.)/.test(uri)) {
-        uri = uri.replace(/\d(?=\.)/, (match) => { return `${++match}`; });
-      } else {
+      if (/\d(?=\.)|(\d$)/.test(uri)) {
+        uri = uri.replace(/\d(?=\.)|(\d$)/, (match) => { return `${++match}`; });
+      } else if (/\./.test(uri)) {
         uri = uri.replace(/\./, '1.');
+      } else {
+        uri = uri + '1';
       }
     }
     cb(null, uri);
