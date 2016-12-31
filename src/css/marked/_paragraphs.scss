@@ -5,4 +5,7 @@
     line-height: 170%;
     font-weight: 300;
     color: $grey;
+    &--center {
+      text-align: center;
+    }
 }

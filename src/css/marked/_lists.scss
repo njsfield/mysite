@@ -5,7 +5,10 @@
     list-style: none;
     padding: 0;
     margin: .3em;
-    
+    &--center {
+      text-align: center;
+    }
+
     // List '+'
     .li {
         padding-top: .2em;
@@ -28,6 +31,9 @@
     list-style: none;
     padding: 0;
     margin: .3em;
+    &--center {
+      text-align: center;
+    }
     // List 'IIV'
     .li {
         list-style-type: upper-roman;

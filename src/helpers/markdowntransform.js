@@ -1,6 +1,15 @@
 const marked = require('marked');
 const renderer = new marked.Renderer();
 const highlightjs = require('highlight.js');
+
+// Helper function to extract mod classes (e.g '-center-'), returning parsed text and classes in object
+const classExtract = (className, text) => {
+  let mods = text.match(/-\w+-/g);
+  if (mods) mods.forEach(m => { text = text.replace(m, ''); });
+  let modClasses = mods ? `${mods.map(m => className + '--' + m.slice(1, -1)).join(' ')}` : '';
+  return {text: text, classes: modClasses};
+};
+
 highlightjs.configure({
   classPrefix: 'code--'
 });
@@ -18,7 +27,8 @@ marked.setOptions({
 
 /* Paragraph */
 renderer.paragraph = (text) => {
-  return `<p class="p">${text}</p>`;
+  let parsed = classExtract('p', text);
+  return `<p class="p ${parsed.classes}">${parsed.text}</p>`;
 };
 
 /* Code */
@@ -28,7 +38,8 @@ renderer.code = (code, language) => {
   // Highlight only if the language is valid.
   const highlighted = validLang ? highlightjs.highlight(language, code).value : code;
   // Render the highlighted code with `hljs` class.
-  return `<pre class="code"><code class="code__${language}">${highlighted}</code></pre>`;
+  let parsed = classExtract('code', highlighted);
+  return `<pre class="code ${parsed.classes}"><code class="code__${language}">${parsed.text}</code></pre>`;
 };
 
 /* Inline Code */
@@ -43,14 +54,15 @@ renderer.link = (href, title, text) => {
 
 /* Heading */
 renderer.heading = (text, level) => {
-  const align = /^{.+}$/.test(text) ? `h${level}--center` : ''; // Centered class add if '{ }'
-  text = align ? text.split('').slice(1, -1).join('') : text;
-  return `<h${level} class="h${level} ${align}">${text}</h${level}>`;
+  let parsed = classExtract(`h${level}`, text);
+  return `<h${level} class="h${level} ${parsed.classes}">${parsed.text}</h${level}>`;
 };
 
 /* List */
 renderer.list = (body, boolean) => {
-  return `<${boolean ? 'ol' : 'ul'} class="${boolean ? 'ol' : 'ul'}">${body}</${boolean ? 'ol' : 'ul'}>`;
+  let listType = boolean ? 'ol' : 'ul';
+  let parsed = classExtract(listType, body);
+  return `<${listType} class="${listType} ${parsed.classes}">${parsed.text}</${listType}>`;
 };
 /* List Item */
 renderer.listitem = (text) => {
@@ -85,10 +97,8 @@ renderer.blockquote = (quote) => {
 
 /* Image */
 renderer.image = (href, title, text) => {
-  let mods = text.match(/--\w+/g);
-  mods.forEach(m => { text = text.replace(m, ''); });
-  let modClasses = mods ? `${mods.map(m => 'img' + m).join(' ')}` : '';
-  return `<img class="img ${modClasses}" src="${href}" alt="${text}" title="${text}">`;
+  let parsed = classExtract('img', text);
+  return `<img class="img ${parsed.classes}" src="${href}" alt="${parsed.text}" title="${parsed.text}">`;
 };
 
 module.exports = (text) => marked(text, {renderer: renderer});

@@ -4,6 +4,10 @@
     font-weight: 200;
     line-height: 130%;
     padding: .5em;
+    //Center
+    &--center {
+      text-align: center;
+    }
 
     // Inner element
     &__inline {
