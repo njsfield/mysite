@@ -14,6 +14,7 @@ const preparePostAndSend = (req, reply) => {
 // Get posts and send with credentials
 const preparePostsAndSend = (req, reply) => {
   getPosts((err, posts) => {
+    // console.log(posts);
     err ? reply(err) : reply.view('blog', {posts: posts, credentials: credentialsCheck(req)});
   }
 );

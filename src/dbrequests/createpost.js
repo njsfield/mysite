@@ -16,13 +16,9 @@ const secondQuery = `INSERT INTO postbodies (postid, postbody)
 
 const query = ({posttitle, posturi, imageurl, live, categoryname, postbody, ownerusername}, cb) => {
   dbConn.query(firstQuery, [posttitle, posturi, imageurl, live, categoryname, ownerusername], (err, data) => {
-    if (err) throw err;
-    else {
-      let postid = data.rows[0].postid;
-      dbConn.query(secondQuery, [postid, postbody], (err, data) => {
-        (err) ? cb(err) : cb(null);
-      });
-    }
+    (err) ? cb(err) : dbConn.query(secondQuery, [data.rows[0].postid, postbody], (err, data) => {
+      (err) ? cb(err) : cb(null);
+    });
   });
 };
 

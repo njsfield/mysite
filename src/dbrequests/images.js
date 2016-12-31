@@ -36,16 +36,9 @@ const addImage = (imageurl, imagebody, cb) => {
                     VALUES ($1, $2 );`;
 
   dbConn.query(firstQuery, [imageurl], (err, data) => {
-    if (err) throw err;
-    else {
-      let imageid = data.rows[0].imageid;
-      dbConn.query(secondQuery, [imageid, imagebody], (err, data) => {
-        if (err) throw err;
-        else {
-          cb(data);
-        }
-      });
-    }
+    (err) ? cb(err) : dbConn.query(secondQuery, [data.rows[0].imageid, imagebody], (err, data) => {
+      (err) ? cb(err) : cb(null, data);
+    });
   });
 };
 
