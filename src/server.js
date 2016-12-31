@@ -7,6 +7,7 @@ const error = require('hapi-error');
 const routes = require('./routes');
 const server = new Hapi.Server();
 const env = require('env2');
+const http = require('http');
 
 // Install Environment Variables
 env('./config.env');
@@ -21,10 +22,12 @@ const options = {
   redirectTo: '/'
 };  // make this :)
 
-// Uncomment for production
+// SleepStopper: Every 5 minutes (but not between 23PM - 6AM) call homepage
 // setInterval(() => {
-//   require('http').get('http://the-badgerer.herokuapp.com');
-// }, 300000); // every 5 minutes
+//   if (new Date().getHours() < 23 && new Date().getHours() > 6) {
+//     http.get('http://nickfield.io');
+//   }
+// }, 300000);
 
 // Set Connection
 server.connection({

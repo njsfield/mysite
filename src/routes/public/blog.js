@@ -4,8 +4,8 @@ const markDownTransform = require('../../helpers/markdowntransform');
 
 // Get post via url, prepare markdown and send with credentials
 const preparePostAndSend = (req, reply) => {
-  let posturi = req.params.uri;
-  getPost(posturi, (err, post) => {
+  getPost(req.params.uri, (err, post) => {
+    // Transform markdown into HTML
     post.postbody = markDownTransform(post.postbody);
     err ? reply(err) : reply.view('post', {post: post, credentials: credentialsCheck(req)});
   });
@@ -14,7 +14,6 @@ const preparePostAndSend = (req, reply) => {
 // Get posts and send with credentials
 const preparePostsAndSend = (req, reply) => {
   getPosts((err, posts) => {
-    // console.log(posts);
     err ? reply(err) : reply.view('blog', {posts: posts, credentials: credentialsCheck(req)});
   }
 );
