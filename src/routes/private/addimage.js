@@ -4,17 +4,11 @@ const credentialsCheck = require('../../helpers/credentialscheck');
 
 // Add Image to Database
 const addImageToDb = (req, reply) => {
-  if (!credentialsCheck(req)) {
-    reply('Not Authorized');
-  } else {
-    let imageData = req.payload;
-    let uri = req.query.name;
-    prepareURIForDb(uri, getImages, 'imageurl', (err, newURI) => {
-      err ? reply(err) : addImage(newURI, imageData, (err) => {
-        err ? reply(err) : reply('done');
-      });
+  (!credentialsCheck(req)) ? reply('Not Authorized') : prepareURIForDb(req.query.name, getImages, 'imageurl', (err, newURI) => {
+    err ? reply(err) : addImage(newURI, req.payload, (err) => {
+      err ? reply(err) : reply('done');
     });
-  }
+  });
 };
 
 module.exports = {

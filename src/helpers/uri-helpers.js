@@ -8,7 +8,7 @@ const prepareURIForDb = (uri, queryFunc, key, cb) => {
     data = data ? data.map(data => data[key]) : [];
     // Check URI function
     let existingURI = (currentUri) => data.indexOf(currentUri) > -1;
-    // While found, increments URI. E.G 'Welcome To My Site1' becomes 'Welcome To My Site2'
+    // While found, increments URI (e.g. 'image1.jpg' or 'New Post2')
     while (existingURI(uri)) {
       if (/\d(?=\.)|(\d$)/.test(uri)) {
         uri = uri.replace(/\d(?=\.)|(\d$)/, (match) => { return `${++match}`; });
