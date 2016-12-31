@@ -14,8 +14,7 @@ const secondQuery = `Update postbodies SET postbody = $1
 const query = ({posttitle, imageurl, categoryname, postbody, postid, live, posturi}, cb) => {
   dbConn.query('BEGIN TRANSACTION;', () => {
     dbConn.query(firstQuery, [posttitle, imageurl, categoryname, live, posturi], (err, data) => {
-      if (err) throw err;
-      dbConn.query(secondQuery, [postbody, postid], (err, data) => {
+      (err) ? cb(err) : dbConn.query(secondQuery, [postbody, postid], (err, data) => {
         (err) ? cb(err) : cb(null);
         dbConn.query('COMMIT');
       });
