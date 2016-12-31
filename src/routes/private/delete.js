@@ -1,30 +1,23 @@
 const {deleteImage, deletePost} = require('../../dbrequests/delete');
 const credentialsCheck = require('../../helpers/credentialscheck');
+const notJson = JSON.parse;
+const authError = new Error('Not Authorized');
 
+// If post method, then image gets deleted
 const deleteImageFromDb = (req, reply) => {
-  if (!credentialsCheck(req)) {
-    reply('Not Authorized');
-  } else {
-    let payload = JSON.parse(req.payload);
-    let imageurl = payload.imageurl;
-    deleteImage(imageurl, (err) => {
-      err ? reply(err) : reply(`${imageurl} deleted`);
-    });
-  }
+  (!credentialsCheck(req)) ? reply(authError) : deleteImage(notJson(req.payload).imageurl, (err) => {
+    err ? reply(err) : reply(`${notJson(req.payload).imageurl} deleted`);
+  });
 };
 
+// If get method, then post gets deleted
 const deletePostFromDb = (req, reply) => {
-  if (!credentialsCheck(req)) {
-    reply('Not Authorized');
-  } else {
-    deletePost(req.params.id, (err) => {
-      err ? reply(err) : reply.redirect('/blog');
-    });
-  }
+  (!credentialsCheck(req)) ? reply(authError) : deletePost(req.params.id, (err) => {
+    err ? reply(err) : reply.redirect('/blog');
+  });
 };
 
 // const delete
-
 module.exports = {
   path: '/delete/{id*}',
   method: ['get', 'post'],
