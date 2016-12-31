@@ -1,29 +1,23 @@
 const { getPost } = require('../../dbrequests/posts');
 const getCategories = require('../../dbrequests/getcategories');
 const updatePost = require('../../dbrequests/updatepost');
+const growObj = require('../../helpers/growobj');
 
 // Get Post contents via uri, send contents
 const sendPostContentsToEdit = (req, reply) => {
-  let posturi = req.params.uri;
-  getPost(posturi, (err, post) => {
-    if (err) throw err;
-    getCategories((err, categories) => {
-      if (err) throw err;
-      if (post.postid === 1) post.homepost = true;
-      reply.view('edit', {post: post, categories: categories});
+  getPost(req.params.uri, (err, post) => {
+    (err) ? reply(err) : getCategories((err, categories) => {
+      (err) ? reply(err) : reply.view('edit', {post: growObj(post, 'homepost', post.postid === 1), categories: categories});
     });
   });
 };
 
 // Update post to DB and redirect
 const updatePostToDb = (req, reply) => {
-  let payload = req.payload;
-  payload.live = payload.live === 'on';
-  payload.posturi = req.params.uri;
+  let payload = growObj(req.payload, 'live', req.payload.live === 'on');
+  payload = growObj(payload, 'posturi', req.params.uri);
   updatePost(payload, (err) => {
-    if (err) throw err;
-    let uri = `/blog/${payload.posturi}`;
-    reply.redirect(uri);
+    (err) ? reply(err) : reply.redirect(`/blog/${payload.posturi}`);
   });
 };
 
