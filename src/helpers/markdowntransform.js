@@ -10,10 +10,12 @@ const classExtract = (className, text) => {
   return {text: text, classes: modClasses};
 };
 
+/* Prefix for highlighted code classes */
 highlightjs.configure({
   classPrefix: 'code--'
 });
 
+/* Init */
 marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,

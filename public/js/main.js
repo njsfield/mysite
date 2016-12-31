@@ -447,12 +447,14 @@
 	    };
 	    // While found, increments URI. E.G 'Welcome To My Site1' becomes 'Welcome To My Site2'
 	    while (existingURI(uri)) {
-	      if (/\d(?=\.)/.test(uri)) {
-	        uri = uri.replace(/\d(?=\.)/, function (match) {
+	      if (/\d(?=\.)|(\d$)/.test(uri)) {
+	        uri = uri.replace(/\d(?=\.)|(\d$)/, function (match) {
 	          return '' + ++match;
 	        });
-	      } else {
+	      } else if (/\./.test(uri)) {
 	        uri = uri.replace(/\./, '1.');
+	      } else {
+	        uri = uri + '1';
 	      }
 	    }
 	    cb(null, uri);
