@@ -1,6 +1,6 @@
 // Extract data type and store data as Buffer. Send as object
 module.exports = (dataString) => {
-  const matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  const matches = dataString.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
   const response = {};
 
   response.type = matches[1];
