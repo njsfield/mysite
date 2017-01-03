@@ -9,7 +9,7 @@ const dbConnReplace = {'../dbconnection.js': dbConnTest};
 
 const posts = proxyquire('../../src/dbrequests/posts', dbConnReplace);
 const createPost = proxyquire('../../src/dbrequests/createpost', dbConnReplace);
-// const del = proxyquire('../../src/dbrequests/delete', dbConnReplace);
+const del = proxyquire('../../src/dbrequests/delete', dbConnReplace);
 // const getCategories = require('../../src/dbrequests/getcategories');
 // const getUser = require('../../src/dbrequests/getuser');
 const images = proxyquire('../../src/dbrequests/images', dbConnReplace);
@@ -127,6 +127,43 @@ const queryTests = () => {
           t.ok(imageUrls.indexOf('hello-world.jpg') > -1, 'Should return the newly added image');
           t.end();
         });
+      });
+    });
+  });
+  // Delete Post
+  test('Detete Post', (t) => {
+    let targetPost = {};
+    // Get latest post
+    posts.getPost('new-post', (err, data) => {
+      t.error(err, 'Should not throw error when retrieving latest post');
+      targetPost.postid = data.postid;
+      t.ok(targetPost.postid, 'Should retrieve postid from latest post');
+      // Delete latest post
+      del.deletePost(targetPost.postid, (err, data) => {
+        t.error(err, 'Should not throw error when deleting post');
+        // Attempt to get post
+        posts.getPost('new-post', (err, data) => {
+          t.error(err, 'Should not throw error when retrieving non-existent post');
+          t.notok(data, 'Should NOT return any data');
+          posts.getPosts((err, data) => {
+            let postUris = data.map(post => post.posturi);
+            t.error(err, 'Should not throw error when retrieving posts');
+            t.ok(postUris.indexOf('new-post') < 0, 'Get posts should not return deleted post');
+            t.end();
+          });
+        });
+      });
+    });
+  });
+  // Delete Image
+  test('Detete Image', (t) => {
+    del.deleteImage('hello-world.jpg', (err, data) => {
+      t.error(err, 'Should not throw error when deleting image');
+      // Attempt to get Image
+      images.getImage('hello-world.jpg', (err, data) => {
+        t.error(err, 'Should not throw error when retrieving non-existent post');
+        t.notok(data, 'Should NOT return the deleted image');
+        t.end();
       });
     });
   });
