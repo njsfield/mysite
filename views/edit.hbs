@@ -15,9 +15,12 @@
 
     <!-- No ability to edit home post title and category -->
 
+    <!-- Hide-div if home -->
+    {{#if post.homepost}}<div style="display: none;">{{/if}}
+
       <!--Title-->
-      <label for="edit__title-input" class="edit__label">Title</label>
-        <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" value="{{post.posttitle}}" {{#if post.homepost}} hidden {{else}} required{{/if}}/>
+      <label for="edit__title-input" class="edit__label" {{#if post.homepost}} style="display: none;" {{/if}}>Title</label>
+        <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" value="{{post.posttitle}}" required/>
 
       <!-- Category Select -->
       <label for="categoryname" class="edit__label">Category</label>
@@ -31,6 +34,9 @@
       <label for="live" class="edit__label edit__label--toggle">Live
         <input id="live" class="edit__live-checkbox" type="checkbox" name="live" {{#if post.homepost}} checked {{else if post.live}}checked{{/if}}/>
       </label>
+
+    <!-- Close-home hide div -->  
+    {{#if post.homepost}}</div>{{/if}}
 
     <!-- Post Body Area-->
     <label for="postbody" class="edit__label">Add Some Words</label>

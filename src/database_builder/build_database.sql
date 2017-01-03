@@ -67,7 +67,7 @@ INSERT INTO categories (categoryname) VALUES
 ('Personal');
 
 INSERT INTO posts (posttitle, posturi, imageid, creationdate, modifieddate, live, categoryid, ownerid) VALUES
-('Welcome To My Site', 'welcome-to-my-site', null, CURRENT_DATE, CURRENT_DATE, TRUE, 1, 1);
+('Welcome To My Site', 'welcome-to-my-site', null, CURRENT_DATE, CURRENT_DATE, FALSE, 1, 1);
 
 INSERT INTO postbodies (postid, postbody) VALUES
 ((SELECT MAX(postid) FROM posts),
