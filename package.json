@@ -8,7 +8,8 @@
     "dev-webpack": "nodemon index.js && webpack --watch",
     "start": "node index.js",
     "style-check": "doiuse public/css/style.css",
-    "build-db": "node src/database_builder/build_database.js"
+    "build-db": "node src/database_builder/build_database.js",
+    "test": "tape tests/database-tests/query-tests.js | tap-spec"
   },
   "repository": {
     "type": "git",
@@ -52,9 +53,12 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^4.1.1",
     "postcss-loader": "^1.2.1",
+    "proxyquire": "^1.7.10",
     "sass-loader": "^4.1.1",
     "scss-lint": "0.0.0",
     "style-loader": "^0.13.1",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3",
     "webpack": "^1.14.0"
   }
 }
