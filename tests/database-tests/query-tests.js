@@ -10,8 +10,8 @@ const dbConnReplace = {'../dbconnection.js': dbConnTest};
 const posts = proxyquire('../../src/dbrequests/posts', dbConnReplace);
 const createPost = proxyquire('../../src/dbrequests/createpost', dbConnReplace);
 const del = proxyquire('../../src/dbrequests/delete', dbConnReplace);
-// const getCategories = require('../../src/dbrequests/getcategories');
-// const getUser = require('../../src/dbrequests/getuser');
+const getCategories = proxyquire('../../src/dbrequests/getcategories', dbConnReplace);
+const getUser = proxyquire('../../src/dbrequests/getuser', dbConnReplace);
 const images = proxyquire('../../src/dbrequests/images', dbConnReplace);
 
 // const updatePost = require('../../src/dbrequests/updatepost');
@@ -165,6 +165,27 @@ const queryTests = () => {
         t.notok(data, 'Should NOT return the deleted image');
         t.end();
       });
+    });
+  });
+  // Get Categories
+  test('Get Categories', (t) => {
+    getCategories((err, data) => {
+      t.error(err, 'should not throw error when retrieving categories');
+      t.ok(data instanceof Array, 'returned data should be array');
+      t.ok(data.indexOf('Portfolio') > -1, 'Should return Portfolio category');
+      t.end();
+    });
+  });
+  // Get User
+  test('Get User', (t) => {
+    getUser('njsfield', (err, data) => {
+      t.error(err, 'Should not throw error when getting root user');
+      t.ok(data.ownerusername, `Should return username: ${data.ownerusername}`);
+      t.ok(data.ownername, `Should return name: ${data.ownername}`);
+      t.ok(data.ownerpassword, `Should return password`);
+      t.ok(data.owneremailaddress, `Should return emailaddress: ${data.owneremailaddress}`);
+      t.ok(data.signupdate, `Should return signup date: ${data.signupdate}`);
+      t.end();
     });
   });
 };
