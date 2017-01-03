@@ -1,4 +1,5 @@
 .DS_Store
+src/database_builder
 node_modules
 config.env
 npm-debug.log
