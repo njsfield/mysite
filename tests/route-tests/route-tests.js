@@ -411,4 +411,85 @@ const routeTests = () => {
       t.end();
     });
   });
+  /***************/
+  /***************/
+  /** Add Image **/
+  /***************/
+  /***************/
+
+  // No credentials
+  test('Add Image (no credentials)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/addimage?name=image1.jpg',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect without credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+  // Saving an image
+  test('Add Image (with credentials)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/addimage?name=image1.jpg',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      credentials: {
+        current_user: 'john'
+      },
+      payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'done', 'Should give "done message" when complete');
+      t.end();
+    });
+  });
+  /************/
+  /************/
+  /** Images **/
+  /************/
+  /************/
+  // // No credentials
+  // test('Add Image (no credentials)', (t) => {
+  //   let options = {
+  //     method: 'post',
+  //     url: '/addimage?name=image1.jpg',
+  //     headers: {
+  //       'content-type': 'text/plain;charset=UTF-8'
+  //     },
+  //     payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
+  //   };
+  //   server.inject(options, (res) => {
+  //     t.equal(res.statusCode, 302, 'Should redirect without credentials');
+  //     t.equal(res.headers['location'], '/', 'Should redirect to home');
+  //     t.end();
+  //   });
+  // });
+  // // Saving an image
+  // test('Add Image (with credentials)', (t) => {
+  //   let options = {
+  //     method: 'post',
+  //     url: '/addimage?name=image1.jpg',
+  //     headers: {
+  //       'content-type': 'text/plain;charset=UTF-8'
+  //     },
+  //     credentials: {
+  //       current_user: 'john'
+  //     },
+  //     payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
+  //   };
+  //   server.inject(options, (res) => {
+  //     t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+  //     t.equal(res.payload, 'done', 'Should give "done message" when complete');
+  //     t.end();
+  //   });
+  // });
 };
