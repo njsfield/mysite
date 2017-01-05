@@ -6,9 +6,9 @@ const updatePost = require('../../dbrequests/updatepost');
 const sendPostContentsToEdit = (req, reply) => {
   let posturi = req.params.uri;
   getPost(posturi, (err, post) => {
-    if (err) throw err;
+    if (err) reply(err);
     getCategories((err, categories) => {
-      if (err) throw err;
+      if (err) reply(err);
       if (post.postid === 1) post.homepost = true;
       reply.view('edit', {post: post, categories: categories});
     });
@@ -19,11 +19,8 @@ const sendPostContentsToEdit = (req, reply) => {
 const updatePostToDb = (req, reply) => {
   let payload = req.payload;
   payload.live = payload.live === 'on';
-  payload.posturi = req.params.uri;
-  updatePost(payload, (err) => {
-    if (err) throw err;
-    let uri = `/blog/${payload.posturi}`;
-    reply.redirect(uri);
+  updatePost(payload, (err, data) => {
+    err ? reply(err) : reply.redirect(`/blog/${payload.posturi}`);
   });
 };
 

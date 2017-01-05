@@ -2,8 +2,8 @@
   <h4 class="title">Editing: {{post.posttitle}}</h4>
 
   <form class="edit" action="/edit/{{post.posturi}}" method="post">
-    <!-- Hidden Post ID -->
-    <input type="text" name="postid" value="{{post.postid}}" hidden />
+    <!-- Hidden Post URI -->
+    <input type="text" name="posturi" value="{{post.posturi}}" hidden />
     <!-- Triggers /images route-->
     <button class="edit__feature-image-btn button button--blue button--free-width">Select Image</button>
     <!-- Triggers /images route-->
@@ -35,7 +35,7 @@
         <input id="live" class="edit__live-checkbox" type="checkbox" name="live" {{#if post.homepost}} checked {{else if post.live}}checked{{/if}}/>
       </label>
 
-    <!-- Close-home hide div -->  
+    <!-- Close-home hide div -->
     {{#if post.homepost}}</div>{{/if}}
 
     <!-- Post Body Area-->

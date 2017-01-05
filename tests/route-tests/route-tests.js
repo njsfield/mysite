@@ -17,6 +17,7 @@ proxyquire('../../src/dbrequests/delete', dbConnReplace);
 proxyquire('../../src/dbrequests/getcategories', dbConnReplace);
 proxyquire('../../src/dbrequests/getuser', dbConnReplace);
 proxyquire('../../src/dbrequests/images', dbConnReplace);
+proxyquire('../../src/dbrequests/updatepost', dbConnReplace);
 
 // const updatePost = require('../../src/dbrequests/updatepost');
 
@@ -691,6 +692,97 @@ const routeTests = () => {
         t.notok(/image1\.jpg/.test(res.payload), 'No image shown');
         t.end();
       });
+    });
+  });
+  // New post with no credentials
+  test('Compose Post (post no credentials))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/compose',
+      payload: {
+        ownerusername: process.env.DB_USERNAME,
+        imageurl: '',
+        posttitle: 'New Blog 2',
+        categoryname: 'CSS',
+        live: 'on',
+        postbody: 'newer blog post'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect if no credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+  /**********/
+  /**********/
+  /** EDIT **/
+  /**********/
+  /**********/
+  test('Edit Post (get)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/edit/new-blog',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should respond with status code of 200');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View renders html/body tag');
+      t.ok(/<form class="edit" action="\/edit\/new-blog"/.test(res.payload), 'View displays edit form');
+      t.ok(/design/i.test(res.payload), 'Should display a category name');
+      t.ok(/css/i.test(res.payload), 'Should display a category name');
+      t.end();
+    });
+  });
+  // Edit post with no credentials
+  test('Edit Post (post no credentials))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/edit/new-blog'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect if no credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+  // Edit post (post, change title, postbody, categoryname, remove image)
+  test('Edit Post (post))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/edit/new-blog',
+      credentials: {
+        current_user: 'john'
+      },
+      payload: {
+        posturi: 'new-blog',
+        imageurl: '',
+        posttitle: 'Lovely New Blog',
+        categoryname: 'Design',
+        live: 'on',
+        postbody: 'greater post body'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect after edit');
+      t.equal(res.headers['location'], '/blog/new-blog', 'Should redirect to blog');
+      t.end();
+    });
+  });
+
+  test('Review New Post from post snippets)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/blog/new-blog'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should return 200');
+      t.ok(/Lovely New Blog/i.test(res.payload), 'Should show new post title');
+      t.ok(/greater post body/i.test(res.payload), 'Should show new post body');
+      t.notok(/image1\.jpg/.test(res.payload), 'Image not present anymore');
+      t.end();
     });
   });
   // New post with no credentials
