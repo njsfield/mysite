@@ -483,4 +483,23 @@ const routeTests = () => {
       t.end();
     });
   });
+  // Get Raw Image Data
+  test('Get raw image data(with credentials)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images?imageurl=image1.jpg',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.ok(JSON.parse(res.payload), 'Should reply with JSON formatted image data');
+      let imageData = JSON.parse(res.payload);
+      t.equal(imageData.imagetitle, 'Custom Upload', 'Should store default Custom Upload title');
+      t.ok(imageData.uploaddate, 'Should store upload date');
+      t.ok(imageData.imagebody, 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA', 'Should send back image body');
+      t.end();
+    });
+  });
 };
