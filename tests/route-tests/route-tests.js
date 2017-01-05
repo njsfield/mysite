@@ -138,6 +138,7 @@ const routeTests = () => {
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
       t.ok(/<a class="snippet" href="\/blog\/[a-z-]*">/.test(res.payload), 'Should render at least one blog snippet');
       t.notok(/href="\/compose"/.test(res.payload), 'Without credentials, should NOT show compose button');
+      t.notok(/NOT LIVE/.test(res.payload), 'Without credentials, should not show NOT LIVE warning');
       t.end();
     });
   });
@@ -154,6 +155,53 @@ const routeTests = () => {
       t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
       t.ok(/href="\/compose"/.test(res.payload), 'With credentials, should show compose button');
+      t.ok(/NOT LIVE/.test(res.payload), 'With credentials, should show NOT LIVE warning for home post');
+      t.end();
+    });
+  });
+  // Blog URI
+  test('blog URI', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/blog/markdown-style-guide'
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View renders html/body tag');
+      t.ok(/<h1 class="post__header">.+<\/h1>/.test(res.payload), 'Should render header tag');
+      t.ok(/<h5 class="post__date">\d{2} - \d{2} - \d{4}<\/h5>/.test(res.payload), 'Should render date correctly');
+      t.ok(/<div class="post__body">(.|\n)*<\/div>/.test(res.payload), 'Should render postbody');
+      t.notok(/```javascript /.test(res.payload), 'Should NOT render markdown syntax');
+      t.notok(/href="\/edit"/.test(res.payload), 'Without credentials, should NOT show edit button');
+      t.end();
+    });
+  });
+  // Blog URI with credentials
+  test('blog URI (with credentials)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/blog/markdown-style-guide',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View renders html/body tag');
+      t.ok(/href="\/edit\/markdown-style-guide"/.test(res.payload), 'With credentials, should show edit button for this post');
+      t.end();
+    });
+  });
+  // Not existent post
+  test('blog URI (with credentials)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/blog/non-existent-post'
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 404, 'Should respond with 404 if post not found');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'Still renders HTML');
+      t.ok(/NEEDZ MORE POST/.test(res.payload), 'Should display custom error');
       t.end();
     });
   });

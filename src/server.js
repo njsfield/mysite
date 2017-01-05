@@ -8,6 +8,16 @@ const routes = require('./routes');
 const server = new Hapi.Server();
 const env = require('env2');
 
+// status Code options
+const config = {
+  templateName: 'error',
+  statusCodes: {
+    401: { message: 'I could show you that buuuuuuuuuut I dont wanna' },
+    404: { message: 'Sorry dear, that does not exist (yet may do one day)' },
+    500: { message: 'This plane has no left phalange.' }
+  }
+};
+
 // Install Environment Variables
 env('./config.env');
 
@@ -37,7 +47,7 @@ server.connection({
 });
 
 // Register Plugins
-server.register([vision, error, inert, cookieAuth, hapiContextCredentials], (err) => {
+server.register([vision, {register: error, options: config}, inert, cookieAuth, hapiContextCredentials], (err) => {
   if (err) { throw err; }
 
     // Register views
