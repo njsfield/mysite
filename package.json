@@ -9,7 +9,8 @@
     "start": "node index.js",
     "style-check": "doiuse public/css/style.css",
     "build-db": "node src/database_builder/build_database.js",
-    "test": "tape tests/database-tests/query-tests.js | tap-spec"
+    "test-db": "tape tests/database-tests/query-tests.js | tap-spec",
+    "test-routes": "tape tests/route-tests/route-tests.js | tap-spec"
   },
   "repository": {
     "type": "git",
@@ -56,6 +57,7 @@
     "proxyquire": "^1.7.10",
     "sass-loader": "^4.1.1",
     "scss-lint": "0.0.0",
+    "sinon": "^1.17.7",
     "style-loader": "^0.13.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3",
