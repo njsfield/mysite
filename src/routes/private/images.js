@@ -30,6 +30,8 @@ const getAllImageurls = (req, reply) => {
 const imageTitleHandler = (req, reply) => {
   if (!credentialsCheck(req)) {
     reply('Not Authorized');
+  } else if (typeof req.payload !== 'string') {
+    reply('payload must be JSON formatted');
   } else {
     let payload = JSON.parse(req.payload);
     let imageurl = payload.imageurl;

@@ -498,7 +498,96 @@ const routeTests = () => {
       let imageData = JSON.parse(res.payload);
       t.equal(imageData.imagetitle, 'Custom Upload', 'Should store default Custom Upload title');
       t.ok(imageData.uploaddate, 'Should store upload date');
-      t.ok(imageData.imagebody, 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA', 'Should send back image body');
+      t.equal(imageData.imagebody, 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA', 'Should send back image body');
+      t.end();
+    });
+  });
+  // Get Raw Image Data (not authorized)
+  test('Get raw image data(without credentials)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images?imageurl=image1.jpg'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'Not Authorized', 'Should reply with Not Authorized');
+      t.end();
+    });
+  });
+  // Get All Image Urls
+  test('Get all image urls', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should respond with status code of 200');
+      t.ok(JSON.parse(res.payload), 'Should reply with JSON');
+      let imageUrls = JSON.parse(res.payload).images;
+      t.ok(imageUrls instanceof Array, 'JSON should contain array');
+      t.ok(imageUrls.length > 0, 'Should contain at least one item in array');
+      t.ok(imageUrls.indexOf('image1.jpg') > -1, 'Should contain the added image url');
+      t.end();
+    });
+  });
+  // Get Image Urls (not authorized)
+  test('Get image urls (without credentials)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'Not Authorized', 'Should reply with Not Authorized');
+      t.end();
+    });
+  });
+  // Update Image Title
+  test('Update image title', (t) => {
+    let options = {
+      method: 'post',
+      url: '/images',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      credentials: {
+        current_user: 'john'
+      },
+      payload: JSON.stringify({
+        imageurl: 'image1.jpg',
+        imagetitle: 'New Title'
+      })
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'New Title', 'Should reply with New title');
+      server.inject({
+        method: 'get',
+        url: '/images?imageurl=image1.jpg',
+        credentials: {
+          current_user: 'john'
+        }}, (res) => {
+        t.equal(JSON.parse(res.payload).imagetitle, 'New Title', 'new get request returns new title');
+        t.end();
+      });
+    });
+  });
+  // Update Image Title (No credentials)
+  test('Update image title (no credentials)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/images',
+      payload: JSON.stringify({
+        imageurl: 'image1.jpg',
+        imagetitle: 'New Title'
+      })
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'Not Authorized', 'Should reply with Not Authorized');
       t.end();
     });
   });
