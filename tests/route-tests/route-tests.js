@@ -104,23 +104,7 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 404, 'Should NOT respond with 200 when attempting post request to home');
-      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View will still render html/body tag');
-      t.end();
-    });
-  });
-
-  // Blog
-  test('No posting to Home route', (t) => {
-    let options = {
-      method: 'POST',
-      url: '/',
-      payload: {
-        evilcode: '(function (evil) { evil()}(badFunc)'
-      }
-    };
-    server.inject(options, (res) => {
-      t.ok(res.statusCode, 404, 'Should NOT respond with 200 when attempting post request to home');
+      t.equal(res.statusCode, 404, 'Should NOT respond with 200 when attempting post request to home');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View will still render html/body tag');
       t.end();
     });
@@ -138,7 +122,7 @@ const routeTests = () => {
       url: '/blog'
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for blog');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
       t.ok(/<a class="snippet" href="\/blog\/[a-z-]*">/.test(res.payload), 'Should render at least one blog snippet');
       t.notok(/href="\/compose"/.test(res.payload), 'Without credentials, should NOT show compose button');
@@ -156,7 +140,7 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for blog');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
       t.ok(/href="\/compose"/.test(res.payload), 'With credentials, should show compose button');
       t.ok(/NOT LIVE/.test(res.payload), 'With credentials, should show NOT LIVE warning for home post');
@@ -170,7 +154,7 @@ const routeTests = () => {
       url: '/blog/markdown-style-guide'
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for blog');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View renders html/body tag');
       t.ok(/<h1 class="post__header">.+<\/h1>/.test(res.payload), 'Should render header tag');
       t.ok(/<h5 class="post__date">\d{2} - \d{2} - \d{4}<\/h5>/.test(res.payload), 'Should render date correctly');
@@ -190,7 +174,7 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for blog');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for blog');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View renders html/body tag');
       t.ok(/href="\/edit\/markdown-style-guide"/.test(res.payload), 'With credentials, should show edit button for this post');
       t.end();
@@ -203,7 +187,7 @@ const routeTests = () => {
       url: '/blog/non-existent-post'
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 404, 'Should respond with 404 if post not found');
+      t.equal(res.statusCode, 404, 'Should respond with 404 if post not found');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'Still renders HTML');
       t.ok(/NEEDZ MORE POST/.test(res.payload), 'Should display custom error');
       t.end();
@@ -222,7 +206,7 @@ const routeTests = () => {
       url: '/portfolio'
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag at least');
       t.notok(/href="\/compose"/.test(res.payload), 'Without credentials, should NOT show compose button');
       t.end();
@@ -238,7 +222,7 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
       t.ok(/href="\/compose"/.test(res.payload), 'With credentials, should show compose button');
       t.end();
@@ -251,7 +235,7 @@ const routeTests = () => {
       url: '/portfolio/non-existent-post'
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 404, 'Should respond with 404 if portfolio post not found');
+      t.equal(res.statusCode, 404, 'Should respond with 404 if portfolio post not found');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'Still renders HTML');
       t.ok(/This Project\.\.\. I did not embark upon/.test(res.payload), 'Should display custom error');
       t.end();
@@ -270,7 +254,7 @@ const routeTests = () => {
       url: '/login'
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
+      t.equal(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
       t.ok(/Please Kindly Log In/.test(res.payload), 'Should display prompt to log in');
       t.ok(/<form class="login" action="\/login" method="post"/.test(res.payload), 'Should display form to fill in details');
@@ -288,7 +272,7 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should still respond with 200 status code for loggin in if false username');
+      t.equal(res.statusCode, 200, 'Should still respond with 200 status code for loggin in if false username');
       t.ok(/Non existent user/.test(res.payload), 'Should display Non existent user if user not found');
       t.end();
     });
@@ -304,7 +288,7 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should still respond with 200 status code for loggin in if false password');
+      t.equal(res.statusCode, 200, 'Should still respond with 200 status code for loggin in if false password');
       t.ok(/Wrong password/.test(res.payload), 'Should display Wrong password if password doesnt match');
       t.end();
     });
@@ -320,8 +304,43 @@ const routeTests = () => {
       }
     };
     server.inject(options, (res) => {
-      t.ok(res.statusCode, 200, 'Should still respond with 200 if successful');
+      t.equal(res.statusCode, 302, 'Should redirect on login');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
       t.ok(res.headers['set-cookie'], 'Should set cookie in header after successful login');
+      t.end();
+    });
+  });
+  /************/
+  /************/
+  /** Logout **/
+  /************/
+  /************/
+
+  // Logout
+  test('Login (removes credentials)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/logout',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect on logout');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.ok(/somecookie=; Max-Age=0;/.test(res.headers['set-cookie'][0]), 'Should set client cookie to null');
+      t.end();
+    });
+  });
+  // Logout (without credentials)
+  test('Login (without credentials)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/logout'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should still redirect on logout');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
       t.end();
     });
   });
