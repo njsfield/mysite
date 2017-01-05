@@ -591,4 +591,126 @@ const routeTests = () => {
       t.end();
     });
   });
+  /*************/
+  /*************/
+  /** Compose **/
+  /*************/
+  /*************/
+
+  // Compose Post
+  test('Compose Post (get)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/compose',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should respond with status code of 200');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View renders html/body tag');
+      t.ok(/<form class="edit"/.test(res.payload), 'View displays edit form');
+      t.ok(/design/i.test(res.payload), 'Should display a category name');
+      t.ok(/css/i.test(res.payload), 'Should display a category name');
+      t.end();
+    });
+  });
+  // No credentials
+  test('Compose Post (get with no credentials))', (t) => {
+    let options = {
+      method: 'get',
+      url: '/compose'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect without credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+  // Compose Post (post)
+  test('Compose Post (post))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/compose',
+      credentials: {
+        current_user: 'john'
+      },
+      payload: {
+        ownerusername: process.env.DB_USERNAME,
+        imageurl: 'image1.jpg',
+        posttitle: 'New Blog',
+        categoryname: 'CSS',
+        live: 'on',
+        postbody: 'new blog post'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect after compose');
+      t.equal(res.headers['location'], '/blog', 'Should redirect to home');
+      let newOptions = {
+        method: 'get',
+        url: '/blog/new-blog'
+      };
+      server.inject(newOptions, (res) => {
+        t.equal(res.statusCode, 200, 'Should return 200 when getting new post');
+        t.ok(/New Blog/i.test(res.payload), 'Should show new post title');
+        t.ok(/CSS/i.test(res.payload), 'Should show category');
+        t.ok(/image1\.jpg/.test(res.payload), 'Should show image');
+        t.end();
+      });
+    });
+  });
+  // New post with no image
+  test('Compose Post (post no image))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/compose',
+      credentials: {
+        current_user: 'john'
+      },
+      payload: {
+        ownerusername: process.env.DB_USERNAME,
+        imageurl: '',
+        posttitle: 'New Blog 2',
+        categoryname: 'CSS',
+        live: 'on',
+        postbody: 'newer blog post'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect after compose');
+      t.equal(res.headers['location'], '/blog', 'Should redirect to home');
+      let newOptions = {
+        method: 'get',
+        url: '/blog/new-blog-2'
+      };
+      server.inject(newOptions, (res) => {
+        t.equal(res.statusCode, 200, 'Should return 200 when getting new post');
+        t.ok(/New Blog 2/i.test(res.payload), 'Should show new post title');
+        t.ok(/CSS/i.test(res.payload), 'Should show category');
+        t.notok(/image1\.jpg/.test(res.payload), 'No image shown');
+        t.end();
+      });
+    });
+  });
+  // New post with no credentials
+  test('Compose Post (post no credentials))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/compose',
+      payload: {
+        ownerusername: process.env.DB_USERNAME,
+        imageurl: '',
+        posttitle: 'New Blog 2',
+        categoryname: 'CSS',
+        live: 'on',
+        postbody: 'newer blog post'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect if no credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
 };
