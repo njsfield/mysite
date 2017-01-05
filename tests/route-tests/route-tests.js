@@ -457,39 +457,30 @@ const routeTests = () => {
   /** Images **/
   /************/
   /************/
-  // // No credentials
-  // test('Add Image (no credentials)', (t) => {
-  //   let options = {
-  //     method: 'post',
-  //     url: '/addimage?name=image1.jpg',
-  //     headers: {
-  //       'content-type': 'text/plain;charset=UTF-8'
-  //     },
-  //     payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
-  //   };
-  //   server.inject(options, (res) => {
-  //     t.equal(res.statusCode, 302, 'Should redirect without credentials');
-  //     t.equal(res.headers['location'], '/', 'Should redirect to home');
-  //     t.end();
-  //   });
-  // });
-  // // Saving an image
-  // test('Add Image (with credentials)', (t) => {
-  //   let options = {
-  //     method: 'post',
-  //     url: '/addimage?name=image1.jpg',
-  //     headers: {
-  //       'content-type': 'text/plain;charset=UTF-8'
-  //     },
-  //     credentials: {
-  //       current_user: 'john'
-  //     },
-  //     payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
-  //   };
-  //   server.inject(options, (res) => {
-  //     t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
-  //     t.equal(res.payload, 'done', 'Should give "done message" when complete');
-  //     t.end();
-  //   });
-  // });
+
+  // Send Raw Image
+  test('Send Raw Image', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images/image1.jpg'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should respond with status code of 200');
+      t.equal(res.headers['content-type'], 'image/jpeg');
+      t.ok(/xif\u0000\u0000/.test(res.payload), 'Should send payload as buffer');
+      t.end();
+    });
+  });
+  // Send Raw Image (not found)
+  test('Send Back nothing if not found', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images/invalidimage.jpg'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'Image Not Found', 'Should reply with Image Not Found');
+      t.end();
+    });
+  });
 };

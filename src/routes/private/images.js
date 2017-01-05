@@ -7,12 +7,15 @@ const sendRawImage = (req, reply) => {
   let imageurl = req.params.url;
   getImage(imageurl, (err, image) => {
     if (err) reply(err);
-    image = decodeBase64Image(image.imagebody);
-    reply(image.data).header('content-type', image.type);
+    else if (!image) reply('Image Not Found');
+    else {
+      image = decodeBase64Image(image.imagebody);
+      reply(image.data).header('content-type', image.type);
+    }
   });
 };
 
-const getAllImageUrls = (req, reply) => {
+const getAllImageurls = (req, reply) => {
   if (!credentialsCheck(req)) {
     reply('Not Authorized');
   } else {
@@ -67,7 +70,7 @@ module.exports = {
         } else if (req.query.imageurl) {
           getImageData(req, reply);
         } else {
-          getAllImageUrls(req, reply);
+          getAllImageurls(req, reply);
         }
       } else {
         imageTitleHandler(req, reply);
