@@ -2,6 +2,10 @@
 const test = require('tape');
 const buildDb = require('../database-tests/build_test_database.js');
 const dbConnTest = require('../database-tests/dbconnection_test');
+const env = require('env2');
+
+// Install Environment Variables
+env('./config.env');
 
 // Override production dbconnection to dbconnection_test (for mock database purposes)
 const proxyquire = require('proxyquire');
@@ -25,11 +29,11 @@ const server = require('../../src/server.js');
 
 // Tests
 const routeTests = () => {
- /************/
- /************/
- /**  Home **/
- /************/
- /************/
+ /**********/
+ /**********/
+ /** Home **/
+ /**********/
+ /**********/
 
 // Home (no credentials)
   test('Home route should load content', (t) => {
@@ -121,11 +125,11 @@ const routeTests = () => {
       t.end();
     });
   });
-  /************/
-  /************/
-  /**  Blog **/
-  /************/
-  /************/
+  /**********/
+  /**********/
+  /** Blog **/
+  /**********/
+  /**********/
 
   // Blog no credentials
   test('blog (no credentials)', (t) => {
@@ -193,7 +197,7 @@ const routeTests = () => {
     });
   });
   // Not existent post
-  test('blog URI (with credentials)', (t) => {
+  test('Blog URI (non-existent)', (t) => {
     let options = {
       method: 'GET',
       url: '/blog/non-existent-post'
@@ -202,6 +206,122 @@ const routeTests = () => {
       t.ok(res.statusCode, 404, 'Should respond with 404 if post not found');
       t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'Still renders HTML');
       t.ok(/NEEDZ MORE POST/.test(res.payload), 'Should display custom error');
+      t.end();
+    });
+  });
+  /**************/
+  /**************/
+  /* Portfolio **/
+  /**************/
+  /**************/
+
+  // Portfolio no credentials
+  test('Portfolio (no credentials)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/portfolio'
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag at least');
+      t.notok(/href="\/compose"/.test(res.payload), 'Without credentials, should NOT show compose button');
+      t.end();
+    });
+  });
+  // Portfolio with credentials
+  test('Portfolio with credentials', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/portfolio',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
+      t.ok(/href="\/compose"/.test(res.payload), 'With credentials, should show compose button');
+      t.end();
+    });
+  });
+  // Not existent portfolio post
+  test('portfolio URI (non existent)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/portfolio/non-existent-post'
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 404, 'Should respond with 404 if portfolio post not found');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'Still renders HTML');
+      t.ok(/This Project\.\.\. I did not embark upon/.test(res.payload), 'Should display custom error');
+      t.end();
+    });
+  });
+  /***********/
+  /***********/
+  /** Login **/
+  /***********/
+  /***********/
+
+  // Login
+  test('Login (get)', (t) => {
+    let options = {
+      method: 'GET',
+      url: '/login'
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should respond with 200 status code for portfolio');
+      t.ok(/<html>/.test(res.payload) && /<body>/.test(res.payload), 'View render html/body tag');
+      t.ok(/Please Kindly Log In/.test(res.payload), 'Should display prompt to log in');
+      t.ok(/<form class="login" action="\/login" method="post"/.test(res.payload), 'Should display form to fill in details');
+      t.end();
+    });
+  });
+  // Login (false username)
+  test('Login (false username)', (t) => {
+    let options = {
+      method: 'POST',
+      url: '/login',
+      payload: {
+        username: 'john',
+        password: 'secret'
+      }
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should still respond with 200 status code for loggin in if false username');
+      t.ok(/Non existent user/.test(res.payload), 'Should display Non existent user if user not found');
+      t.end();
+    });
+  });
+  // Login (false password)
+  test('Login (false password)', (t) => {
+    let options = {
+      method: 'POST',
+      url: '/login',
+      payload: {
+        username: process.env.DB_USERNAME,
+        password: 'wrongpassword'
+      }
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should still respond with 200 status code for loggin in if false password');
+      t.ok(/Wrong password/.test(res.payload), 'Should display Wrong password if password doesnt match');
+      t.end();
+    });
+  });
+  // Login (successful credentials)
+  test('Login (false password)', (t) => {
+    let options = {
+      method: 'POST',
+      url: '/login',
+      payload: {
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD
+      }
+    };
+    server.inject(options, (res) => {
+      t.ok(res.statusCode, 200, 'Should still respond with 200 if successful');
+      t.ok(res.headers['set-cookie'], 'Should set cookie in header after successful login');
       t.end();
     });
   });
