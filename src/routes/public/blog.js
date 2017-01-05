@@ -2,7 +2,7 @@ const { getPost, getPosts } = require('../../dbrequests/posts.js');
 const credentialsCheck = require('../../helpers/credentialscheck');
 const markDownTransform = require('../../helpers/markdowntransform');
 
-// Custom Error
+// Custom Error for post
 const nullPostError = {
   errorTitle: 'NEEDZ MORE POST',
   statusCode: 404,

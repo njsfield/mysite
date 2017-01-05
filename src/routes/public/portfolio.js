@@ -2,12 +2,19 @@ const { getPost, getPortfolioItems } = require('../../dbrequests/posts.js');
 const credentialsCheck = require('../../helpers/credentialscheck');
 const markDownTransform = require('../../helpers/markdowntransform');
 
+// Custom Error for post
+const nullPortfolioPostError = {
+  errorTitle: 'This Project... I did not embark upon',
+  statusCode: 404,
+  errorMessage: 'So I was having a look through my past work records, trying to please YOU (again), and guess what... you made it up... AGAIN'
+};
+
 // Get post via url, prepare markdown and send with credentials
 const preparePostAndSend = (req, reply) => {
   let posturi = req.params.uri;
   getPost(posturi, (err, post) => {
-    post.postbody = markDownTransform(post.postbody);
-    err ? reply(err) : reply.view('post', {post: post, credentials: credentialsCheck(req)});
+    post ? post.postbody = markDownTransform(post.postbody) : err = true;
+    err ? reply.view('error', nullPortfolioPostError).code(404) : reply.view('post', {post: post, credentials: credentialsCheck(req)});
   });
 };
 
@@ -33,7 +40,7 @@ module.exports = {
       }
     },
     handler: (req, reply) => {
-      if (req.params.url) {
+      if (req.params.uri) {
         preparePostAndSend(req, reply);
       } else {
         preparePortfolioItemsAndSend(req, reply);
