@@ -48,7 +48,7 @@
 
 	__webpack_require__(1);
 	// Fetches base sass file to build style.css file to /public
-	__webpack_require__(3);
+	__webpack_require__(4);
 	// Fetches base js file to build app.js file to /public
 
 /***/ },
@@ -82,7 +82,7 @@
 	// Sanitize URI
 
 
-	var _require2 = __webpack_require__(7),
+	var _require2 = __webpack_require__(3),
 	    sanitizeURI = _require2.sanitizeURI;
 
 	/** Dom Elements **/
@@ -212,7 +212,7 @@
 	// Preview Button
 	previewBtn.addEventListener('click', function (e) {
 	  stopE(e);
-	  postReq('/marked', postBodyElt.value, function (htmlString) {
+	  postReq('/marked', postBodyElt.value || 'NULL', function (htmlString) {
 	    setHTML(postBodyOutputElt, JSON.parse(htmlString).marked);
 	    toggleElts(postBodyOutputElt, postBodyElt, isHidden(postBodyOutputElt));
 	  });
@@ -418,15 +418,6 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */
-/***/ function(module, exports) {
-
 	'use strict';
 
 	// Convert URIs. E.G 'Welcome To "My Site"' becomes 'welcome-to-%22my-site%22'
@@ -465,6 +456,12 @@
 	  sanitizeURI: sanitizeURI,
 	  prepareURIForDb: prepareURIForDb
 	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

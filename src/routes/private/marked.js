@@ -9,7 +9,7 @@ module.exports = {
       mode: 'try'
     },
     handler: (req, reply) => {
-      let marked = markDownTransform(req.payload);
+      let marked = req.payload === 'NULL' ? '' : markDownTransform(req.payload);
       reply(JSON.stringify({marked: marked}));
     }
   }

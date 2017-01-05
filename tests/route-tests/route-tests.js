@@ -344,4 +344,71 @@ const routeTests = () => {
       t.end();
     });
   });
+  /************/
+  /************/
+  /** Marked **/
+  /************/
+  /************/
+
+  // Marked with post
+  test('Marked payload post', (t) => {
+    let options = {
+      method: 'post',
+      url: '/marked',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      credentials: {
+        current_user: 'john'
+      },
+      payload: '## Hello'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should respond with status code of 200');
+      t.ok(JSON.parse(res.payload), 'Response is sent as JSON object');
+      let html = JSON.parse(res.payload).marked;
+      t.ok(/<h2/.test(html), 'Response contains html');
+      t.ok(/Hello/.test(html), 'Response contains original string');
+      t.notok(/##/.test(html), 'Response does not contain markdown');
+      t.end();
+    });
+  });
+
+  // Marked with no credentials
+  test('Marked payload post (no credentials)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/marked',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      payload: '## Hello'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect without credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+  // Marked with no 'NULL' as payload
+  test('Marked payload (empty post)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/marked',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      credentials: {
+        current_user: 'john'
+      },
+      payload: 'NULL'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.ok(JSON.parse(res.payload), 'Response is sent as JSON object');
+      let html = JSON.parse(res.payload).marked;
+      t.notok(html, 'Marked response in payload should be empty');
+      t.end();
+    });
+  });
 };

@@ -147,7 +147,7 @@ selectBtn.addEventListener('click', (e) => {
 // Preview Button
 previewBtn.addEventListener('click', (e) => {
   stopE(e);
-  postReq('/marked', postBodyElt.value, (htmlString) => {
+  postReq('/marked', postBodyElt.value || 'NULL', (htmlString) => {
     setHTML(postBodyOutputElt, JSON.parse(htmlString).marked);
     toggleElts(postBodyOutputElt, postBodyElt, isHidden(postBodyOutputElt));
   });
