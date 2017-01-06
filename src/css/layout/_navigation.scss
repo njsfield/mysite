@@ -24,7 +24,7 @@
     // Fixed
     &--fixed {
         position: fixed;
-        width: 100%;
+        width: 100vw;
         z-index: 4;
         @media screen and (min-width: $break-extra-large) {
             width: 25%;
