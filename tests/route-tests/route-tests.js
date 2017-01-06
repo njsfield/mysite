@@ -27,7 +27,7 @@ buildDb((error) => {
 });
 
 const server = require('../../src/server.js');
-
+const categoryColor = require('../../views/helpers/categorycolor');
 // Tests
 const routeTests = () => {
  /**********/
@@ -598,6 +598,18 @@ const routeTests = () => {
   /*************/
   /*************/
 
+  // Category Color Helpers
+  test('Category Colors', (t) => {
+    t.equal(categoryColor('css'), 'blue', 'CSS should be blue labelled');
+    t.equal(categoryColor('design'), 'pink', 'Design should be pink labelled');
+    t.equal(categoryColor('javascript'), 'red', 'JavaScript should be red labelled');
+    t.equal(categoryColor('portfolio'), 'green', 'Portfolio should be green labelled');
+    t.equal(categoryColor('databases'), 'grey', 'Databases should be grey labelled');
+    t.equal(categoryColor('testing'), 'purple', 'Testing should be purple labelled');
+    t.equal(categoryColor('html'), 'orange', 'HTML should be orange labelled');
+    t.equal(categoryColor('personal'), 'light-blue', 'HTML should be light-blue labelled');
+    t.end();
+  });
   // Compose Post
   test('Compose Post (get)', (t) => {
     let options = {
@@ -661,8 +673,8 @@ const routeTests = () => {
       });
     });
   });
-  // New post with no image
-  test('Compose Post (post no image))', (t) => {
+  // New post with serialised posturi
+  test('Compose Post (duplicate title handled))', (t) => {
     let options = {
       method: 'post',
       url: '/compose',
@@ -672,7 +684,7 @@ const routeTests = () => {
       payload: {
         ownerusername: process.env.DB_USERNAME,
         imageurl: '',
-        posttitle: 'New Blog 2',
+        posttitle: 'New Blog',
         categoryname: 'CSS',
         live: 'on',
         postbody: 'newer blog post'
@@ -683,11 +695,11 @@ const routeTests = () => {
       t.equal(res.headers['location'], '/blog', 'Should redirect to home');
       let newOptions = {
         method: 'get',
-        url: '/blog/new-blog-2'
+        url: '/blog/new-blog1'
       };
       server.inject(newOptions, (res) => {
-        t.equal(res.statusCode, 200, 'Should return 200 when getting new post');
-        t.ok(/New Blog 2/i.test(res.payload), 'Should show new post title');
+        t.equal(res.statusCode, 200, 'Should return 200 when getting new-blog1 as new-blog already exists');
+        t.ok(/New Blog/i.test(res.payload), 'Should show post title');
         t.ok(/CSS/i.test(res.payload), 'Should show category');
         t.notok(/image1\.jpg/.test(res.payload), 'No image shown');
         t.end();
@@ -702,7 +714,7 @@ const routeTests = () => {
       payload: {
         ownerusername: process.env.DB_USERNAME,
         imageurl: '',
-        posttitle: 'New Blog 2',
+        posttitle: 'Cannot post this',
         categoryname: 'CSS',
         live: 'on',
         postbody: 'newer blog post'
@@ -785,15 +797,15 @@ const routeTests = () => {
       t.end();
     });
   });
-  // New post with no credentials
+  // Edit post with no credentials
   test('Edit Post (post no credentials))', (t) => {
     let options = {
       method: 'post',
-      url: '/edit/new-blog-2',
+      url: '/edit/new-blog1',
       payload: {
-        posturi: 'new-blog-2',
+        posturi: 'new-blog1',
         imageurl: '',
-        posttitle: 'New Blog 2',
+        posttitle: 'New Blog',
         categoryname: 'CSS',
         live: 'on',
         postbody: 'newer blog post'
