@@ -453,6 +453,25 @@ const routeTests = () => {
       t.end();
     });
   });
+  // Saving an image (with same url)
+  test('Add Image (with same url)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/addimage?name=image1.jpg',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      credentials: {
+        current_user: 'john'
+      },
+      payload: 'data:image/jpeg;base64,/9j/4Qj1RXhpZgAA'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should still respond with status code of 200');
+      t.equal(res.payload, 'done', 'Should give "done message" when complete');
+      t.end();
+    });
+  });
   /************/
   /************/
   /** Images **/
@@ -464,6 +483,19 @@ const routeTests = () => {
     let options = {
       method: 'get',
       url: '/images/image1.jpg'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should respond with status code of 200');
+      t.equal(res.headers['content-type'], 'image/jpeg');
+      t.ok(/xif\u0000\u0000/.test(res.payload), 'Should send payload as buffer');
+      t.end();
+    });
+  });
+  // Send Raw Image (of dupliate image)
+  test('Send Raw Image (of duplicate image)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/images/image2.jpg'
     };
     server.inject(options, (res) => {
       t.equal(res.statusCode, 200, 'Should respond with status code of 200');
@@ -699,6 +731,39 @@ const routeTests = () => {
       };
       server.inject(newOptions, (res) => {
         t.equal(res.statusCode, 200, 'Should return 200 when getting new-blog1 as new-blog already exists');
+        t.ok(/New Blog/i.test(res.payload), 'Should show post title');
+        t.ok(/CSS/i.test(res.payload), 'Should show category');
+        t.notok(/image1\.jpg/.test(res.payload), 'No image shown');
+        t.end();
+      });
+    });
+  });
+  // New post from new blog1 to new blog2
+  test('Compose Post (duplicate title handled from new-blog1 to new-blog2))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/compose',
+      credentials: {
+        current_user: 'john'
+      },
+      payload: {
+        ownerusername: process.env.DB_USERNAME,
+        imageurl: '',
+        posttitle: 'New Blog',
+        categoryname: 'CSS',
+        live: 'on',
+        postbody: 'newer blog post'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect after compose');
+      t.equal(res.headers['location'], '/blog', 'Should redirect to home');
+      let newOptions = {
+        method: 'get',
+        url: '/blog/new-blog2'
+      };
+      server.inject(newOptions, (res) => {
+        t.equal(res.statusCode, 200, 'Should return 200 when getting new-blog2 as new-blog1 already exists');
         t.ok(/New Blog/i.test(res.payload), 'Should show post title');
         t.ok(/CSS/i.test(res.payload), 'Should show category');
         t.notok(/image1\.jpg/.test(res.payload), 'No image shown');
