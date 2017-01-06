@@ -70,14 +70,22 @@ INSERT INTO posts (posttitle, posturi, imageid, creationdate, modifieddate, live
 
 INSERT INTO postbodies (postid, postbody) VALUES
 ((SELECT MAX(postid) FROM posts),
-  'I am **freelance** Web Developer based in London. Things I love: -center-
-- JavaScript -center-
-- CSS
-- HTML
-- Design
-- Food
-Want to work together? Email me at [heyimnick@live.com](mailto://heyimnick@live.com). -center-
-#### Thank you :) -center-');
+  'I’m a problem solver and a builder. -center-
+
+I enjoy working toward milestones and collecting new ones.
+Graphing the connection between keyboard typing and the beating heart of an online system is highly motivating. -center-
+
+In that context, I’m disciplined in **JavaScript**, **HTML** and **CSS**, I work in **NodeJS** on the server side, and dabble in many a **SQL** query. I test a lot with libraries like [Tape](https://www.npmjs.com/package/tape
+)/[Jasmine](https://jasmine.github.io/
+), I use [GitHub](https://jasmine.github.io/
+) for version control, using [Atom](https://atom.io/) to write code with (and [Brackets](http://brackets.io/) for design), as well as other technologies to help me do what I do. -center-
+
+I’m a digital design hobbyist, I use Illustrator CC a lot when not writing code, and have a musical background which remains a strong interest- I have ventured heavily into music production, sound design and audio recording before being ~~kidnapped~~ lovestruck by the web. -center-
+
+You’ll often find me at [Founders and Coders](http://www.foundersandcoders.com/), as well of many [meetups](https://www.meetup.com/cities/gb/17/london/
+) in London. -center-
+
+Contact me at [heyimnick@live.com](mailto://heyimnick@live.com) -center-');
 
 INSERT INTO posts (posttitle, posturi, imageid, creationdate, modifieddate, live, categoryid, ownerid) VALUES
 ('Markdown Style Guide', 'markdown-style-guide', null, CURRENT_DATE, CURRENT_DATE, TRUE, 3, 1);
