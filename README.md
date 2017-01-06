@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/njsfield/mysite.svg?branch=master)](https://travis-ci.org/njsfield/mysite)
+[![codecov](https://codecov.io/gh/njsfield/mysite/branch/master/graph/badge.svg)](https://codecov.io/gh/njsfield/mysite)
+
 # Description
 A personal website to host a biography, a blog, and personal/professional projects.
 Users can view blog posts and filter them by category.
