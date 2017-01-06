@@ -2,130 +2,50 @@
 [![codecov](https://codecov.io/gh/njsfield/mysite/branch/master/graph/badge.svg)](https://codecov.io/gh/njsfield/mysite)
 
 # Description
-A personal website to host a biography, a blog, and personal/professional projects.
-Users can view blog posts and filter them by category.
-The owner can log in, edit/create/delete/hide blog and portfolio posts.
+A personal website to host a biography, a blog, and personal/professional projects. Includes a content manage system to add/update/update posts from a database, as well as add/update/delete images. See [mockups](./docs/mockups/) for original designs.
+
+The live site can be viewed here
+
 
 # Technologies
-Node.js  
-Hapi.js
-Bcrypt
-Handlebars
-Postgres
+- Node.js  
+- Hapi.js
+- Sass
+- PostCSS
+- Webpack
+- ES6
+- Handlebars
+- Postgres
 
-# Mockups
+# Testing Tools
+- Tape
+- Istanbul
+- Codecov
 
-### Home/Nav
-![Nav/home](./mockups/nav-home.png)
-### Blog
-![Blog](./mockups/blog.png)
-### Portfolio
-![Portfolio](./mockups/portfolio.png)
-### Create Post Flow
-![Createpostflow](./mockups/createpostflow.png)
+# Admin Screenshots
 
-# Schema
-![Schema](./mockups/schema.png)
+For logged in users, they can see an edit button below their posts-
 
-### Insert Post Query
-```sql
-BEGIN TRANSACTION;
-  INSERT INTO posts (posttitle, imageid, creationdate, modifieddate, live, categoryid, ownerid)
-    VALUES ('A Guide To Flexbox' , 1 , CURRENT_DATE, CURRENT_DATE, TRUE, 1, 1);
-  INSERT INTO postbodies (postid, postbody)
-    VALUES ((SELECT MAX(postid) FROM posts), 'Flexbox is simply incredible');
-COMMIT;
-```
+![edit-button](./docs/screenshots/edit-button.png)
 
-### Return Whole Post Query
-```sql
-SELECT p.postid,
-      pb.postbody,
-      p.posttitle,
-      i.imageurl,
-      p.creationdate,
-      p.modifieddate,
-      p.live,
-      c.categoryname,
-      o.ownername
-      FROM posts AS p
-INNER JOIN postbodies AS pb
-      ON pb.postid = 1
-INNER JOIN images AS i
-      ON i.imageid = p.imageid
-INNER JOIN categories AS c
-      on c.categoryid = p.categoryid
-INNER JOIN owners as O
-      on o.ownerid = p.ownerid;
-```
-### Update Post
-```sql
-BEGIN TRANSACTION;
-  Update posts
-    SET posttitle = 'CSS is super',
-        imageid = (SELECT imageid FROM images WHERE imageurl = 'site-logo.png'),
-        modifieddate = CURRENT_DATE,
-        categoryid = (SELECT categoryid FROM categories WHERE categoryname = 'Design')
-    WHERE postid = 1;
-  Update postbodies SET postbody = 'I just love it so much'
-    WHERE postid = 1;
-COMMIT;
-```
-### Delete Post
-```sql
-DELETE FROM posts WHERE postid = 1;
-```
-### Hide Post
-```sql
-Update posts SET live = FALSE WHERE postid = 1;
-```
-### Show Post
-```sql
-Update posts SET live = TRUE WHERE postid = 1;
-```
-### Return Posts By Category
-```sql
-SELECT * FROM posts WHERE posts.categoryid IN
-(SELECT categoryid FROM categories WHERE categories.categoryname = 'CSS');
-```
+When the user hits edit, they're taken to a restricted edit page for the post-
 
-# Routes
-### Public
-/home [GET]  
-/blog (queries: filterby='CSS/JavaScript/Design' ) [GET]  
-/blog/id [GET]  
-/portfolio [GET]   
-/portfolio/id [GET]  
+![edit-post](./docs/screenshots/edit-post.png)
 
-### Owner
-/login [GET, POST]    
-/logout [GET]  
-/compose [GET, POST]  
-/edit/id [GET,PUT]  
-/delete/id [DELETE]   
-/hide/id [PUT]  
-/show/id [PUT]  
-/images [GET, POST]
+Here they can update the main image, edit the title, category, preview the markdown text (and embed images in the text), as well as submit changes and delete the post if they wish. If they choose to select an image;
 
+![upload-image](./docs/screenshots/upload-image.png)
 
-# HBS
+They'll be shown an overlay of previously uploaded images, where they can upload a new image, edit the image title, delete an image, or go back.
 
-## Views
+If they choose to make the post hidden (so only they can view it) they can deselect the 'Live' button. Then when viewing the post snippet in the blog view they'll be warned that it's not live-
 
-home.hbs  
-blog.hbs  
-post.hbs  
-portfolio.hbs  
-edit.hbs  
-compose.hbs  
-login.hbs  
+![not-live](./docs/screenshots/not-live.png)
 
-## Partials
+# Database
+![Schema](./docs/mockups/schema.png)
 
-posts.hbs  
-header.hbs
-portfolioitems.hbs  
-
-## Layout
-
-default.hbs  
+Postgres is used to store the database, with queries passed to it via the npm module [pg](https://www.npmjs.com/package/pg). Features of the schema include-
+- Posts are split into 'posts' and 'postbodies' tables. Post bodies can be quite lengthy, and often when querying posts only meta information is needed. So post bodies are stored in their own table, queries are used to update/insert both at the same time, and when a post gets deleted the postbody is automatically deleted (`postid INT REFERENCES posts ON DELETE CASCADE`)
+- Images are also split into 'images' and 'imagebodies'. The image bodies are stored as blobs, and the server deals with the logic of extracting the data and converting it to a buffer when sending to the client.
+- Inner Joins on other tables are used to get information about a post (including the postbody, category, ownername), but Left Joins are used on the image table (as sometimes an image used for a post will be deleted, so the post can still queried if the image id is no longer used)
