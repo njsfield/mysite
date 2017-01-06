@@ -786,18 +786,100 @@ const routeTests = () => {
     });
   });
   // New post with no credentials
-  test('Compose Post (post no credentials))', (t) => {
+  test('Edit Post (post no credentials))', (t) => {
     let options = {
       method: 'post',
-      url: '/compose',
+      url: '/edit/new-blog-2',
       payload: {
-        ownerusername: process.env.DB_USERNAME,
+        posturi: 'new-blog-2',
         imageurl: '',
         posttitle: 'New Blog 2',
         categoryname: 'CSS',
         live: 'on',
         postbody: 'newer blog post'
       }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect if no credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+  /************/
+  /************/
+  /** DELETE **/
+  /************/
+  /************/
+
+  // Delete Post
+  test('Delete Post (post))', (t) => {
+    let options = {
+      method: 'get',
+      url: '/delete/new-blog',
+      credentials: {
+        current_user: 'john'
+      }
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect after delete');
+      t.equal(res.headers['location'], '/blog', 'Should redirect to blog');
+      server.inject({method: 'get', url: 'blog'}, (res) => {
+        t.notok(/Lovely New Blog/i.test(res.payload), 'Should not show deleted blog uri');
+        t.notok(/newer blog post/i.test(res.payload), 'Should not show deleted blog postbody');
+      });
+      t.end();
+    });
+  });
+  // Delete Post with no credentials
+  test('Delete Post (no credentials)', (t) => {
+    let options = {
+      method: 'post',
+      url: '/delete/new-blog-2'
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 302, 'Should redirect if no credentials');
+      t.equal(res.headers['location'], '/', 'Should redirect to home');
+      t.end();
+    });
+  });
+
+  // Delete Image
+
+  test('Delete Image (post))', (t) => {
+    let options = {
+      method: 'post',
+      url: '/delete',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      credentials: {
+        current_user: 'john'
+      },
+      payload: JSON.stringify({
+        imageurl: 'image1.jpg'
+      })
+    };
+    server.inject(options, (res) => {
+      t.equal(res.statusCode, 200, 'Should redirect after delete iamge');
+      t.equal(res.payload, 'image1.jpg deleted', 'Should send delete message back containing image url');
+      server.inject({method: 'get', url: '/images', credentials: options.credentials}, (res) => {
+        let imageUrls = JSON.parse(res.payload).images;
+        t.notok(imageUrls.indexOf('image1.jpg') > -1, 'Should not return deleted image');
+        t.end();
+      });
+    });
+  });
+  // Delete Image with no credentials
+  test('Delete Image (no credentials)', (t) => {
+    let options = {
+      method: 'get',
+      url: '/delete',
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8'
+      },
+      payload: JSON.stringify({
+        imageurl: 'image1.jpg'
+      })
     };
     server.inject(options, (res) => {
       t.equal(res.statusCode, 302, 'Should redirect if no credentials');

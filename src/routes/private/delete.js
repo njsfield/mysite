@@ -3,7 +3,7 @@ const credentialsCheck = require('../../helpers/credentialscheck');
 
 const deleteImageFromDb = (req, reply) => {
   if (!credentialsCheck(req)) {
-    reply('Not Authorized');
+    reply.redirect('/');
   } else {
     let payload = JSON.parse(req.payload);
     let imageurl = payload.imageurl;
@@ -15,9 +15,9 @@ const deleteImageFromDb = (req, reply) => {
 
 const deletePostFromDb = (req, reply) => {
   if (!credentialsCheck(req)) {
-    reply('Not Authorized');
+    reply.redirect('/');
   } else {
-    deletePost(req.params.id, (err) => {
+    deletePost(req.params.uri, (err) => {
       err ? reply(err) : reply.redirect('/blog');
     });
   }
@@ -26,7 +26,7 @@ const deletePostFromDb = (req, reply) => {
 // const delete
 
 module.exports = {
-  path: '/delete/{id*}',
+  path: '/delete/{uri*}',
   method: ['get', 'post'],
   config: {
     auth: {

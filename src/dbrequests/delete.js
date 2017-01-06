@@ -6,8 +6,8 @@ const deleteImage = (imageurl, cb) => {
   });
 };
 
-const deletePost = (postid, cb) => {
-  dbConn.query(`DELETE FROM posts WHERE postid = $1;`, [postid], (err, data) => {
+const deletePost = (posturi, cb) => {
+  dbConn.query(`DELETE FROM posts WHERE posturi = $1;`, [posturi], (err, data) => {
     (err ? cb(err) : cb(null));
   });
 };
