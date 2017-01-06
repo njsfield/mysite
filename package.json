@@ -9,8 +9,8 @@
     "start": "node index.js",
     "style-check": "doiuse public/css/style.css",
     "build-db": "node src/database_builder/build_database.js",
-    "test-db": "tape tests/database-tests/query-tests.js | tap-spec",
-    "test-routes": "tape tests/route-tests/route-tests.js | tap-spec"
+    "coverage": "./node_modules/.bin/istanbul cover tests/route-tests/route-tests.js && istanbul report lcov && codecov",
+    "codecov": "source config.env && ./node_modules/.bin/codecov -t $CODECOV_TOKEN"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/njsfield/mysite#readme",
   "dependencies": {
-    "bcrypt": "^0.8.7",
     "env2": "^2.1.1",
     "handlebars": "^4.0.6",
     "hapi": "^15.2.0",
