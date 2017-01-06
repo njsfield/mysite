@@ -14,7 +14,7 @@
 
     <!--Title-->
     <label for="edit__title-input" class="edit__label">Set Title</label>
-      <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" required/>
+      <input type="text" class="edit__text-input" name="posttitle" id="edit__title-input" pattern="[A-Za-z\d\s]+" title="Only letters, numbers and spaces when creating a title you moron (reason: this will get converted to a uri). After the post is made, you can change the title to whatever the hello you like" required/>
 
     <!-- Category Select -->
     <label for="categoryname" class="edit__label">Choose Category</label>

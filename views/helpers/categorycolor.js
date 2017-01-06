@@ -9,6 +9,7 @@ module.exports = (categoryname) => {
     case 'testing' : { color = 'purple'; break; }
     case 'html' : { color = 'orange'; break; }
     case 'personal' : { color = 'light-blue'; break; }
+    default: { color = 'black'; break; }
   }
   return color;
 };
