@@ -43,19 +43,19 @@ With css applied-
 ```
 
 # Technologies
-- Node.js  
-- Hapi.js
-- Sass
-- PostCSS
-- Webpack
-- ES6
-- Handlebars
-- Postgres
+- [Node.js](https://nodejs.org/)  
+- [Hapi.js](https://hapijs.com/)
+- [Sass](http://sass-lang.com/)
+- [PostCSS](http://postcss.org/)
+- [Webpack](https://webpack.github.io/)
+- [ES6](http://es6-features.org/#)
+- [Handlebars](http://handlebarsjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 # Testing Tools
-- Tape
-- Istanbul
-- Codecov
+- [Tape](https://www.npmjs.com/package/tape)
+- [Istanbul](https://istanbul.js.org/)
+- [Codecov](https://codecov.io/)
 
 # Admin Screenshots
 
