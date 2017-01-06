@@ -21,6 +21,7 @@ const preparePostAndSend = (req, reply) => {
 // Get posts and send with credentials
 const preparePostsAndSend = (req, reply) => {
   getPosts((err, posts) => {
+    posts.forEach(post => { post.postbody = `${post.postbody.substring(0, 200)}...`; });
     err ? reply(err) : reply.view('blog', {posts: posts, credentials: credentialsCheck(req)});
   }
 );
