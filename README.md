@@ -2,10 +2,45 @@
 [![codecov](https://codecov.io/gh/njsfield/mysite/branch/master/graph/badge.svg)](https://codecov.io/gh/njsfield/mysite)
 
 # Description
-A personal website to host a biography, a blog, and personal/professional projects. Includes a content manage system to add/update/update posts from a database, as well as add/update/delete images. See [mockups](./docs/mockups/) for original designs.
+A personal website to host a biography, a blog, and personal/professional projects. Includes a CMS to add/update/update posts from a database, as well as add/update/delete images. See [mockups](./docs/mockups/) for original designs.
 
 The live site can be viewed here
 
+# Motivation
+
+To create a CMS with similar (and much simpler) functionality to *Wordpress* using Node.js on the back-end. *Wordpress* allows you to distinguish post-types for different purposes- posts can be given a hierarchy and displayed in a non-blog-post manner (for example, a blog post can be 'featured' and set as a home past). The same idea applies to this site; you can create a post and set its category to 'CSS' to appear as a blog post, you can then change the category to 'Portfolio' and it will appear as a portfolio piece in a different area of the site. The home post used to display the first post on the site, its category cannot be changed be changed and it can't be deleted.
+
+Github pages is another inspiration for its manipulation of markdown files. The [marked](https://github.com/chjj/marked) npm plugin allows serious customisation of outputted markdown syntax. This plugin is used to add custom BEM classes to elements, as well as respond to markdown **triggers** which cause certain classes to appear. For example;
+```
+[Image1](image.jpg)
+```
+Would cause the following to render;
+```html
+<img class="img" src="image.jpg" title="Image1">
+```
+**Triggers** can be added to add custom classes;
+```
+[Image1 -center- -small-](image.jpg)
+```
+translates to-
+```html
+<img class="img img--center img--small" src="image.jpg" title="Image1">
+```
+With css applied-
+```css
+.img {
+  width: 100%;
+}
+
+.img--small {
+  width: 50%;
+}
+
+.img--center {
+  display: block;
+  margin: 0 auto;
+}
+```
 
 # Technologies
 - Node.js  
