@@ -1,5 +1,7 @@
 const sqlLogin = require('../../dbrequests/getuser.js');
-const compare = require('bcrypt').compare;
+const env = require('env2');
+// Install Environment Variables
+env('./config.env');
 
 const checkUser = (username, cb) => {
   sqlLogin(username, (err, data) => {
@@ -9,12 +11,8 @@ const checkUser = (username, cb) => {
   });
 };
 
-const comparePasswords = (reqpass, dbpass, cb) => {
-  compare(reqpass, dbpass, (err, isMatch) => {
-    if (err) cb(err);
-    else if (!isMatch) cb(null);
-    else cb(null, true);
-  });
+const checkPassword = (reqpass, cb) => {
+  reqpass === process.env.DB_PASSWORD ? cb(true) : cb(false);
 };
 
 const userNotFound = {
@@ -39,10 +37,8 @@ const loginHandler = (req, reply) => {
     } else if (!data) {
       reply.view('login', userNotFound);
     } else {
-      comparePasswords(password, data.ownerpassword, (err, isMatch) => {
-        if (err) {
-          throw err;
-        } else if (!isMatch) {
+      checkPassword(password, (isMatch) => {
+        if (!isMatch) {
           reply.view('login', wrongPassword(username));
         } else {
           req.cookieAuth.set({current_user: username});

@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/njsfield/mysite#readme",
   "dependencies": {
-    "bcrypt": "^0.8.7",
     "env2": "^2.1.1",
     "handlebars": "^4.0.6",
     "hapi": "^15.2.0",
