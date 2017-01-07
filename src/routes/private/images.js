@@ -60,6 +60,10 @@ module.exports = {
       strategy: 'session',
       mode: 'try'
     },
+    cache: {
+      expiresIn: 2000 * 1000,
+      privacy: 'private'
+    },
     plugins: {
       'hapi-auth-cookie': {
         redirectTo: false
