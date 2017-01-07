@@ -31,10 +31,13 @@ const options = {
   redirectTo: '/'
 };  // make this :)
 
-// Uncomment for production
-// setInterval(() => {
-//   require('http').get('http://the-badgerer.herokuapp.com');
-// }, 300000); // every 5 minutes
+// For Dynos
+setInterval(() => {
+  let hourOfDay = new Date().getHours();
+  if (hourOfDay > 10 || hourOfDay < 5) {
+    require('http').get('http://in.nickfield.io/');
+  }
+}, 1800000); // every 30 minutes
 
 // Set Connection
 server.connection({
