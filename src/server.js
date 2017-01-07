@@ -32,12 +32,12 @@ const options = {
 };  // make this :)
 
 // For Dynos
-setInterval(() => {
-  let hourOfDay = new Date().getHours();
-  if (hourOfDay > 10 || hourOfDay < 5) {
-    require('http').get('http://in.nickfield.io/');
-  }
-}, 1800000); // every 30 minutes
+// setInterval(() => {
+//   let hourOfDay = new Date().getHours();
+//   if (hourOfDay > 10 || hourOfDay < 5) {
+//     require('http').get('http://in.nickfield.io/');
+//   }
+// }, 1800000); // every 30 minutes
 
 // Set Connection
 server.connection({
