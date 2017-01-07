@@ -12,14 +12,3 @@
     {{/if}}
   {{/each}}
 </div>
-
-<script type="text/javascript">
-// Add Event Listeners
- window.addEventListener('load', function(){
-  Array.prototype.forEach.call(document.querySelectorAll('.portfolio__item'), function(portfolioItem){
-    portfolioItem.addEventListener('touchstart', function(e){
-      window.location = e.target.getAttribute('href');
-    });
-  });
-});
-</script>

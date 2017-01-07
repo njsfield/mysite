@@ -42,20 +42,28 @@
       background-color: rgba(255,255,255, 0);
       filter: grayscale(0);
       border-color: $orange;
-      &:before {
-        font-size: 5em;
-        box-sizing: border-box;
-        content: '';
-        position: absolute;
-        width: calc(100%);
-        height: 1em;
-        top: calc(50% - 0.5em);
-        border: 3px solid $orange;
-        border-left-color: white;
-        border-right-color: white;
-        background: white;
-        transform-origin: 50% 50%;
-        transform: rotate(6deg) skewX(6deg) scale(1.03);
+      .portfolio__title {
+        color: $transparent;
+      }
+      @media screen and (min-width: $break-medium) {
+        .portfolio__title {
+          color: $black;
+        }
+        &:before {
+          font-size: 5em;
+          box-sizing: border-box;
+          content: '';
+          position: absolute;
+          width: calc(100%);
+          height: 1em;
+          top: calc(50% - 0.5em);
+          border: 3px solid $orange;
+          border-left-color: white;
+          border-right-color: white;
+          background: white;
+          transform-origin: 50% 50%;
+          transform: rotate(6deg) skewX(6deg) scale(1.03);
+        }
       }
 
     }
@@ -65,9 +73,10 @@
     box-sizing: border-box;
     position: relative;
     font-weight: 500;
-    color: black;
+    color: $black;
     text-align: center;
     z-index: 2;
     background-color: $transparent;
+
   }
 }
