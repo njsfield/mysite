@@ -1,8 +1,8 @@
 /* Tables */
 
 .table {
+    box-sizing: border-box;
     width: 100%;
-    min-width: $container-max;
     border-collapse: collapse;
     // Head Container
     &__thead {
