@@ -9,6 +9,7 @@ const portfolio = require('./public/portfolio');
 const compose = require('./private/compose');
 const del = require('./private/delete');
 const edit = require('./private/edit');
+const image = require('./private/image');
 const images = require('./private/images');
 const addimage = require('./private/addimage');
 const login = require('./private/login');
@@ -25,6 +26,7 @@ module.exports = [
   del,
   edit,
   addimage,
+  image,
   images,
   marked
 ];

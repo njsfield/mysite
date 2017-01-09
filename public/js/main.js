@@ -137,7 +137,7 @@
 	  getReq('/images', function (raw) {
 	    var images = JSON.parse(raw).images;
 	    images.forEach(function (image) {
-	      var imageElt = createRawElt('<span class="images__image" style="background-image: url(/images/' + image + ')" path="' + image + '"></span>');
+	      var imageElt = createRawElt('<span class="images__image" style="background-image: url(/image/' + image + ')" path="' + image + '"></span>');
 	      onClick(imageElt, function () {
 	        stealClass(imageElt, selectedClass);
 	        enableElt(selectBtn);
@@ -201,9 +201,9 @@
 	  var path = elt('.images__image--selected').getAttribute('path');
 	  if (selectBtn.getAttribute('outputMainImage')) {
 	    setAttr(featureImgInputElt, 'value', path);
-	    setAttr(featureImgOutputElt, 'src', '/images/' + path);
+	    setAttr(featureImgOutputElt, 'src', '/image/' + path);
 	  } else {
-	    postBodyElt.value = postBodyElt.value + ' ![' + titleElt.value + '](/images/' + path + ')';
+	    postBodyElt.value = postBodyElt.value + ' ![' + titleElt.value + '](/image/' + path + ')';
 	  }
 	  disableElt(selectBtn);
 	  toggleClass(overlayElt, 'images--hidden');

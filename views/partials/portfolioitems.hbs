@@ -1,11 +1,11 @@
 <div class="portfolio">
   {{#each posts}}
     {{#if this.live}}
-      <a class="portfolio__item" href="/blog/{{this.posturi}}" style="background-image: url('/images/{{this.imageurl}}');">
+      <a class="portfolio__item" href="/blog/{{this.posturi}}" style="background-image: url('/image/{{this.imageurl}}');">
         <h3 class="portfolio__title">{{this.posttitle}}</h3>
       </a>
     {{else if ../credentials.current_user}}
-      <a class="portfolio__item" href="/blog/{{this.posturi}}" style="background-image: url('/images/{{this.imageurl}}'); opacity: 0.3;">
+      <a class="portfolio__item" href="/blog/{{this.posturi}}" style="background-image: url('/image/{{this.imageurl}}'); opacity: 0.3;">
         <h3 class="portfolio__title" style="color: red;">{{this.posttitle}} NOT LIVE</h3>
       </a>
     {{else}}

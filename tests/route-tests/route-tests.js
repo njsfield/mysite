@@ -482,7 +482,7 @@ const routeTests = () => {
   test('Send Raw Image', (t) => {
     let options = {
       method: 'get',
-      url: '/images/image1.jpg'
+      url: '/image/image1.jpg'
     };
     server.inject(options, (res) => {
       t.equal(res.statusCode, 200, 'Should respond with status code of 200');
@@ -495,7 +495,7 @@ const routeTests = () => {
   test('Send Raw Image (of duplicate image)', (t) => {
     let options = {
       method: 'get',
-      url: '/images/image2.jpg'
+      url: '/image/image2.jpg'
     };
     server.inject(options, (res) => {
       t.equal(res.statusCode, 200, 'Should respond with status code of 200');
@@ -508,7 +508,7 @@ const routeTests = () => {
   test('Send Back nothing if not found', (t) => {
     let options = {
       method: 'get',
-      url: '/images/invalidimage.jpg'
+      url: '/image/invalidimage.jpg'
     };
     server.inject(options, (res) => {
       t.equal(res.statusCode, 200, 'Should still respond with status code of 200');

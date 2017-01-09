@@ -72,7 +72,7 @@ const buildGallery = (fromGallery) => {
   getReq('/images', (raw) => {
     let images = JSON.parse(raw).images;
     images.forEach((image) => {
-      let imageElt = createRawElt(`<span class="images__image" style="background-image: url(/images/${image})" path="${image}"></span>`);
+      let imageElt = createRawElt(`<span class="images__image" style="background-image: url(/image/${image})" path="${image}"></span>`);
       onClick(imageElt, () => {
         stealClass(imageElt, selectedClass);
         enableElt(selectBtn);
@@ -136,9 +136,9 @@ selectBtn.addEventListener('click', (e) => {
   let path = elt('.images__image--selected').getAttribute('path');
   if (selectBtn.getAttribute('outputMainImage')) {
     setAttr(featureImgInputElt, 'value', path);
-    setAttr(featureImgOutputElt, 'src', `/images/${path}`);
+    setAttr(featureImgOutputElt, 'src', `/image/${path}`);
   } else {
-    postBodyElt.value = `${postBodyElt.value} ![${titleElt.value}](/images/${path})`;
+    postBodyElt.value = `${postBodyElt.value} ![${titleElt.value}](/image/${path})`;
   }
   disableElt(selectBtn);
   toggleClass(overlayElt, 'images--hidden');

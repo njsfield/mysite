@@ -1,19 +1,5 @@
-const decodeBase64Image = require('../../helpers/decodebase64image');
 const { getImages, getImage, updateImageTitle } = require('../../dbrequests/images');
 const credentialsCheck = require('../../helpers/credentialscheck');
-
-// Send Raw Image
-const sendRawImage = (req, reply) => {
-  let imageurl = req.params.url;
-  getImage(imageurl, (err, image) => {
-    if (err) reply(err);
-    else if (!image) reply('Image Not Found');
-    else {
-      image = decodeBase64Image(image.imagebody);
-      reply(image.data).header('content-type', image.type);
-    }
-  });
-};
 
 const getAllImageurls = (req, reply) => {
   if (!credentialsCheck(req)) {
@@ -53,16 +39,12 @@ const getImageData = (req, reply) => {
 };
 
 module.exports = {
-  path: '/images/{url*}',
+  path: '/images',
   method: ['get', 'post'],
   config: {
     auth: {
       strategy: 'session',
       mode: 'try'
-    },
-    cache: {
-      expiresIn: 2000 * 1000,
-      privacy: 'private'
     },
     plugins: {
       'hapi-auth-cookie': {
@@ -71,9 +53,7 @@ module.exports = {
     },
     handler: (req, reply) => {
       if (req.method === 'get') {
-        if (req.params.url) {
-          sendRawImage(req, reply);
-        } else if (req.query.imageurl) {
+        if (req.query.imageurl) {
           getImageData(req, reply);
         } else {
           getAllImageurls(req, reply);
