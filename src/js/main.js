@@ -41,6 +41,7 @@ const featureImgOutputElt = elt('.edit__feature-image-output');
 const overlayElt = elt('.images');
 const galleryElt = elt('.images__gallery');
 const titleElt = elt('.images__selected-title');
+const imagesLoading = elt('.images__loading');
 
 // Post Body
 const postBodyElt = elt('.edit__post-body');
@@ -50,24 +51,29 @@ const postBodyOutputElt = elt('.edit__post-body-output');
 
 // enableTitleElt
 const setTitleElt = (image) => {
+  displayElt(imagesLoading); // show load icon
   getReq(`/images?imageurl=${image}`, (data) => {
     if (data) {
       setEltValue(titleElt, JSON.parse(data).imagetitle);
       displayElt(titleElt);
+      hideElt(imagesLoading); // hide load icon
     }
   });
 };
 
 // Delete Elt
 const deleteImg = (image, cb) => {
+  displayElt(imagesLoading); // show load icon
   let payload = JSON.stringify({item: 'image', imageurl: image});
   postReq('/delete', payload, (data) => {
     cb();
+    hideElt(imagesLoading); // hide load icon
   });
 };
 
 // Build Images
 const buildGallery = (fromGallery) => {
+  displayElt(imagesLoading); // show load icon
   let selectedClass = 'images__image--selected';
   getReq('/images', (raw) => {
     let images = JSON.parse(raw).images;
@@ -88,6 +94,7 @@ const buildGallery = (fromGallery) => {
       });
       imageElt.appendChild(deleteElt);
       galleryElt.appendChild(imageElt);
+      hideElt(imagesLoading); // hide load icon
     });
   });
 };
@@ -120,6 +127,7 @@ backBtn.addEventListener('click', (e) => {
 
 // Upload Button
 uploadBtn.addEventListener('change', (e) => {
+  displayElt(imagesLoading);
   retrieveFile(e, (file) => {
     let name = sanitizeURI(file.name);
     postReq(`/addimage?name=${name}`, file.raw, (response) => {
@@ -160,11 +168,13 @@ postBodyOutputElt.addEventListener('click', (e) => {
 
 // Selected Title
 titleElt.addEventListener('focusout', (e) => {
+  displayElt(imagesLoading); // display image loading
   postReq('/images', JSON.stringify({
     imagetitle: titleElt.value,
     imageurl: elt('.images__image--selected').getAttribute('path')
   }), (title) => {
     setEltValue(titleElt, title);
+    hideElt(imagesLoading); // hide image loading
   });
 });
 

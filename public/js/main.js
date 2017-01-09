@@ -106,6 +106,7 @@
 	var overlayElt = elt('.images');
 	var galleryElt = elt('.images__gallery');
 	var titleElt = elt('.images__selected-title');
+	var imagesLoading = elt('.images__loading');
 
 	// Post Body
 	var postBodyElt = elt('.edit__post-body');
@@ -115,24 +116,29 @@
 
 	// enableTitleElt
 	var setTitleElt = function setTitleElt(image) {
+	  displayElt(imagesLoading); // show load icon
 	  getReq('/images?imageurl=' + image, function (data) {
 	    if (data) {
 	      setEltValue(titleElt, JSON.parse(data).imagetitle);
 	      displayElt(titleElt);
+	      hideElt(imagesLoading); // hide load icon
 	    }
 	  });
 	};
 
 	// Delete Elt
 	var deleteImg = function deleteImg(image, cb) {
+	  displayElt(imagesLoading); // show load icon
 	  var payload = JSON.stringify({ item: 'image', imageurl: image });
 	  postReq('/delete', payload, function (data) {
 	    cb();
+	    hideElt(imagesLoading); // hide load icon
 	  });
 	};
 
 	// Build Images
 	var buildGallery = function buildGallery(fromGallery) {
+	  displayElt(imagesLoading); // show load icon
 	  var selectedClass = 'images__image--selected';
 	  getReq('/images', function (raw) {
 	    var images = JSON.parse(raw).images;
@@ -153,6 +159,7 @@
 	      });
 	      imageElt.appendChild(deleteElt);
 	      galleryElt.appendChild(imageElt);
+	      hideElt(imagesLoading); // hide load icon
 	    });
 	  });
 	};
@@ -185,6 +192,7 @@
 
 	// Upload Button
 	uploadBtn.addEventListener('change', function (e) {
+	  displayElt(imagesLoading);
 	  retrieveFile(e, function (file) {
 	    var name = sanitizeURI(file.name);
 	    postReq('/addimage?name=' + name, file.raw, function (response) {
@@ -225,11 +233,13 @@
 
 	// Selected Title
 	titleElt.addEventListener('focusout', function (e) {
+	  displayElt(imagesLoading); // display image loading
 	  postReq('/images', JSON.stringify({
 	    imagetitle: titleElt.value,
 	    imageurl: elt('.images__image--selected').getAttribute('path')
 	  }), function (title) {
 	    setEltValue(titleElt, title);
+	    hideElt(imagesLoading); // hide image loading
 	  });
 	});
 

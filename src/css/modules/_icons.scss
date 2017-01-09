@@ -1,0 +1,25 @@
+.icon {
+    display: inline-block;
+    font-size: 1em;
+    width: auto;
+    height: auto;
+    color: $black;
+    &--rotating {
+      animation: rotating .5s linear infinite;
+    }
+
+    &--medium {
+      font-size: 2em;
+    }
+
+    &--white {
+      color: white;
+    }
+
+    &--bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 1em;
+    }
+  }
