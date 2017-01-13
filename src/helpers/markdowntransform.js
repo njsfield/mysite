@@ -99,7 +99,6 @@ renderer.blockquote = (quote) => {
 
 /* Image */
 renderer.image = (href, title, text) => {
-  console.log(href);
   let parsed = classExtract('img', text);
   return `<img class="img ${parsed.classes}" src="${href}" alt="${parsed.text}" title="${parsed.text}">`;
 };
