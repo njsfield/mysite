@@ -29,7 +29,7 @@ marked.setOptions({
 
 /* Paragraph */
 renderer.paragraph = (text) => {
-  let parsed = classExtract('p', text);
+  let parsed = /<img/.test(text) ? {text: text, classes: ''} : classExtract('p', text);
   return `<p class="p ${parsed.classes}">${parsed.text}</p>`;
 };
 
@@ -99,6 +99,7 @@ renderer.blockquote = (quote) => {
 
 /* Image */
 renderer.image = (href, title, text) => {
+  console.log(href);
   let parsed = classExtract('img', text);
   return `<img class="img ${parsed.classes}" src="${href}" alt="${parsed.text}" title="${parsed.text}">`;
 };
