@@ -20,7 +20,7 @@ Would cause the following to render;
 ```
 **Triggers** can be added to add custom classes;
 ```
-[Image1 -center- -small-](image.jpg)
+[Image1 %center% %small%](image.jpg)
 ```
 translates to-
 ```html
