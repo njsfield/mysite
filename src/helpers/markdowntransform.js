@@ -4,7 +4,7 @@ const highlightjs = require('highlight.js');
 
 // Helper function to extract mod classes (e.g '-center-'), returning parsed text and classes in object
 const classExtract = (className, text) => {
-  let mods = text.match(/-\w+-/g);
+  let mods = text.match(/%\w+%/g);
   if (mods) mods.forEach(m => { text = text.replace(m, ''); });
   let modClasses = mods ? `${mods.map(m => className + '--' + m.slice(1, -1)).join(' ')}` : '';
   return {text: text, classes: modClasses};
